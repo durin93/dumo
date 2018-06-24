@@ -1,0 +1,273 @@
+@charset "UTF-8";
+
+.content-nav {
+	z-index: 9;
+	left: 13%;
+	position: fixed;
+	background-color: white;
+	height: 100px;
+	border-left: 1px solid #bdbdbd;
+	border-bottom: 1px solid #bdbdbd;
+	width: 100%;
+	float: left;
+	position: fixed;
+	/* margin-left: 13%; */
+}
+
+.content-nav-header {
+	/* 	background-color: yellow; */
+	/* 	width: 100%; */
+	height: 50%;
+}
+
+.content-nav-header ul {
+	margin-top: 15px;
+}
+
+.content-nav-header ul li {
+	float: left;
+	border: 1px solid black;
+	margin-left: 20px;
+}
+
+.content-nav-header ul li:nth-child(3) {
+	float: left;
+	border-left: 1px solid white;
+	margin-left: 0;
+}
+
+.content-nav-header ul li:last-child {
+	float: left;
+	line-height: 34px;
+	margin-left: 20px;
+	border: none;
+	font-weight: bold;
+	margin-left: 20px;
+}
+
+.bar {
+	border: 0.5px solid #bdbdbd;
+	/* margin-left: 10px; */
+	margin-right: 10px;
+	width: 10px;
+	/* height: 0px; */
+}
+
+.content-nav-header ul li:nth-child(3) {
+	float: left;
+	border-left: 1px solid white;
+	margin-left: 0;
+}
+
+.content-nav-header ul li a {
+	text-decoration: none;
+}
+
+li.menu-btn {
+	height: 32px;
+	width: 32px;
+}
+
+.content-nav-function {
+	/* 	background-color: blue; */
+	/* 	width: 100%; */
+	height: 50%;
+}
+
+.content-nav-function ul {
+	
+}
+
+.content-nav-function ul li {
+	float: left;
+	margin-left: 2%;
+}
+
+.content-nav-function ul li a {
+	text-decoration: none;
+}
+
+.hambuger {
+	width: 100%;
+}
+
+.margin-0 {
+	margin: 0;
+}
+
+.search {
+	width: 100%;
+}
+
+.input-search {
+	border: none;
+	height: 30px;
+}
+
+.content-main {
+	position: absolute;
+	border: 1px solid black;
+	width: 1660px;
+	margin-left: 13%;
+	/* top: 60px; */
+	background-color: #e0e0e0;
+	/* top: 161px; */
+	height: 780px;
+	margin-left: 255px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-top: 105px;
+}
+
+.one-memo {
+	visibility: hidden;
+	cursor: move;
+	float: left;
+	width: 270px;
+	height: 335px;
+	/* border: 1px solid black; */
+	overflow-x: hidden;
+	overflow-y: hidden;
+	margin-left: 3%;
+	box-shadow: 1px 1px 1px 0px grey;
+	margin-top: 1%;
+	background-color: #ffffea;
+}
+
+.memo-title {
+	border: none;
+	border-bottom: 1px solid #e0e0e0;
+	width: 220px;
+	height: 30px;
+	margin-top: 5px;
+	margin-left: 7px;
+	background-color: #ffffea;
+}
+
+.memo-textarea {
+	margin: 0px;
+	text-decoration: none;
+	width: 105px;
+	height: 117px;
+	width: 250px;
+	border: 1px solid black;
+	height: 260px;
+	/* padding: 0px 0px 0px 0px; */
+	margin-left: 7px;
+	margin-top: 8px;
+	padding: auto;
+	/* border: none; */
+	background-color: #ffffea;
+	resize: none;
+	font-size: 12pt;
+	overflow-x: hidden;
+}
+
+.memo-delete {
+	position: absolute;
+	right: -6px;
+	top: -5px;
+	text-decoration: none;
+	visibility: hidden;
+}
+
+.memo-delete-img {
+	width: 55px;
+}
+
+.memo-cursor-img {
+	position: relative;
+	width: 25px;
+	left: 5px;
+	top: 6px;
+	text-decoration: none;
+	visibility: visible;
+}
+
+.memo-time {
+position: relative;
+    top: -8px;
+    margin-left: 80px;
+}
+
+.memo-checkbox{
+	    width: 50px;
+    height: 20px;
+    /* margin: auto; */
+    position: relative;
+    bottom: 3px;
+    left: -10px;
+}
+
+/* s */
+.pop-layer .pop-container {
+	padding: 20px 25px;
+}
+
+.pop-layer p.ctxt {
+	color: #666;
+	line-height: 25px;
+}
+
+.pop-layer .btn-r {
+	width: 100%;
+	margin: 10px 0 20px;
+	padding-top: 10px;
+	border-top: 1px solid #DDD;
+	text-align: right;
+}
+
+.pop-layer {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 410px;
+	height: auto;
+	background-color: #fff;
+	border: 5px solid #3571B5;
+	z-index: 10;
+}
+
+.dim-layer {
+	display: none;
+	position: fixed;
+	_position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+.dim-layer .dimBg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+}
+
+.dim-layer .pop-layer {
+	display: block;
+}
+
+a.btn-layerClose {
+	display: inline-block;
+	height: 25px;
+	padding: 0 14px 0;
+	border: 1px solid #304a8a;
+	background-color: #3f5a9d;
+	font-size: 13px;
+	color: #fff;
+	line-height: 25px;
+}
+
+a.btn-layerClose:hover {
+	border: 1px solid #091940;
+	background-color: #1f326a;
+	color: #fff;
+}

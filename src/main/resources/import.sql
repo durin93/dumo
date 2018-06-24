@@ -1,0 +1,2 @@
+insert into user (id, create_date, modified_date, name, password, user_id)  values(0, current_time(), current_time(), '이승철', '1234', 'lsc109');
+insert into label (id, create_date, modified_date, writer_id, title) values (0, current_time(), current_time(), 1, '전체메모');

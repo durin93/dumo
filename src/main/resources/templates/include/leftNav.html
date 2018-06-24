@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="/css/left-nav.css" />
+
+<div class="left-navBar">
+
+	<div class="write-memo-btn-div">
+		{{#click_memo}}
+		<a class="write-memo-btn" href="#">새 메모쓰기</a>
+		{{/click_memo}}
+		{{#click_link}}
+		<a class="write-link-btn" href="#">새 링크 쓰기</a>
+		{{/click_link}}
+	</div>
+
+	<div class="main-category">
+		{{#click_memo}}
+		<div class="make-label-div">
+		<img class="leftNav-click-img" alt="메모아이콘"
+					src="/image/memo/label/labeladdicon.png"/>
+		<a href="/api/labels"  class="leftNav-a make-label">새 라벨 만들기</a>
+		</div>
+		<ul class="label-list-ul">
+		
+		{{#labels}}
+		<li>
+		<div class="one-label">
+		<a href="/memo/list/{{id}}" class="leftNav-a left-link link-memo">
+		<img class="leftNav-label-img" alt="메모아이콘"
+					src="/image/memo/label/labelicon.png"/>
+		</a>
+		<input class="label-action" type="hidden"  value="/api/labels/{{id}}"/>
+		<input class="label-title" type="text" name="title" value="{{title}}"/>
+		<a href="/api/labels/{{id}}" class="label-delete"><img class="label-delete-img" alt="메모아이콘"
+					src="/image/memo/label/labeldelete.png"></a>			
+		</div>
+		</li>
+		{{/labels}}
+		{{/click_memo}}
+		{{#click_link}}
+		<li><a class="left-link link-link" href="/link/list">전체링크</a></li>
+		{{/click_link}}
+		</ul>
+	</div>
+</div>

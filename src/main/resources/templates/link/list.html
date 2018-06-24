@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모두의 두모</title>
+<link rel="stylesheet" href="/css/login.css" />
+<link rel="stylesheet" href="/css/link.css" />
+<script src="/js/jquery-2.2.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+</head>
+<body>
+
+
+	{{#loginUser}}
+	{{> include/header}} 
+	{{> include/leftNav}} 
+	{{> include/contentNav}}
+
+
+
+	<!-- 		https://api.letsvalidate.com/v1/thumbs/?url=naver.com&width=10  -->
+
+	<div class="content-main">
+		{{#links}}
+		<div class="one-link">
+			<input placeholder="링크 이름" class="link-title" type="text" value="{{title}}" />
+			<input placeholder="https://~" class="link-info" type="text" value="{{originalUrl}}"/>
+			<textarea placeholder="링크 설명" class="link-textarea">{{content}}</textarea>
+			<a href="{{originalUrl}}"  onclick="window.open(this.href);return false;" target="_blank"><img class="link-thumnail-img" src="{{thumnailUrl}}"/></a>	
+			<input class="link-id" type="hidden" name="id" value="{{id}}"/>
+			<a href="/api/link/{{id}}" class="link-delete"><img class="link-delete-img" alt="메모아이콘"
+					src="/image/content/trash.png"></a>
+			<span class="link-time">{{formattedModifiedDate}}</span>
+		</div>
+		{{/links}}
+		
+		{{/loginUser}}
+		
+	</div>
+	<script type="text/template" id="linkTemplate">
+	<div class="one-link">
+			<input placeholder="링크 이름" class="link-title" type="text" value="{1}"/>
+			<input placeholder="https://~"  class="link-info" type="text" value="{3}"/>
+			<textarea placeholder="링크 설명" class="link-textarea">{2}</textarea>
+				<img class="link-thumnail-img" src="{4}"/>
+			<input class="link-id" type="hidden" name="id" value="{0}"/>
+	<a href="{3}"  onclick="window.open(this.href);return false;" target="_blank">
+<img class="link-delete-img" alt="링크아이콘"
+					src="/image/content/trash.png">
+	</a>
+			<a href="/api/link/{0}" class="link-delete">
+
+</a>
+			<span class="link-time">{5}</span>
+		</div>
+</script>
+
+<script src="/js/link/link.js"></script>
+</body>
+</html>

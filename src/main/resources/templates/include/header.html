@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/css/reset.css" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/header.css" />
+
+
+<div class="header">
+	<div class="header-logo">
+		<a href="/memo/list"><img class="header-logo-img" alt="로고"
+			src="/image/header/dumoLogo.png"></a>
+	</div>
+	<div class="header-center">
+		<ul>
+			<li><a class="header-click-a" href="/memo/list">
+			{{^click_memo}}
+			<img class="header-click-img" alt="메모아이콘"
+					src="/image/header/blackmemo.png">
+			{{/click_memo}}
+			{{#click_memo}}
+			<img class="select header-click-img" alt="메모아이콘"
+					src="/image/header/blackmemo.png">
+			{{/click_memo}}		
+			</a></li>
+			
+			<li><a class="header-click-a" href="/link/list">
+			{{#click_link}}
+			<img class="select header-click-img" alt="메모아이콘"
+					src="/image/header/blacklink.png">
+			{{/click_link}}
+			{{^click_link}}
+			<img class="header-click-img" alt="링크아이콘"
+					src="/image/header/blacklink.png">
+			{{/click_link}}
+			</a></li>
+			
+			
+			
+			<li><a  class="header-click-a"  href="#"><img class="header-click-img" alt="링크아이콘"
+					src="/image/header/blacklink.png"></a></li>
+			<li><a  class="header-click-a"  href="#"><img class="header-click-img" alt="링크아이콘"
+					src="/image/header/blacklink.png"></a></li>
+		</ul>
+	</div>
+	<div class="header-user-menu">
+		<ul>
+			<li><a href="/api/users/{{id}}/info">{{name}} 님</a>
+				<span class="right-bar"></span></li>
+			<li><a><img class="header-img"
+					src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140" /></a>
+				<span class="right-bar"></span></li>
+			<li><a class="logout-btn" href="/users/logout">logout</a></li>
+		</ul>
+	</div>
+</div>
+
