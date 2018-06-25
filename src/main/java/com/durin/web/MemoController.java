@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.durin.domain.Memo;
+import com.durin.domain.Pagination;
 import com.durin.domain.User;
 import com.durin.security.LoginUser;
 import com.durin.service.LabelService;
@@ -25,6 +26,8 @@ import com.durin.service.UserService;
 @RequestMapping("/memo")
 public class MemoController {
 	
+	private static final int SHOW_MEMO_RANGE = 9;
+
 	
 	@Resource(name="labelService")
 	private LabelService labelService;
@@ -35,22 +38,25 @@ public class MemoController {
 	@Resource(name="userService")
 	private UserService userService;
 	
-	@GetMapping("/list")
+	
+	/*@GetMapping("/list")
 	public String list(@LoginUser User loginUser,  Model model) {
-
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		Page<Memo> postPage = memoService.findAll(1L, PageRequest.of(0, 9, Sort.Direction.DESC, "createDate"));
+		Page<Memo> postPage = memoService.findAll(1L, PageRequest.of(0, SHOW_MEMO_RANGE, Sort.Direction.DESC, "createDate"));
 		model.addAttribute("memos", postPage.getContent());
 		model.addAttribute("click_memo",true);
+		model.addAttribute("pagination", Pagination.makePagination(1L, 0, postPage.getTotalPages()));
 		return "memo/list";
-	}
+	}*/
 
 	@GetMapping("/list/{labelId}/{page}")
-	public String list(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable int page, Model model) {
+	public String list(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page, Model model) {
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		Page<Memo> postPage = memoService.findAll(labelId, PageRequest.of(page, 9, Sort.Direction.DESC, "createDate"));
+		Page<Memo> postPage = memoService.findAll(labelId, PageRequest.of(page-1, SHOW_MEMO_RANGE, Sort.Direction.DESC, "createDate"));
 		model.addAttribute("memos", postPage.getContent());
 		model.addAttribute("click_memo",true);
+		model.addAttribute("pagination", Pagination.makePagination(labelId, page, postPage.getTotalPages()));
+
 		return "memo/list";
 	}
 }

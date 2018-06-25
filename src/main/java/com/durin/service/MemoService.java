@@ -50,14 +50,10 @@ public class MemoService {
 		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
 		return 	memoRepository.findByLabel(label);
 	}
-	
-	/*public Page<Memo> findAll(Long labelId, Pageable pageable) {
-		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
-		return 	memoRepository.findByLabel(label, pageable);
-	}*/
+
 	public Page<Memo> findAll(Long labelId, PageRequest pageRequest) {
 		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
-		return 	memoRepository.findByLabel(label, new PageRequest(0, 9));
+		return 	memoRepository.findByLabel(label, pageRequest);
 	}
 	
 }

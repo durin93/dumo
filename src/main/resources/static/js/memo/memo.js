@@ -56,7 +56,8 @@ function initDraggable() {
 //글 추가
 $(".write-memo-btn").on(
 		"click",
-		function() {
+		function(e) {
+			e.preventDefault();
 			var url = "/api/memo";
 			var title = "제목";
 			var content = "";

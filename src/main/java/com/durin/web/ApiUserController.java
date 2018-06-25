@@ -36,7 +36,7 @@ public class ApiUserController {
 		try {
 			User loginUser = userService.login(data.get("userId"), data.get("password"));
 			session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-			result = Result.success("/memo/list");
+			result = Result.success("/memo/list/1/1");
 		} catch (NullPointerException e) {
 			result = Result.fail_none();
 		} catch (AuthenticationException e) {
