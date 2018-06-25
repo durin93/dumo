@@ -22,6 +22,7 @@
     margin-left: 2%;
     background-color: beige;
     margin-top: 1%;
+        cursor: move;
 }
 
 .link-thumnail-img{
@@ -53,7 +54,7 @@ position: relative;
 .link-time{
 position: relative;
     top: -11%;
-    left: 30%;
+    left: 20%;
 }
 
 
@@ -70,6 +71,15 @@ position: relative;
 .link-delete-img {
 	width: 55px;
 	visibility: hidden;
+}
+
+.link-cursor-img {
+position: relative;
+    width: 25px;
+    left: 5px;
+    top: -27px;
+    text-decoration: none;
+    visibility: visible;
 }
 
 .link-textarea{

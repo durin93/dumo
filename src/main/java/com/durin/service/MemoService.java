@@ -2,9 +2,14 @@ package com.durin.service;
 
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.durin.domain.Label;
@@ -38,6 +43,21 @@ public class MemoService {
 		Memo memo = memoRepository.findById(id).orElseThrow(NullPointerException::new);
 		memo.isOwner(loginUser);
 		memoRepository.delete(memo);
+	}
+	
+
+	public List<Memo> getMemos(Long labelId) {
+		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+		return 	memoRepository.findByLabel(label);
+	}
+	
+	/*public Page<Memo> findAll(Long labelId, Pageable pageable) {
+		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+		return 	memoRepository.findByLabel(label, pageable);
+	}*/
+	public Page<Memo> findAll(Long labelId, PageRequest pageRequest) {
+		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+		return 	memoRepository.findByLabel(label, new PageRequest(0, 9));
 	}
 	
 }

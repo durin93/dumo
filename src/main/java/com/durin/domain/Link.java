@@ -33,7 +33,7 @@ public class Link extends AbstractEntity{
 	public Link (User writer, String title, String content, String originalUrl) {
 		super(0L);
 		this.writer = writer;
-		this.title = title;
+		this.title = title.trim();
 		this.content = content;
 		this.originalUrl = originalUrl;
 		this.thumnailUrl = "https://image.thum.io/get/width/270/crop/800/"+originalUrl;
@@ -74,7 +74,7 @@ public class Link extends AbstractEntity{
 	}
 	public void update(User loginUser , String title, String content , String originalUrl) throws AuthenticationException {
 		isOwner(loginUser);
-		this.title = title;
+		this.title = title.trim();
 		this.content = content;
 		this.originalUrl = originalUrl;
 		this.thumnailUrl = "https://image.thum.io/get/width/270/crop/800/"+originalUrl;

@@ -21,7 +21,14 @@ public class Labels {
 	public int AllCount() {
 		return labels.size();
 	}
-
+	
+	public int AllMemoCount() {
+		int count = 0;
+		for (Label label : labels) {
+			count += label.getMemos().size();
+		}
+		return count;
+	}
 	
 	
 }

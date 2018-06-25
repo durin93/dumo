@@ -105,7 +105,7 @@ function toggleMemo(target, focused) {
 	}
 }
 
-$('.link-title, .link-info, .link-textarea').on('click', function(e) {
+$(".content-main").on('click', ".link-title, .link-info, .link-textarea",function(e) {
 	var thislink = $(this).parent(".one-link");
 	e.stopPropagation();  
 	toggleMemo('.one-link', false); 
@@ -119,7 +119,7 @@ $(window).on('click', function() { //밖에 클릭하면 전부 클릭안한 스
 
 	
 //삭제
-$(".link-delete").on("click",function(e){
+$(".content-main").on("click",  ".link-delete", function(e){
 	e.preventDefault();
 	var deleteBtn = $(this);
 	var oneLink = deleteBtn.parent();
@@ -155,7 +155,7 @@ $(".link-delete").on("click",function(e){
 
 
 //수정
-$(".link-textarea , .link-title, .link-info").on("change keydown",function() {
+$(".content-main").on("change",  ".link-textarea , .link-title, .link-info", function() {
 	var onelink = $(this).closest(".one-link");
 	var id = onelink.find(".link-id").val();
 	var title = onelink.find(".link-title").val();
@@ -180,6 +180,7 @@ $(".link-textarea , .link-title, .link-info").on("change keydown",function() {
 		},
 		success : function(data) {
 			onelink.find(".link-thumnail-img").prop("src", data.thumnailUrl);
+			onelink.find(".link-title").val(data.title);
 			console.log(data);
 		},
 		beforeSend : beforeSend,

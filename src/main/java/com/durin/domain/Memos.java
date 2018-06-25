@@ -17,7 +17,6 @@ public class Memos {
 	public List<Memo> getMemos() {
 		return memos;
 	}
-	
 	public int AllCount() {
 		return memos.size();
 	}

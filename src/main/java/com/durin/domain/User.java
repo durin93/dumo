@@ -27,12 +27,11 @@ public class User extends AbstractEntity {
 	@Embedded
 	private Labels labels;
 	
-	@Embedded
-	private Memos memos;
+	/*@Embedded
+	private Memos memos;*/
 	
 	@Embedded
 	private Links links;
-
 	
 	
 	public User() {
@@ -60,10 +59,10 @@ public class User extends AbstractEntity {
 		return name;
 	}
 	
-
-	public List<Memo> getMemos() {
-		return memos.getMemos();
-	}
+//
+//	public List<Memo> getMemos() {
+//		return memos.getMemos();
+//	}
 	
 	public List<Link> getLinks(){
 		return links.getLinks();
@@ -84,7 +83,8 @@ public class User extends AbstractEntity {
 	}
 	
 	public int getMemoCount() {
-		return memos.AllCount();
+//		return memos.AllCount();
+		return labels.AllMemoCount();
 	}
 	
 	public int getLinkCount() {

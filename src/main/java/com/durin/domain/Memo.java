@@ -24,6 +24,7 @@ public class Memo extends AbstractEntity {
 	
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_memo_label"))
+	@JsonIgnore
 	private Label label;
 	
 	private boolean deleted = false;
@@ -76,5 +77,13 @@ public class Memo extends AbstractEntity {
 		this.title = title;
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Memo [writer=" + writer + ", title=" + title + ", content=" + content + ", label=" + label
+				+ ", deleted=" + deleted + "]";
+	}
+	
+	
 
 }

@@ -145,30 +145,54 @@ li.menu-btn {
 }
 
 .memo-textarea {
-	margin: 0px;
-	text-decoration: none;
-	width: 105px;
-	height: 117px;
-	width: 250px;
-	border: 1px solid black;
-	height: 260px;
-	/* padding: 0px 0px 0px 0px; */
-	margin-left: 7px;
-	margin-top: 8px;
-	padding: auto;
-	/* border: none; */
-	background-color: #ffffea;
-	resize: none;
-	font-size: 12pt;
-	overflow-x: hidden;
+/* 	margin: 0px; */
+/* 	text-decoration: none; */
+/* 	width: 105px; */
+/* 	height: 117px; */
+/* 	width: 250px; */
+/* 	border: 1px solid black; */
+/* 	height: 260px; */
+/* 	/* padding: 0px 0px 0px 0px; */ */
+/* 	margin-left: 7px; */
+/* 	margin-top: 8px; */
+/* 	padding: auto; */
+/* 	/* border: none; */ */
+/* 	background-color: #ffffea; */
+/* 	resize: none; */
+/* 	font-size: 12pt; */
+/* 	overflow-x: hidden; */
+    text-decoration: none;
+    width: 105px;
+    height: 117px;
+    width: 250px;
+    border: 1px solid black;
+    position: relative;
+    height: 260px;
+    /* padding: 0px 0px 0px 0px; */
+    margin-left: 7px;
+    margin-top: 8px;
+    padding: auto;
+    /* border: none; */
+    background-color: #ffffea;
+    resize: none;
+    font-size: 12pt;
+    overflow-x: hidden;
+    bottom: 58px;
 }
 
 .memo-delete {
-	position: absolute;
-	right: -6px;
-	top: -5px;
-	text-decoration: none;
-	visibility: hidden;
+/* 	position: absolute; */
+/* 	right: -6px; */
+/* 	top: -5px; */
+/* 	text-decoration: none; */
+/* 	visibility: hidden; */
+	
+	    position: relative;
+    /* top: 11px; */
+    text-decoration: none;
+    visibility: hidden;
+    bottom: 45px;
+    left: 222px;
 }
 
 .memo-delete-img {
@@ -186,7 +210,7 @@ li.menu-btn {
 
 .memo-time {
 position: relative;
-    top: -8px;
+    top: -64px;
     margin-left: 80px;
 }
 
@@ -270,4 +294,20 @@ a.btn-layerClose:hover {
 	border: 1px solid #091940;
 	background-color: #1f326a;
 	color: #fff;
+}
+
+.paging-btn{
+    display: inline-block;
+    position: relative;
+    top: 600px;
+    right: 150px;
+}
+
+.paging-btn ul li{
+    display: inline-block;
+    float: left;
+}
+.paging-btn ul li a{
+	text-decoration: none;
+	border:  1px solid black;
 }

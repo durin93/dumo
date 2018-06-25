@@ -18,7 +18,7 @@
 
 
 	<div class="content-main">
-		{{#label}}
+		
 		{{#memos}}
 		<div class="one-memo">
 			<input class="memo-title" type="text" value="{{title}}" />
@@ -32,8 +32,13 @@
 			<span class="memo-time">{{formattedModifiedDate}}</span>
 		</div>
 		{{/memos}}
-		{{/label}}
 		
+		<div class="paging-btn">
+		<ul>
+		<li><a href="/memo/list" >이전</a></li>
+		<li><a href="/memo/list">다음</a></li>
+		</ul>
+		</div>
 	</div>
 
 	
@@ -42,8 +47,9 @@
 			<input class="memo-title" type="text" value="{1}" />
 			<img class="memo-cursor-img" alt="메모아이콘"
 					src="/image/content/drag.png">
-			<a href="/api/memo/{0}" class="memo-delete" href="api/memo"><img class="memo-delete-img" alt="메모아이콘"
-					src="/image/content/trash.png"></a>
+
+			<a href="/api/memo/{0}" class="memo-delete"><img class="memo-delete-img" alt="메모아이콘"
+					src="/image/content/trash.png">	</a>
 			<input class="memo-id" type="hidden" name="id" value="{0}"/>
 			<textarea class="memo-textarea">{2}</textarea>
 			<input class="memo-checkbox" type="checkbox"/>

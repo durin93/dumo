@@ -102,7 +102,8 @@ function toggleMemo(target, focused) {
 	}
 }
 
-$('.memo-title , .memo-textarea').on('click', function(e) {
+//토글
+$(".content-main").on("click", ".memo-title , .memo-textarea", function(e) {
 	var thismemo = $(this).parent(".one-memo");
 	e.stopPropagation();  
 	toggleMemo('.one-memo', false); 
@@ -116,7 +117,7 @@ $(window).on('click', function() { //밖에 클릭하면 전부 클릭안한 스
 
 	
 //삭제
-$(".memo-delete").on("click",function(e){
+$(".content-main").on("click", ".memo-delete", function(e){
 	e.preventDefault();
 	var deleteBtn = $(this);
 	var oneMemo = deleteBtn.parent();
@@ -152,7 +153,7 @@ $(".memo-delete").on("click",function(e){
 
 
 //수정
-$(".memo-textarea , .memo-title").on("change keydown",function() {
+$(".content-main").on("change keydown", ".memo-textarea , .memo-title",function() {
 	var onememo = $(this).closest(".one-memo");
 	var id = onememo.find(".memo-id").val();
 	var title = onememo.find(".memo-title").val();
