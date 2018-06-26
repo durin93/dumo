@@ -25,7 +25,7 @@ import com.durin.security.LoginUser;
 import com.durin.service.LinkService;
 
 @RestController
-@RequestMapping("/api/link")
+@RequestMapping("/api/links")
 public class ApiLinkController {
 	
 	private static final int TITLE_START_LENGTH = 7;
@@ -37,7 +37,7 @@ public class ApiLinkController {
 	public ResponseEntity<Link> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
 		String title = getUrlTitle(data.get("url"), data.get("title"));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create("/api/link"));
+		headers.setLocation(URI.create("/api/links"));
 		return new ResponseEntity<Link>(linkService.add(loginUser, title, data.get("content"), data.get("url")),
 				HttpStatus.CREATED);
 	}
@@ -57,9 +57,9 @@ public class ApiLinkController {
 		Result result;
 		try {
 			linkService.delete(loginUser, id);
-			result = Result.success("/memo/list");
+			result = Result.success("/api/links");
 		} catch (AuthenticationException e) {
-			result = Result.fail_match();
+			result = Result.failById(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}

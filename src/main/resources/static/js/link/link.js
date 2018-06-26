@@ -57,7 +57,7 @@ function initDraggable() {
 $(".write-link-btn").on(
 		"click",
 		function() {
-			var actionUrl = "/api/link";
+			var actionUrl = "/api/links";
 			var title = "";
 			var url = "https://www.google.co.kr";
 			var content = "";
@@ -161,7 +161,7 @@ $(".content-main").on("change",  ".link-textarea , .link-title, .link-info", fun
 	var title = onelink.find(".link-title").val();
 	var url = onelink.find(".link-info").val();
 	var content = onelink.find(".link-textarea").val();
-	var actionUrl = "/api/link/" + id;
+	var actionUrl = "/api/links/" + id;
 
 	console.log("url : " + actionUrl);
 

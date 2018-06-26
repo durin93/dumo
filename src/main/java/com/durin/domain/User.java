@@ -74,7 +74,7 @@ public class User extends AbstractEntity {
 
 	public void matchPassword(String password) throws AuthenticationException{
 		if (!this.password.equals(password)) {
-			throw new AuthenticationException("비밀번호 틀림");
+			throw new AuthenticationException("비밀번호가 일치하지 않습니다.");
 		}
 	}
 

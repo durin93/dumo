@@ -10,4 +10,6 @@ insert into memo (id, create_date, modified_date, writer_id, title, content, del
 insert into memo (id, create_date, modified_date, writer_id, title, content, deleted,label_id) values (8, current_time(), current_time(), 1, '메모9제목', '메모내용9', 0, 1);
 insert into memo (id, create_date, modified_date, writer_id, title, content, deleted,label_id) values (9, current_time(), current_time(), 1, '메모10제목', '메모내영10', 0, 1);
 insert into memo (id, create_date, modified_date, writer_id, title, content, deleted,label_id) values (10, current_time(), current_time(), 1, '메모11제목', '메모내영11', 0, 1);
+insert into memo (id, create_date, modified_date, writer_id, title, content, deleted,label_id) values (11, current_time(), current_time(), 1, '메모12제목', '메모내영12', 0, 1);
+insert into memo (id, create_date, modified_date, writer_id, title, content, deleted,label_id) values (12, current_time(), current_time(), 1, '메모13제목', '메모내영13', 0, 1);
 

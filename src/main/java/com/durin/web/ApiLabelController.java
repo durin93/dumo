@@ -55,7 +55,7 @@ public class ApiLabelController {
 			labelService.delete(loginUser, id);
 			result = Result.success("/label/list");
 		} catch (UnAuthorizedException e) {
-			result = Result.fail_existId(e.getMessage());
+			result = Result.failById(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}

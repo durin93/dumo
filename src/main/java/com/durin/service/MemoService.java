@@ -55,5 +55,10 @@ public class MemoService {
 		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
 		return 	memoRepository.findByLabel(label, pageRequest);
 	}
+
+	public Page<Memo> findAllByTitle(Long labelId, PageRequest pageRequest, String title) {
+		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+		return 	memoRepository.findByLabelAndTitleLike(label,"*" + title + "*", pageRequest);
+	}
 	
 }

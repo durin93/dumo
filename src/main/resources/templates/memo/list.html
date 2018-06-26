@@ -24,7 +24,7 @@
 			<input class="memo-title" type="text" value="{{title}}" />
 			<img class="memo-cursor-img" alt="메모아이콘"
 					src="/image/content/drag.png">
-			<a href="/api/memo/{{id}}" class="memo-delete"><img class="memo-delete-img" alt="메모아이콘"
+			<a href="/api/memos/{{id}}" class="memo-delete"><img class="memo-delete-img" alt="메모아이콘"
 					src="/image/content/trash.png"></a>
 			<input class="memo-id" type="hidden" name="id" value="{{id}}"/>
 			<textarea class="memo-textarea">{{content}}</textarea>
@@ -42,7 +42,7 @@
 			<img class="memo-cursor-img" alt="메모아이콘"
 					src="/image/content/drag.png">
 
-			<a href="/api/memo/{0}" class="memo-delete"><img class="memo-delete-img" alt="메모아이콘"
+			<a href="/api/memos/{0}" class="memo-delete"><img class="memo-delete-img" alt="메모아이콘"
 					src="/image/content/trash.png">	</a>
 			<input class="memo-id" type="hidden" name="id" value="{0}"/>
 			<textarea class="memo-textarea">{2}</textarea>
@@ -55,7 +55,7 @@
 <script type="text/template" id="labelTemplate">
 	<li>
 		<div class="one-label">
-		<a href="/memo/list/{0}" class="leftNav-a left-link link-memo">
+		<a href="/memos/{0}" class="leftNav-a left-link link-memo">
 		<img class="leftNav-label-img" alt="메모아이콘"
 					src="/image/memo/label/labelicon.png"/>
 		</a>
@@ -70,6 +70,7 @@
 
 	<script src="/js/memo/memo.js"></script>
 	<script src="/js/memo/label.js"></script>
+	<script src="/js/memo/search.js"></script>
 
 </body>
 </html>

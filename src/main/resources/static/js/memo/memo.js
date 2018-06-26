@@ -58,7 +58,7 @@ $(".write-memo-btn").on(
 		"click",
 		function(e) {
 			e.preventDefault();
-			var url = "/api/memo";
+			var url = "/api/memos";
 			var title = "제목";
 			var content = "";
 
@@ -159,7 +159,7 @@ $(".content-main").on("change keydown", ".memo-textarea , .memo-title",function(
 	var id = onememo.find(".memo-id").val();
 	var title = onememo.find(".memo-title").val();
 	var content = onememo.find(".memo-textarea").val();
-	var url = "/api/memo/" + id;
+	var url = "/api/memos/" + id;
 
 	console.log("url : " + url);
 

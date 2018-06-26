@@ -3,11 +3,6 @@ package com.durin.web;
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,45 +13,63 @@ import com.durin.domain.Memo;
 import com.durin.domain.Pagination;
 import com.durin.domain.User;
 import com.durin.security.LoginUser;
-import com.durin.service.LabelService;
 import com.durin.service.MemoService;
 import com.durin.service.UserService;
 
 @Controller
-@RequestMapping("/memo")
+@RequestMapping("/memos")
 public class MemoController {
-	
-	private static final int SHOW_MEMO_RANGE = 9;
 
-	
-	@Resource(name="labelService")
-	private LabelService labelService;
-	
-	@Resource(name="memoService")
+	@Resource(name = "memoService")
 	private MemoService memoService;
-	
-	@Resource(name="userService")
-	private UserService userService;
-	
-	
-	/*@GetMapping("/list")
-	public String list(@LoginUser User loginUser,  Model model) {
-		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		Page<Memo> postPage = memoService.findAll(1L, PageRequest.of(0, SHOW_MEMO_RANGE, Sort.Direction.DESC, "createDate"));
-		model.addAttribute("memos", postPage.getContent());
-		model.addAttribute("click_memo",true);
-		model.addAttribute("pagination", Pagination.makePagination(1L, 0, postPage.getTotalPages()));
-		return "memo/list";
-	}*/
 
-	@GetMapping("/list/{labelId}/{page}")
+	@Resource(name = "userService")
+	private UserService userService;
+
+	@GetMapping("")
+	public String defaultMainList(@LoginUser User loginUser, Model model) {
+		model = makeModel(model, loginUser, Pagination.of());
+		return "memo/list";
+	}
+
+	@GetMapping("/{labelId}")
+	public String defaultMainList(@LoginUser User loginUser, Model model, @PathVariable Long labelId) {
+		model = makeModel(model, loginUser, Pagination.of(labelId));
+		return "memo/list";
+	}
+
+	@GetMapping("/{labelId}/{page}")
 	public String list(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page, Model model) {
+		model = makeModel(model, loginUser, Pagination.of(page,labelId));
+		return "memo/list";
+	}
+
+	public Model makeModel(Model model, User loginUser, Pagination pagination) {
+		Page<Memo> postPage = memoService.findAll(pagination.getLabelId(), pagination.makePageReqeest());
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		Page<Memo> postPage = memoService.findAll(labelId, PageRequest.of(page-1, SHOW_MEMO_RANGE, Sort.Direction.DESC, "createDate"));
 		model.addAttribute("memos", postPage.getContent());
-		model.addAttribute("click_memo",true);
-		model.addAttribute("pagination", Pagination.makePagination(labelId, page, postPage.getTotalPages()));
+		model.addAttribute("click_memo", true);
+		model.addAttribute("pagination", pagination.makePagination(postPage.getTotalPages()));
+		return model;
+	}
+
+	@GetMapping("/{labelId}/{search}/{searchVal}")
+	public String list(@LoginUser User loginUser, @PathVariable Long labelId, Model model, @PathVariable String search,
+			@PathVariable String searchVal) {
+		model.addAttribute("loginUser", userService.findByUser(loginUser));
+		Pagination pagination = Pagination.of(1, labelId);
+
+		Page<Memo> postPage;
+		if (search.equals("title")) {
+			postPage = memoService.findAllByTitle(labelId, pagination.makePageReqeest(), searchVal);
+		}
+		postPage = memoService.findAllByTitle(labelId, pagination.makePageReqeest(), searchVal);
+
+		model.addAttribute("memos", postPage.getContent());
+		model.addAttribute("click_memo", true);
+		model.addAttribute("pagination", pagination.makePagination(postPage.getTotalPages()));
 
 		return "memo/list";
 	}
+
 }

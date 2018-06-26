@@ -13,14 +13,14 @@ import com.durin.service.MemoService;
 import com.durin.service.UserService;
 
 @Controller
-@RequestMapping("/link")
+@RequestMapping("/links")
 public class LinkController {
 	
 
 	@Resource(name="userService")
 	private UserService userService;
 	
-	@GetMapping("/list")
+	@GetMapping("")
 	public String list(@LoginUser User loginUser, Model model) {
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
 		model.addAttribute("click_link",true);

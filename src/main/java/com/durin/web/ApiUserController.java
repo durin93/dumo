@@ -36,11 +36,11 @@ public class ApiUserController {
 		try {
 			User loginUser = userService.login(data.get("userId"), data.get("password"));
 			session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-			result = Result.success("/memo/list/1/1");
+			result = Result.success();
 		} catch (NullPointerException e) {
-			result = Result.fail_none();
+			result = Result.failById(e.getMessage());
 		} catch (AuthenticationException e) {
-			result = Result.fail_match();
+			result = Result.faildByPassword(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}
@@ -53,9 +53,9 @@ public class ApiUserController {
 		try {
 			loginUser = userService.add(userDto);
 			headers.setLocation(URI.create(loginUser.generateUrl()));
-			result = Result.success("/");
+			result = Result.success();
 		} catch (Exception e) {
-			result = Result.fail_existId(e.getMessage());
+			result = Result.failById(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}

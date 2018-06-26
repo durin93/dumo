@@ -24,7 +24,7 @@ import com.durin.security.LoginUser;
 import com.durin.service.MemoService;
 
 @RestController
-@RequestMapping("/api/memo")
+@RequestMapping("/api/memos")
 public class ApiMemoController {
 
 	@Resource(name = "memoService")
@@ -33,10 +33,11 @@ public class ApiMemoController {
 	@PostMapping("")
 	public ResponseEntity<Memo> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create("/api/memo"));
+		headers.setLocation(URI.create("/api/memos"));
 		return new ResponseEntity<Memo>(memoService.add(loginUser, data.get("title"), data.get("content")),
 				HttpStatus.CREATED);
 	}
+	
 
 	@PutMapping("{id}")
 	public ResponseEntity<Memo> update(@LoginUser User loginUser, @PathVariable Long id,
@@ -50,9 +51,9 @@ public class ApiMemoController {
 		Result result;
 		try {
 			memoService.delete(loginUser, id);
-			result = Result.success("/memo/list");
+			result = Result.success();
 		} catch (AuthenticationException e) {
-			result = Result.fail_match();
+			result = Result.failById(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}

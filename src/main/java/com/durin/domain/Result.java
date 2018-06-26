@@ -1,10 +1,12 @@
 package com.durin.domain;
 
 public class Result {
+	private static final String MAIN_PAGE = "/memos";
 	private boolean valid;
 	private String errorPart;
 	private String errorMessage;
 	private String url;
+	
 	
 	public Result() {
 	}
@@ -31,17 +33,17 @@ public class Result {
 		return new Result(true, null, url);
 	}
 	
-	public static Result fail_existId(String message) {
-		return new Result(false, message, null, "id");
+	public static Result success() {
+		return new Result(true, null, MAIN_PAGE);
 	}
-
-	public static Result fail_none() {
-		return new Result(false, "존재하지 않는 아이디입니다.", null, "id");
+	
+	public static Result failById(String message) {
+		return new Result(false, message, null, "id");
 	}
 	
 
-	public static Result fail_match() {
-		return new Result(false, "비밀번호가 틀렸습니다.", null, "password" );
+	public static Result faildByPassword(String message) {
+		return new Result(false, message, null, "password" );
 	}
 
 	public boolean isValid() {

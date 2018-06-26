@@ -4,7 +4,7 @@
 
 	<div class="write-memo-btn-div">
 		{{#click_memo}}
-		<a class="write-memo-btn" href="/api/memo">새 메모쓰기</a>
+		<a class="write-memo-btn" href="/api/memos">새 메모쓰기</a>
 		{{/click_memo}}
 		{{#click_link}}
 		<a class="write-link-btn" href="#">새 링크 쓰기</a>
@@ -23,7 +23,7 @@
 		{{#labels}}
 		<li>
 		<div class="one-label">
-		<a href="/memo/list/1/1" class="leftNav-a left-link link-memo">
+		<a href="/memos" class="leftNav-a left-link link-memo">
 		<img class="leftNav-label-img" alt="메모아이콘"
 					src="/image/memo/label/labelicon.png"/>
 		</a>
@@ -36,7 +36,7 @@
 		{{/labels}}
 		{{/click_memo}}
 		{{#click_link}}
-		<li><a class="left-link link-link" href="/link/list">전체링크</a></li>
+		<li><a class="left-link link-link" href="/links">전체링크</a></li>
 		{{/click_link}}
 		</ul>
 	</div>
