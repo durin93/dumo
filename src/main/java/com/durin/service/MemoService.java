@@ -65,11 +65,11 @@ public class MemoService {
 		return 	memoRepository.findByLabelAndContentLike(label,"%" + content + "%");
 	}
 
-	public List<Memo> findAllBySearch(Long labelId, String search, String searchVal) {
+	public List<Memo> findAllBySearch(Long labelId, String search, String value) {
 		if(search.equals("title")) {
-			return findAllByTitle(labelId, searchVal);
+			return findAllByTitle(labelId, value);
 		}
-		return findAllByContent(labelId, searchVal);
+		return findAllByContent(labelId, value);
 	}
 	
 }

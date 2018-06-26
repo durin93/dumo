@@ -10,20 +10,6 @@ $(".search-btn").on("click", function(e){
 	console.log("val :" + searchVal);
 	console.log("url :" + url);
 	
-	location.href="/memos/"+labelId+"/"+search+"/"+searchVal;
-	
-	/*$.ajax({
-		type: 'post',
-		url : url,
-		contentType: "application/json",
-		data: JSON.stringify({
-		search : search,
-		searchVal : searchVal
-		}),
-		error : function(){
-			console.log("error");
-		}
-	});*/
-	
-	
+//	location.href="/memos/"+labelId+"/"+search+"/"+searchVal;
+	location.href="/memos/search?labelId="+labelId+"&search="+search+"&value="+searchVal;
 });
