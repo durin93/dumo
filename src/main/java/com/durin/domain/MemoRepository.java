@@ -17,7 +17,9 @@ public interface MemoRepository extends JpaRepository<Memo, Long>{
 
 	Page<Memo> findByLabelAndTitle(Label label, String title, Pageable pageable);
 
-	Page<Memo> findByLabelAndTitleLike(Label label, String title, Pageable pageable);
+	List<Memo> findByLabelAndTitleLike(Label label, String title);
+
+	List<Memo> findByLabelAndContentLike(Label label, String string);
 
 	
 }

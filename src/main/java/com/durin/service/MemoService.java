@@ -56,9 +56,20 @@ public class MemoService {
 		return 	memoRepository.findByLabel(label, pageRequest);
 	}
 
-	public Page<Memo> findAllByTitle(Long labelId, PageRequest pageRequest, String title) {
+	public List<Memo> findAllByTitle(Long labelId, String title) {
 		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
-		return 	memoRepository.findByLabelAndTitleLike(label,"*" + title + "*", pageRequest);
+		return 	memoRepository.findByLabelAndTitleLike(label,"%" + title + "%");
+	}
+	public List<Memo> findAllByContent(Long labelId, String content) {
+		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+		return 	memoRepository.findByLabelAndContentLike(label,"%" + content + "%");
+	}
+
+	public List<Memo> findAllBySearch(Long labelId, String search, String searchVal) {
+		if(search.equals("title")) {
+			return findAllByTitle(labelId, searchVal);
+		}
+		return findAllByContent(labelId, searchVal);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.durin.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -57,18 +59,11 @@ public class MemoController {
 	public String list(@LoginUser User loginUser, @PathVariable Long labelId, Model model, @PathVariable String search,
 			@PathVariable String searchVal) {
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		Pagination pagination = Pagination.of(1, labelId);
-
-		Page<Memo> postPage;
-		if (search.equals("title")) {
-			postPage = memoService.findAllByTitle(labelId, pagination.makePageReqeest(), searchVal);
-		}
-		postPage = memoService.findAllByTitle(labelId, pagination.makePageReqeest(), searchVal);
-
-		model.addAttribute("memos", postPage.getContent());
+		model.addAttribute("memos", memoService.findAllBySearch(labelId, search, searchVal));
 		model.addAttribute("click_memo", true);
-		model.addAttribute("pagination", pagination.makePagination(postPage.getTotalPages()));
-
+		Pagination pagination = Pagination.of();
+		Page<Memo> postPage = memoService.findAll(pagination.getLabelId(), pagination.makePageReqeest());
+		model.addAttribute("pagination",  pagination.makePagination(postPage.getTotalPages()));
 		return "memo/list";
 	}
 

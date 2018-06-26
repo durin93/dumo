@@ -10,7 +10,7 @@ $(".search-btn").on("click", function(e){
 	console.log("val :" + searchVal);
 	console.log("url :" + url);
 	
-	location.href="/memo/list/"+labelId+"/"+search+"/"+searchVal;
+	location.href="/memos/"+labelId+"/"+search+"/"+searchVal;
 	
 	/*$.ajax({
 		type: 'post',
