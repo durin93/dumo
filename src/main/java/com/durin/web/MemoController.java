@@ -29,6 +29,7 @@ public class MemoController {
 	@Resource(name = "userService")
 	private UserService userService;
 
+
 	@GetMapping("")
 	public String defaultMainList(@LoginUser User loginUser, Model model) {
 		model = makeModel(model, loginUser, Pagination.of());

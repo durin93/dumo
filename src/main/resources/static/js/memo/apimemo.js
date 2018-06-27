@@ -1,4 +1,27 @@
 
+/*
+	var source=$("#memoHandlebarTemplate").html();
+	var template = Handlebars.compile(source);
+
+
+	$.ajax({
+		type : 'get',
+		url : '/api/memos',
+		dataType : 'json',
+		error : function(){
+			alert("에러");
+		},
+		success : function(data){
+			console.log("성공");
+			console.log(data);
+			var html = template(data);
+			$(".content-main").append(html);
+			$(".one-memo").css("visibility","visible");
+		}
+	});
+
+*/
+
 String.prototype.format = function() {
 	var args = arguments;
 	return this.replace(/{(\d+)}/g, function(match, number) {

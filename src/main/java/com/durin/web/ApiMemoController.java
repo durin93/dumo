@@ -6,10 +6,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.durin.domain.Memo;
+import com.durin.domain.MemosDto;
+import com.durin.domain.Pagination;
 import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.security.LoginUser;
@@ -30,6 +34,17 @@ public class ApiMemoController {
 	@Resource(name = "memoService")
 	private MemoService memoService;
 
+	
+	@GetMapping("")
+	public ResponseEntity<MemosDto> defaultMainList(@LoginUser User loginUser) {
+		Pagination pagination = Pagination.of();
+		Page<Memo> postPage = memoService.findAll(pagination.getLabelId(), pagination.makePageReqeest());
+		MemosDto memos = new MemosDto();
+		memos.setMemos(postPage.getContent());
+		return new ResponseEntity<MemosDto>(memos,HttpStatus.OK);
+	}
+	
+	
 	@PostMapping("")
 	public ResponseEntity<Memo> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
 		HttpHeaders headers = new HttpHeaders();
