@@ -27,11 +27,6 @@ $(".make-label").on("click", function(e){
 			var labelTemplate = $("#labelTemplate").html();
 			var template = labelTemplate.format(data.id, data.title);
 			$(".label-list-ul").append(template);
-			
-			
-			
-			
-			
 			alert("라벨등록성공");
 		},
 		beforeSend : beforeSend,

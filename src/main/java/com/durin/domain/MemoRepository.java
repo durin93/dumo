@@ -19,7 +19,9 @@ public interface MemoRepository extends JpaRepository<Memo, Long>{
 
 	List<Memo> findByLabelAndTitleLike(Label label, String title);
 
-	List<Memo> findByLabelAndContentLike(Label label, String string);
+	List<Memo> findByLabelAndContentLike(Label label, String content);
+
+	List<Memo> findByLabelAndContentLikeOrTitleLike(Label label, String content, String title);
 
 	
 }

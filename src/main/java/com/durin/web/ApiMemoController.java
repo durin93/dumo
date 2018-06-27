@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.durin.domain.Memo;
-import com.durin.domain.MemosDto;
+import com.durin.dto.MemosDto;
 import com.durin.domain.Pagination;
 import com.durin.domain.Result;
 import com.durin.domain.User;

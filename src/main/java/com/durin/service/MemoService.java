@@ -29,47 +29,59 @@ public class MemoService {
 	
 	
 	public Memo add(User loginUser ,String title, String content) {
-		Label defaultLabel = labelRepository.findById(1L).orElseThrow(NullPointerException::new);
+		Label defaultLabel = findLabelById(1L);
 		return	memoRepository.save(new Memo(loginUser, title, content, defaultLabel));
 	}
 
 	public Memo update(User loginUser, Long id, String title, String content) throws AuthenticationException {
-		Memo baseMemo = memoRepository.findById(id).orElseThrow(NullPointerException::new);
+		Memo baseMemo = findMemoById(id);
 		baseMemo.update(loginUser, title, content);
 		return memoRepository.save(baseMemo);
 	}
 
 	public void delete(User loginUser, Long id) throws AuthenticationException {
-		Memo memo = memoRepository.findById(id).orElseThrow(NullPointerException::new);
+		Memo memo = findMemoById(id);
 		memo.isOwner(loginUser);
 		memoRepository.delete(memo);
 	}
 	
+	public Memo findMemoById(Long memoId) {
+		return memoRepository.findById(memoId).orElseThrow(NullPointerException::new);
+	}
+	
+	public Label findLabelById(Long labelId) {
+		return labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+	}
 
 	public List<Memo> getMemos(Long labelId) {
-		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
-		return 	memoRepository.findByLabel(label);
+		return 	memoRepository.findByLabel(findLabelById(labelId));
 	}
 
 	public Page<Memo> findAll(Long labelId, PageRequest pageRequest) {
-		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
-		return 	memoRepository.findByLabel(label, pageRequest);
+		return 	memoRepository.findByLabel(findLabelById(labelId), pageRequest);
 	}
 
-	public List<Memo> findAllByTitle(Long labelId, String title) {
-		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+	public List<Memo> findAllByTitle(Label label, String title) {
 		return 	memoRepository.findByLabelAndTitleLike(label,"%" + title + "%");
 	}
-	public List<Memo> findAllByContent(Long labelId, String content) {
-		Label label = labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+	public List<Memo> findAllByContent(Label label, String content) {
 		return 	memoRepository.findByLabelAndContentLike(label,"%" + content + "%");
+	}
+	public List<Memo> findAllByAll(Label label, String content) {
+		return 	memoRepository.findByLabelAndContentLikeOrTitleLike(label,"%" + content + "%","%" + content + "%");
 	}
 
 	public List<Memo> findAllBySearch(Long labelId, String search, String value) {
+		Label label = findLabelById(labelId);
+		
 		if(search.equals("title")) {
-			return findAllByTitle(labelId, value);
+			return findAllByTitle (label, value);
 		}
-		return findAllByContent(labelId, value);
+		if(search.equals("content")) {
+		return findAllByContent(label, value);
+		}
+		return findAllByAll(label, value);
+
 	}
 	
 }

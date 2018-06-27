@@ -1,6 +1,8 @@
-package com.durin.domain;
+package com.durin.dto;
 
 import java.util.List;
+
+import com.durin.domain.Memo;
 
 
 public class MemosDto {
