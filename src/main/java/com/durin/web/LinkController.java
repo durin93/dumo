@@ -23,7 +23,6 @@ public class LinkController {
 	@GetMapping("")
 	public String list(@LoginUser User loginUser, Model model) {
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		model.addAttribute("click_link",true);
 		return "link/list";
 	}
 }

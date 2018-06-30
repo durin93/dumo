@@ -5,17 +5,8 @@
 
 	<div class="content-nav-function">
 		<ul>
-			<li class="menu-btn">
-			{{#click_memo}}
-			<span>전체 메모</span>
-			<span class="bar"></span>
-			<span class="memo-count">{{memoCount}}</span>
-			{{/click_memo}}
-			{{#click_link}}
-			<span>전체 링크</span>
-			<span class="bar"></span>
-			<span class="memo-count">{{linkCount}}</span>
-			{{/click_link}}
+			<li class="info menu-btn">
+			
 			</li>
 			<li><a href="#"><input type="radio"/></a></li>
 			<li><a href="#">삭제</a></li>
@@ -48,9 +39,20 @@
 		</ul>
 		<div class="pagination">
 		<ul>
-		{{{pagination}}}
+		
 		</ul>
 		</div>
 	</div>
 <!-- 		{{/loginUser}} -->
 </div>
+
+<script type="text/x-handlebars-template" id="memo-content-nav">
+<span class="span-name">전체 메모</span>
+<span class="bar"></span>
+<span class="memo-count">\{{memoCount}}</span>
+</script>
+<script type="text/x-handlebars-template" id="link-content-nav">
+<span class="span-name">전체 링크</span>
+<span class="bar"></span>
+<span class="memo-count">\{{linkCount}}</span>
+</script>

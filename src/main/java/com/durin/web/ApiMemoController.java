@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,12 +39,32 @@ public class ApiMemoController {
 	@GetMapping("")
 	public ResponseEntity<MemosDto> defaultMainList(@LoginUser User loginUser) {
 		Pagination pagination = Pagination.of();
-		Page<Memo> postPage = memoService.findAll(pagination.getLabelId(), pagination.makePageReqeest());
+		Page<Memo> postPage = memoService.findAll(pagination);
+		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
+	}
+	
+	@GetMapping("/{labelId}")
+	public ResponseEntity<MemosDto> labelIdList(@LoginUser User loginUser, @PathVariable Long labelId, Model model) {
+		Pagination pagination = Pagination.of(labelId);
+		Page<Memo> postPage = memoService.findAll(pagination);
+		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
+	}
+	
+	@GetMapping("/{labelId}/{page}")
+	public ResponseEntity<MemosDto> labelIdPageList(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page, Model model) {
+		Pagination pagination = Pagination.of(page,labelId);
+		Page<Memo> postPage = memoService.findAll(pagination);
+		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
+	}
+	
+	@GetMapping("/search")
+	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, String labelId, String search, String value,  Model model) {
 		MemosDto memos = new MemosDto();
-		memos.setMemos(postPage.getContent());
+		memos.setMemos(memoService.findAllBySearch(Long.parseLong(labelId), search, value));
 		return new ResponseEntity<MemosDto>(memos,HttpStatus.OK);
 	}
 	
+
 	
 	@PostMapping("")
 	public ResponseEntity<Memo> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
@@ -71,6 +92,11 @@ public class ApiMemoController {
 			result = Result.failById(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/size")
+	public ResponseEntity<Integer> userMemoSize(@LoginUser User loginUser) {
+		return new ResponseEntity<Integer>(memoService.allMemoCount(loginUser), HttpStatus.OK);
 	}
 
 }

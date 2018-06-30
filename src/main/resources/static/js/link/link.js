@@ -56,7 +56,8 @@ function initDraggable() {
 //글 추가
 $(".write-link-btn").on(
 		"click",
-		function() {
+		function(e) {
+			e.preventDefault();
 			var actionUrl = "/api/links";
 			var title = "";
 			var url = "https://www.google.co.kr";

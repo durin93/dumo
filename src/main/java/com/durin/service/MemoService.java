@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
+import com.durin.domain.Labels;
 import com.durin.domain.Memo;
 import com.durin.domain.MemoRepository;
+import com.durin.domain.Pagination;
 import com.durin.domain.User;
 
 @Service
@@ -57,8 +59,12 @@ public class MemoService {
 		return 	memoRepository.findByLabel(findLabelById(labelId));
 	}
 
-	public Page<Memo> findAll(Long labelId, PageRequest pageRequest) {
-		return 	memoRepository.findByLabel(findLabelById(labelId), pageRequest);
+	public int allMemoCount(User loginUser) {
+		return 	memoRepository.findByWriter(loginUser).size();
+	}
+
+	public Page<Memo> findAll(Pagination pagination) {
+		return 	memoRepository.findByLabel(findLabelById(pagination.getLabelId()), pagination.makePageReqeest());
 	}
 
 	public List<Memo> findAllByTitle(Label label, String title) {
@@ -83,5 +89,5 @@ public class MemoService {
 		return findAllByAll(label, value);
 
 	}
-	
+
 }

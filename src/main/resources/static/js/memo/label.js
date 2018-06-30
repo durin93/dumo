@@ -8,8 +8,34 @@ String.prototype.format = function() {
 };
 
 
+
+$(document).on("click", ".link-memo", function(e){
+	e.preventDefault();
+	var url = $(this).attr("href");
+	$("#write-btn").prop("href", url);
+
+	var source = $("#apimemo-template").html();
+	var template = Handlebars.compile(source);
+	$.ajax({
+		type : 'get',
+		url : url,
+		dataType : 'json',
+		error : function(){
+			alert("에러");
+		},
+		success : function(data){
+			$(".content-main .one-memo").remove();
+			$(".content-main").append(template(data));
+			$(".pagination ul").html(data.pagination);
+			$(".one-memo").css("visibility","visible"); 
+			initDraggable();
+		}
+	});
+});
+
+
 //라벨 추가
-$(".make-label").on("click", function(e){
+$(document).on("click", ".make-label", function(e){
 	e.preventDefault();
 
 	var title = "새라벨";
@@ -40,7 +66,7 @@ $(window).on('click', function() { //밖에 클릭하면 전부 클릭안한 스
 	toggleLabel('.label-title', false);
 })
 
-$(".label-title").on("click", function(e){
+$(document).on("click",  ".label-title", function(e){
 	e.stopPropagation();  
 	toggleLabel('.label-title', false); 
 	toggleLabel(this, true);
@@ -56,7 +82,7 @@ function toggleLabel(target, focused) {
 }
 
 //라벨수정
-$(".label-title").on("change keyup",function(e) {
+$(document).on("change keyup",  ".label-title" ,function(e) {
 	e.preventDefault();
 	var thisLabel = $(this).closest(".one-label");
 	var url = thisLabel.find(".label-action").val();
@@ -87,7 +113,7 @@ $(".label-title").on("change keyup",function(e) {
 
 
 //라벨삭제
-$(".label-delete").on("click",function(e){
+$(document).on("click", ".label-delete", function(e){
 	e.preventDefault();
 	var deleteBtn = $(this);
 	var oneLabel = deleteBtn.parent();

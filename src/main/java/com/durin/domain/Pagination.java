@@ -41,27 +41,27 @@ public class Pagination {
 	
 	public  String leftButton() {
 		if(1 < nowPage) {
-			return "<li><a href=/memos/"+labelId+"/"+(nowPage-1)+"><</a></li>";
+			return "<li><a href=/api/memos/"+labelId+"/"+(nowPage-1)+"><</a></li>";
 		}
 		return "";
 	}
 	public  String rightButton(int totalPage) {
 		if(nowPage < totalPage) {
-			return "<li><a href=/memos/"+labelId+"/"+(nowPage+1)+">></a></li>";
+			return "<li><a href=/api/memos/"+labelId+"/"+(nowPage+1)+">></a></li>";
 		}
 		return "";
 	}
 
 	public  String paginationLeftButton(int totalPage) {
 		if(nowPage > SHOW_PAGE_RANGE ) {
-			return "<li><a href=/memos/"+labelId+"/"+(nowPage-SHOW_PAGE_RANGE)+"><<</a></li>";
+			return "<li><a href=/api/memos/"+labelId+"/"+(nowPage-SHOW_PAGE_RANGE)+"><<</a></li>";
 		}
 		return "";
 	}
 	
 	public  String paginationRightButton(int totalPage) {
 		if(nowPage < totalPage) {
-			return "<li><a href=/memos/"+labelId+"/"+calcPaginationRight(totalPage)+">>></a></li>";
+			return "<li><a href=/api/memos/"+labelId+"/"+calcPaginationRight(totalPage)+">>></a></li>";
 		}
 		return "";
 	}
@@ -78,7 +78,7 @@ public class Pagination {
 	public String pagination(int totalPage) {
 		String pagination ="";
 		for(int i = calcStartPage(); i < calcLastPage(totalPage); i++) {
-			pagination += "<li><a href=/memos/"+labelId+"/"+(i+1)+">"+(i+1)+"</a></li>";
+			pagination += "<li><a href=/api/memos/"+labelId+"/"+(i+1)+">"+(i+1)+"</a></li>";
 		}
 		return pagination;
 	}

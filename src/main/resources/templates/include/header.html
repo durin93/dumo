@@ -11,25 +11,13 @@
 	<div class="header-center">
 		<ul>
 			<li><a class="header-click-a" href="/memos">
-			{{^click_memo}}
-			<img class="header-click-img" alt="메모아이콘"
+			<img id="memoIcon" class="header-click-img" alt="메모아이콘"
 					src="/image/header/blackmemo.png">
-			{{/click_memo}}
-			{{#click_memo}}
-			<img class="select header-click-img" alt="메모아이콘"
-					src="/image/header/blackmemo.png">
-			{{/click_memo}}		
 			</a></li>
 			
 			<li><a class="header-click-a" href="/links">
-			{{#click_link}}
-			<img class="select header-click-img" alt="메모아이콘"
+			<img id="linkIcon" class="select header-click-img" alt="메모아이콘"
 					src="/image/header/blacklink.png">
-			{{/click_link}}
-			{{^click_link}}
-			<img class="header-click-img" alt="링크아이콘"
-					src="/image/header/blacklink.png">
-			{{/click_link}}
 			</a></li>
 			
 			
@@ -51,4 +39,5 @@
 		</ul>
 	</div>
 </div>
+
 

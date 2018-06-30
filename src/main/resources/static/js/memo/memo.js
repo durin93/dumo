@@ -14,6 +14,7 @@ var storedPos = localStorage.getItem('pos') || '[]';
 var pos = JSON.parse(storedPos);
 initDraggable();
 $saveBtn.on('click', function(e) {
+	alert("Zz");
 	$box.each(function(i, v) {
 		pos[i] = {
 			left : $(v).css('left'),
@@ -37,7 +38,7 @@ $backupBtn.on('click', function(e) {
 var css_test_idx = 10;
 
 function initDraggable() {
-	$box.draggable({
+	$('.one-memo').draggable({
 		containment : ".content-main"
 	}).on("mousedown", function(){
 		$(this).css('z-index', css_test_idx); 
@@ -82,6 +83,7 @@ $(".write-memo-btn").on(
 					$(".memo-count").html(count);
 					$(".content-main").prepend(template);
 					$(".one-memo").css("visibility","visible");
+					loadMemoDefaultList();
 				},
 				beforeSend : beforeSend,
 				complete : function() {

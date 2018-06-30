@@ -303,3 +303,8 @@ a.btn-layerClose:hover {
     line-height: 34px;
 }
 
+.pagination ul li a{
+	text-decoration: none;
+	color: black;
+}
+

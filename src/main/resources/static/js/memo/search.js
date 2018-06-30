@@ -11,5 +11,25 @@ $(".search-btn").on("click", function(e){
 	console.log("url :" + url);
 	
 //	location.href="/memos/"+labelId+"/"+search+"/"+searchVal;
-	location.href="/memos/search?labelId="+labelId+"&search="+search+"&value="+searchVal;
+//	location.href="/memos/search?labelId="+labelId+"&search="+search+"&value="+searchVal;
+	
+	var source = $("#apimemo-template").html();
+	var template = Handlebars.compile(source);
+	var queryString = "labelId="+labelId+"&search="+search+"&value="+searchVal;
+	$.ajax({
+		type : 'get',
+		url : '/api/memos/search',
+		data : queryString,
+		dataType : 'json',
+		error : function(){
+			alert("에러");
+		},
+		success : function(data){
+			console.log(data);
+			$(".content-main .one-memo").remove();
+			$(".content-main").append(template(data));
+			$(".one-memo").css("visibility","visible"); 
+		}
+	});
+	
 });

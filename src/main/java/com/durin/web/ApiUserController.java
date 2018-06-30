@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,7 @@ import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
+import com.durin.security.LoginUser;
 import com.durin.service.UserService;
 
 @RestController
@@ -60,5 +60,6 @@ public class ApiUserController {
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}
     
+	
 	
 }

@@ -2,6 +2,7 @@ package com.durin.service;
 
 
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -52,6 +53,10 @@ public class LabelService {
 			labelId = 1L;
 		}
 		return labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
+	}
+
+	public List<Label> getLabels(User loginUser) {
+		return labelRepository.findByWriter(loginUser);
 	}
 
 	

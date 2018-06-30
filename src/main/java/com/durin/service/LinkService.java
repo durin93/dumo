@@ -33,4 +33,8 @@ public class LinkService {
 		linkRepository.delete(link);
 	}
 	
+	public int allLinkCount(User loginUser) {
+		return 	linkRepository.findByWriter(loginUser).size();
+	}
+	
 }
