@@ -22,6 +22,10 @@ public class MemosDto {
 		this.pagination = pagination;
 	}
 
+	public MemosDto(List<Memo> memos) {
+		this.memos = memos;
+	}
+
 	public List<Memo> getMemos() {
 		return memos;
 	}
@@ -40,6 +44,9 @@ public class MemosDto {
 	
 	public static MemosDto of(Page<Memo> postPage, Pagination pagination) {
 		return new MemosDto(postPage.getContent(), pagination.makePagination(postPage.getTotalPages()));
+	}
+	public static MemosDto of(List<Memo> memos) {
+		return new MemosDto(memos);
 	}
 
 	

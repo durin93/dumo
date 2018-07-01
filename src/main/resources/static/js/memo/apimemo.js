@@ -3,7 +3,7 @@
 
 $("#write-btn").removeClass();
 $("#write-btn").addClass("write-memo-btn");
-$("#write-btn").prop("href", "/api/memos");
+$("#write-btn").prop("href", "/api/memos/1");
 $("#write-btn").html("새 메모쓰기");
 
 

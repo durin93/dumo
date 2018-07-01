@@ -30,8 +30,8 @@ public class MemoService {
 	private LabelRepository labelRepository;
 	
 	
-	public Memo add(User loginUser ,String title, String content) {
-		Label defaultLabel = findLabelById(1L);
+	public Memo add(User loginUser , Long labelId, String title, String content) {
+		Label defaultLabel = findLabelById(labelId);
 		return	memoRepository.save(new Memo(loginUser, title, content, defaultLabel));
 	}
 
@@ -63,8 +63,8 @@ public class MemoService {
 		return 	memoRepository.findByWriter(loginUser).size();
 	}
 
-	public Page<Memo> findAll(Pagination pagination) {
-		return 	memoRepository.findByLabel(findLabelById(pagination.getLabelId()), pagination.makePageReqeest());
+	public Page<Memo> findAll(Pagination pagination, User loginUser) {
+		return 	memoRepository.findByLabelAndWriter(findLabelById(pagination.getLabelId()), loginUser, pagination.makePageReqeest());
 	}
 
 	public List<Memo> findAllByTitle(Label label, String title) {

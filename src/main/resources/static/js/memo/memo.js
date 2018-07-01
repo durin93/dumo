@@ -13,7 +13,7 @@ var $saveBtn = $('.save-btn');
 var storedPos = localStorage.getItem('pos') || '[]';
 var pos = JSON.parse(storedPos);
 initDraggable();
-$saveBtn.on('click', function(e) {
+ $(document).on('click', '.save-btn', function(e) {
 	alert("Zz");
 	$box.each(function(i, v) {
 		pos[i] = {
@@ -38,7 +38,7 @@ $backupBtn.on('click', function(e) {
 var css_test_idx = 10;
 
 function initDraggable() {
-	$('.one-memo').draggable({
+	 $('.one-memo').draggable({
 		containment : ".content-main"
 	}).on("mousedown", function(){
 		$(this).css('z-index', css_test_idx); 
@@ -54,11 +54,12 @@ function initDraggable() {
 
 
 //글 추가
-$(".write-memo-btn").on(
-		"click",
+$(document).on(
+		"click", ".write-memo-btn",
 		function(e) {
 			e.preventDefault();
-			var url = "/api/memos";
+			var url = $(this).attr("href");
+			console.log("url :" + url);
 			var title = "제목";
 			var content = "";
 
@@ -81,9 +82,9 @@ $(".write-memo-btn").on(
 					var count = $(".memo-count").text();
 					count = Number(count)+1;
 					$(".memo-count").html(count);
-					$(".content-main").prepend(template);
-					$(".one-memo").css("visibility","visible");
-					loadMemoDefaultList();
+			/*		$(".content-main").prepend(template);
+					$(".one-memo").css("visibility","visible");*/
+					loadMemoThisLabelList(url);
 				},
 				beforeSend : beforeSend,
 				complete : function() {
@@ -91,6 +92,28 @@ $(".write-memo-btn").on(
 				}
 			});
 		});
+
+
+function loadMemoThisLabelList(url){
+	var source = $("#apimemo-template").html();
+	var template = Handlebars.compile(source);
+	$.ajax({
+		type : 'get',
+		url : url,
+		dataType : 'json',
+		error : function(){
+			alert("에러");
+		},
+		success : function(data){
+			$(".content-main .one-memo").remove();
+			$(".content-main").append(template(data));
+			$(".pagination ul").html(data.pagination);
+			$(".one-memo").css("visibility","visible"); 
+			initDraggable();
+		}
+	});
+}	
+
 
 function toggleMemo(target, focused) {
 	if(focused) {

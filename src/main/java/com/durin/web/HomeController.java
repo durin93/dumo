@@ -15,6 +15,9 @@ public class HomeController {
 		return "users/login";
 	}
 	
-	
+	@GetMapping("/users")
+	public String joinForm() {
+		return "/users/form";
+	}
 	
 }

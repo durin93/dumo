@@ -41,16 +41,16 @@ public class MemoController {
 		return "memo/list";
 	}
 
-	@GetMapping("/{labelId}")
+/*	@GetMapping("/{labelId}")
 	public String labelIdMainList(@LoginUser User loginUser, Model model, @PathVariable Long labelId) {
 		model = makeModel(model, loginUser, Pagination.of(labelId));
 		return "memo/list";
-	}
+	}*/
 
 
 
 	public Model makeModel(Model model, User loginUser, Pagination pagination) {
-		Page<Memo> postPage = memoService.findAll(pagination);
+		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
 		model.addAttribute("loginUser", userService.findByUser(loginUser));
 		model.addAttribute("pagination", pagination.makePagination(postPage.getTotalPages()));
 		return model;

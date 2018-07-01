@@ -2,6 +2,7 @@ package com.durin.domain;
 
 public class Result {
 	private static final String MAIN_PAGE = "/memos";
+	private static final String JOIN_PAGE = "/users";
 	private boolean valid;
 	private String errorPart;
 	private String errorMessage;
@@ -31,6 +32,10 @@ public class Result {
 
 	public static Result success(String url) {
 		return new Result(true, null, url);
+	}
+
+	public static Result successJoinForm() {
+		return new Result(true, null, JOIN_PAGE);
 	}
 	
 	public static Result success() {

@@ -39,38 +39,36 @@ public class ApiMemoController {
 	@GetMapping("")
 	public ResponseEntity<MemosDto> defaultMainList(@LoginUser User loginUser) {
 		Pagination pagination = Pagination.of();
-		Page<Memo> postPage = memoService.findAll(pagination);
+		Page<Memo> postPage = memoService.findAll(pagination , loginUser);
 		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{labelId}")
-	public ResponseEntity<MemosDto> labelIdList(@LoginUser User loginUser, @PathVariable Long labelId, Model model) {
+	public ResponseEntity<MemosDto> labelIdList(@LoginUser User loginUser, @PathVariable Long labelId) {
 		Pagination pagination = Pagination.of(labelId);
-		Page<Memo> postPage = memoService.findAll(pagination);
+		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
 		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{labelId}/{page}")
-	public ResponseEntity<MemosDto> labelIdPageList(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page, Model model) {
+	public ResponseEntity<MemosDto> labelIdPageList(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page) {
 		Pagination pagination = Pagination.of(page,labelId);
-		Page<Memo> postPage = memoService.findAll(pagination);
+		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
 		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
 	@GetMapping("/search")
-	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, String labelId, String search, String value,  Model model) {
-		MemosDto memos = new MemosDto();
-		memos.setMemos(memoService.findAllBySearch(Long.parseLong(labelId), search, value));
-		return new ResponseEntity<MemosDto>(memos,HttpStatus.OK);
+	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, String labelId, String search, String value) {
+		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(Long.parseLong(labelId), search, value)),HttpStatus.OK);
 	}
 	
 
 	
-	@PostMapping("")
-	public ResponseEntity<Memo> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
+	@PostMapping("/{labelId}")
+	public ResponseEntity<Memo> create(@LoginUser User loginUser,  @PathVariable Long labelId, @RequestBody Map<String, String> data) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/api/memos"));
-		return new ResponseEntity<Memo>(memoService.add(loginUser, data.get("title"), data.get("content")),
+		return new ResponseEntity<Memo>(memoService.add(loginUser, labelId, data.get("title"), data.get("content")),
 				HttpStatus.CREATED);
 	}
 	
