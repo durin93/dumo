@@ -63,7 +63,7 @@ public class Memo extends AbstractEntity {
 	}
 	
 	public String generateUrl() {
-		return String.format("/api/memo/%d", getId());
+		return String.format("/api/memos/%d",  getId());
 	}
 	
 	public void isOwner(User loginUser) throws AuthenticationException {
@@ -77,6 +77,8 @@ public class Memo extends AbstractEntity {
 		this.title = title;
 		this.content = content;
 	}
+	
+
 
 	@Override
 	public String toString() {

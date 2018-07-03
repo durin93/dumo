@@ -106,6 +106,9 @@ a.left-link {
         border-bottom: 1px solid #bdbdbd;
     
 }
+.make-label : hover{
+ font-weight: bold;    
+}
 
 
 

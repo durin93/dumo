@@ -181,6 +181,7 @@ $(".content-main").on("click", ".memo-delete", function(e){
 $(".content-main").on("change keydown", ".memo-textarea , .memo-title",function() {
 	var onememo = $(this).closest(".one-memo");
 	var id = onememo.find(".memo-id").val();
+	
 	var title = onememo.find(".memo-title").val();
 	var content = onememo.find(".memo-textarea").val();
 	var url = "/api/memos/" + id;

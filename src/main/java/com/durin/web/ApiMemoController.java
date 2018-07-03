@@ -43,39 +43,40 @@ public class ApiMemoController {
 		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
-	@GetMapping("/{labelId}")
+	@GetMapping("{labelId}")
 	public ResponseEntity<MemosDto> labelIdList(@LoginUser User loginUser, @PathVariable Long labelId) {
 		Pagination pagination = Pagination.of(labelId);
 		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
 		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
-	@GetMapping("/{labelId}/{page}")
+	@GetMapping("{labelId}/{page}")
 	public ResponseEntity<MemosDto> labelIdPageList(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page) {
 		Pagination pagination = Pagination.of(page,labelId);
 		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
 		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
-	@GetMapping("/search")
+	@GetMapping("search")
 	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, String labelId, String search, String value) {
 		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(Long.parseLong(labelId), search, value)),HttpStatus.OK);
 	}
 	
 
 	
-	@PostMapping("/{labelId}")
+	@PostMapping("{labelId}")
 	public ResponseEntity<Memo> create(@LoginUser User loginUser,  @PathVariable Long labelId, @RequestBody Map<String, String> data) {
+		Memo memo = memoService.add(loginUser, labelId, data.get("title"), data.get("content"));
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create("/api/memos"));
-		return new ResponseEntity<Memo>(memoService.add(loginUser, labelId, data.get("title"), data.get("content")),
-				HttpStatus.CREATED);
+		headers.setLocation(URI.create(memo.generateUrl()));
+		return new ResponseEntity<Memo>(memo,headers,	HttpStatus.CREATED);
 	}
 	
 
 	@PutMapping("{id}")
 	public ResponseEntity<Memo> update(@LoginUser User loginUser, @PathVariable Long id,
 			@RequestBody Map<String, String> data) throws AuthenticationException {
+		System.out.println("옷"+data.get("title")+","+data.get("content"));
 		return new ResponseEntity<Memo>(memoService.update(loginUser, id, data.get("title"), data.get("content")),
 				HttpStatus.CREATED);
 	}
@@ -92,7 +93,7 @@ public class ApiMemoController {
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/size")
+	@GetMapping("size")
 	public ResponseEntity<Integer> userMemoSize(@LoginUser User loginUser) {
 		return new ResponseEntity<Integer>(memoService.allMemoCount(loginUser), HttpStatus.OK);
 	}

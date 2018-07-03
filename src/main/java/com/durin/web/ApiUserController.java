@@ -36,7 +36,7 @@ public class ApiUserController {
 		return new ResponseEntity<Result>(Result.successJoinForm(), HttpStatus.OK);
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("login")
 	public ResponseEntity<Result> login(HttpSession session, @RequestBody Map<String, String> data) {
 		Result result;
 		try {
@@ -51,7 +51,7 @@ public class ApiUserController {
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("/logout")
+	@GetMapping("logout")
 	public ResponseEntity<Result> logout(HttpSession session) {
 		session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
 		return new ResponseEntity<Result>(Result.success(), HttpStatus.OK);

@@ -76,7 +76,7 @@ public class ApiLinkController {
 		return title;
 	}
 	
-	@GetMapping("/size")
+	@GetMapping("size")
 	public ResponseEntity<Integer> userLinkSize(@LoginUser User loginUser) {
 		return new ResponseEntity<Integer>(linkService.allLinkCount(loginUser), HttpStatus.OK);
 	}

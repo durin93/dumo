@@ -13,6 +13,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
@@ -22,9 +24,11 @@ public class AbstractEntity {
 	private Long id;
 
 	@CreatedDate
+	@JsonIgnore //because testcode json parse error
 	private LocalDateTime createDate;
 
 	@LastModifiedDate
+	@JsonIgnore //because testcode json parse error
 	private LocalDateTime modifiedDate;
 
 	public AbstractEntity() {
