@@ -12,9 +12,15 @@ var $backupBtn = $(".backup-btn");
 var $saveBtn = $('.save-btn');
 var storedPos = localStorage.getItem('pos') || '[]';
 var pos = JSON.parse(storedPos);
+
+
+console.log(storedPos+"스토포스");
+console.log(pos+"포스");
+
+
 initDraggable();
- $(document).on('click', '.save-btn', function(e) {
-	alert("Zz");
+
+$saveBtn.on('click',  function(e) {
 	$box.each(function(i, v) {
 		pos[i] = {
 			left : $(v).css('left'),

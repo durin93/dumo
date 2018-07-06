@@ -1,3 +1,4 @@
+
 $(".join-form input[type=submit]").on("click", function(e) {
 	e.preventDefault();
 
@@ -36,3 +37,6 @@ $(".join-form input[type=submit]").on("click", function(e) {
 	});
 	
 });
+
+
+

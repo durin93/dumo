@@ -11,7 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +22,6 @@ import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
-import com.durin.security.LoginUser;
 import com.durin.service.UserService;
 
 @RestController
@@ -72,7 +73,27 @@ public class ApiUserController {
 		}
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}
+
+	@PutMapping("")
+	public ResponseEntity<Result> update(@RequestBody UserDto userDto) {
+		
+		User loginUser;
+		Result result;
+		HttpHeaders headers = new HttpHeaders();
+		try {
+			loginUser = userService.update(userDto);
+			headers.setLocation(URI.create(loginUser.generateUrl()));
+			result = Result.success();
+		} catch (AuthenticationException e) {
+			result = Result.faildByPassword(e.getMessage());
+		}
+		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
+	}
     
+	@GetMapping("{id}/info")
+	public ResponseEntity<User> info(@PathVariable Long id){
+		return new ResponseEntity<User>(userService.findByUserId(id), HttpStatus.OK);
+	}
 	
 	
 }

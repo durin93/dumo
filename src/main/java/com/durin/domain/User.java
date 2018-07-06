@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import com.durin.UnAuthorizedException;
 import com.durin.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -110,6 +111,13 @@ public class User extends AbstractEntity {
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", labels=" + labels
 				+ ", links=" + links + "]";
+	}
+
+	
+	public void update(UserDto user) throws AuthenticationException {
+		matchPassword(user.getPassword());
+		this.name = user.getName();
+		this.password = user.getNewPassword();
 	}
 
 	

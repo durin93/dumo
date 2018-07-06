@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.durin.domain.Link;
-import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.security.LoginUser;
 import com.durin.service.LinkService;
@@ -54,15 +53,9 @@ public class ApiLinkController {
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity<Result> delete(@LoginUser User loginUser, @PathVariable Long id){
-		Result result;
-		try {
-			linkService.delete(loginUser, id);
-			result = Result.success("/api/links");
-		} catch (AuthenticationException e) {
-			result = Result.failById(e.getMessage());
-		}
-		return new ResponseEntity<Result>(result, HttpStatus.OK);
+	public ResponseEntity<Void> delete(@LoginUser User loginUser, @PathVariable Long id) throws AuthenticationException{
+		linkService.delete(loginUser, id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	public String getUrlTitle(String url, String title) {

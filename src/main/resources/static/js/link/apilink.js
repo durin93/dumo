@@ -1,6 +1,7 @@
  $("#linkIcon").addClass("select");
  $("#memoIcon").removeClass("select");
-
+ $("#profileIcon").removeClass("select");
+ 
  $("#write-btn").removeClass();
  $("#write-btn").addClass("write-link-btn");
  $("#write-btn").prop("href", "/api/links");

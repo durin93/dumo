@@ -2,13 +2,13 @@ $(".join-btn").on("click", function(e){
 	e.preventDefault();
 	
 	var url = $(this).attr("href");
-	
+	console.log("url : "+url);
 	$.ajax({
 		type : 'get',
 		url : url ,
 		dataType : 'json',
 		error : function(){
-			alert("로그인폼에러");
+			alert("조인폼에러");
 		},
 		success : function(data){
 			location.href = data.url;

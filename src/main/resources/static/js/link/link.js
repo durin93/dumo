@@ -54,8 +54,7 @@ function initDraggable() {
 
 
 //글 추가
-$(".write-link-btn").on(
-		"click",
+$(".write-link-btn").on("click" , 
 		function(e) {
 			e.preventDefault();
 			var actionUrl = "/api/links";
@@ -77,7 +76,6 @@ $(".write-link-btn").on(
 					alert("링크추가에러");
 				},
 				success : function(data) {
-					
 					var linkTemplate = $("#linkTemplate").html();
 					var template = linkTemplate.format(data.id, data.title,
 							data.content, data.originalUrl, data.thumnailUrl, data.modifiedDate);

@@ -2,7 +2,8 @@ package com.durin.domain;
 
 public class Result {
 	private static final String MAIN_PAGE = "/memos";
-	private static final String JOIN_PAGE = "/users";
+	private static final String LINK_PAGE = "/links";
+	private static final String JOIN_PAGE = "/users/join";
 	private boolean valid;
 	private String errorPart;
 	private String errorMessage;

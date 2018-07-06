@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,14 +61,13 @@ public class ApiMemoController {
 		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(Long.parseLong(labelId), search, value)),HttpStatus.OK);
 	}
 	
-
 	
 	@PostMapping("{labelId}")
 	public ResponseEntity<Memo> create(@LoginUser User loginUser,  @PathVariable Long labelId, @RequestBody Map<String, String> data) {
 		Memo memo = memoService.add(loginUser, labelId, data.get("title"), data.get("content"));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create(memo.generateUrl()));
-		return new ResponseEntity<Memo>(memo,headers,	HttpStatus.CREATED);
+		return new ResponseEntity<Memo>(memo,headers,HttpStatus.CREATED);
 	}
 	
 

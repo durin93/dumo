@@ -3,6 +3,7 @@ package com.durin.service;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import com.durin.domain.UserRepository;
 import com.durin.dto.UserDto;
 
 @Service
+@Transactional
 public class UserService {
 
 	private static final String DEFAULT_LABEL = "전체메모";
@@ -49,5 +51,17 @@ public class UserService {
 	public User findByUser(User loginUser) {
 		return userRepository.findById(loginUser.getId()).orElseThrow(NullPointerException::new);
 	}
+
+	public User findByUserId(Long id) {
+		return userRepository.findById(id).orElseThrow(NullPointerException::new);
+	}
+
+	public User update(UserDto userDto) throws AuthenticationException{
+		User user = userRepository.findByUserId(userDto.getUserId()).orElseThrow(NullPointerException::new);
+		user.update(userDto);
+		return user;
+	}
+	
+	
 	
 }
