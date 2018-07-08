@@ -6,13 +6,12 @@ import javax.naming.AuthenticationException;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
 import com.durin.UnAuthorizedException;
 import com.durin.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 
 
 @Entity
@@ -25,11 +24,9 @@ public class User extends AbstractEntity {
 
 	private String name;
 	
+	
 	@Embedded
 	private Labels labels;
-	
-	/*@Embedded
-	private Memos memos;*/
 	
 	@Embedded
 	private Links links;
@@ -72,6 +69,7 @@ public class User extends AbstractEntity {
 	public List<Label> getLabels(){
 		return labels.getLabels();
 	}
+
 
 	public void matchPassword(String password) throws AuthenticationException{
 		if (!this.password.equals(password)) {

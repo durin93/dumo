@@ -76,7 +76,6 @@ public class ApiUserController {
 
 	@PutMapping("")
 	public ResponseEntity<Result> update(@RequestBody UserDto userDto) {
-		
 		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();

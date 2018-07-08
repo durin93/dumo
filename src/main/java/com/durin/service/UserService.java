@@ -5,8 +5,11 @@ import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.durin.domain.Attachment;
+import com.durin.domain.AttachmentRepository;
 import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
 import com.durin.domain.User;
@@ -22,6 +25,13 @@ public class UserService {
 	@Resource(name="userRepository")
 	private UserRepository userRepository;
 	
+	@Resource(name="attachmentRepository")
+	private AttachmentRepository attachmentRepository;
+	
+	
+	@Value("${file.upload.path}")
+	private String uploadPath;
+	
 	@Resource(name="labelRepository")
 	private LabelRepository labelRepository;
 	
@@ -36,9 +46,10 @@ public class UserService {
 		if(userRepository.findByUserId(user.getUserId()).isPresent()) {
 			throw new Exception("이미 존재하는 아이디 입니다.");
 		}
-		
-		labelRepository.save(new Label(userRepository.save(user), DEFAULT_LABEL));
-		return user;
+		User bUser = userRepository.save(user);
+		labelRepository.save(new Label(bUser, DEFAULT_LABEL));
+		attachmentRepository.save(Attachment.ofProfile(bUser, "default.png", uploadPath));
+		return bUser;
 		
 	}
 
@@ -54,6 +65,7 @@ public class UserService {
 
 	public User findByUserId(Long id) {
 		return userRepository.findById(id).orElseThrow(NullPointerException::new);
+		
 	}
 
 	public User update(UserDto userDto) throws AuthenticationException{

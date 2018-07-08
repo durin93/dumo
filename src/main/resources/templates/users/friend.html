@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모두의 두모</title>
+<link rel="stylesheet" href="/css/login.css" />
+<link rel="stylesheet" href="/css/user/update.css" />
+<script src="/js/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+
+{{#loginUser}}
+{{> include/header}}
+{{> include/user/leftNav}}
+
+
+<div class="login-container">
+	<div class="update-title"><span>FRIEND</span></div>
+
+	<div class="input-div m-l-18per w600">		
+		<input class="user-search bd-1-s" type="text" name="userId"  placeholder="친구검색"/> 
+		<a class="search-btn" href="/memos"><img class="search" alt="검색"	src="/image/content/search.png"></a>
+	</div>
+</div>
+
+{{> include/user/rightNav}}
+
+{{/loginUser}}
+
+<script src="/js/user/friend.js"></script>
+</body>
+</html>

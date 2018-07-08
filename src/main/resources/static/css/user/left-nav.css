@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.left-navBar {
+	z-index: 9;
+	width: 13%;
+	height: 100%;
+	position: fixed;
+	background: white;
+	/* color: white; */
+	border-right: 1px solid #bdbdbd;
+	border-bottom: 1px solid #bdbdbd;
+	overflow: hidden;
+	top:55px;
+}
+
+.label-list-ul li a{
+	cursor: pointer;
+}
+
+.label-list-ul  li  a:hover{
+	font-weight: bold;
+}
+
+.select{
+	font-weight: bold;
+}

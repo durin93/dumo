@@ -22,5 +22,10 @@ public class UserController {
 		model.addAttribute("loginUser", loginUser);
 		return "/users/updateForm";
 	}
+	@GetMapping("/friend")
+	public String friendForm(@LoginUser User loginUser, Model model) {
+		model.addAttribute("loginUser", loginUser);
+		return "/users/friend";
+	}
 	
 }
