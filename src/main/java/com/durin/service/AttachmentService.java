@@ -32,7 +32,7 @@ public class AttachmentService {
 
 	public void addAttachment(User loginUser, MultipartFile file)
 			throws IllegalStateException, IOException {
-		Attachment baseAttachment = attachmentRepository.findByWriter(loginUser).get();
+		Attachment baseAttachment = attachmentRepository.findByWriter(loginUser);
 		baseAttachment.update(file.getOriginalFilename());
 		file.transferTo(new File(baseAttachment.getPath(), baseAttachment.getSaveFileName()));
 	}
@@ -42,6 +42,11 @@ public class AttachmentService {
 		Path path = Paths.get(attachment.getPath() + attachment.getSaveFileName());
 		PathResource resource = new PathResource(path);
 		return resource;
+	}
+
+	public String userProfile(User loginUser) {
+		Attachment attachment = attachmentRepository.findByWriter(loginUser);
+		return attachment.getSaveFileName();
 	}
 
 	

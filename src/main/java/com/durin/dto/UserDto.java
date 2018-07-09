@@ -19,7 +19,6 @@ public class UserDto {
     @Size(min = 3, max = 20)
     private String name;
 
-    private MultipartFile  attachment;
     
     
     public UserDto() {
@@ -64,15 +63,7 @@ public class UserDto {
         this.name = name;
     }
 
-    
-    public MultipartFile getAttachment() {
-		return attachment;
-	}
-
-	public void setAttachment(MultipartFile attachment) {
-		this.attachment = attachment;
-	}
-
+ 
 	public User toUser() {
         return new User(this.userId, this.password, this.name);
     }
@@ -126,7 +117,8 @@ public class UserDto {
 				+ name + "]";
 	}
 
-    
+
+	
     
     
 }

@@ -1,5 +1,6 @@
 package com.durin.web;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
 
@@ -13,15 +14,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
+import com.durin.service.AttachmentService;
 import com.durin.service.UserService;
 
 @RestController
@@ -30,6 +34,10 @@ public class ApiUserController {
 
 	@Resource(name = "userService")
 	private UserService userService;
+	
+	@Resource(name = "attachmentService")
+	private AttachmentService attachmentService;
+
 
 	
 	@GetMapping("")
@@ -74,13 +82,14 @@ public class ApiUserController {
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}
 
-	@PutMapping("")
-	public ResponseEntity<Result> update(@RequestBody UserDto userDto) {
+//	@PutMapping("")
+    @RequestMapping(value = "", headers = ("content-type=multipart/*" ), method = RequestMethod.PUT )
+	public ResponseEntity<Result> update(@RequestPart("file") MultipartFile file, UserDto userDto ) throws IllegalStateException, IOException {
 		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();
 		try {
-			loginUser = userService.update(userDto);
+			loginUser = userService.update(userDto,file);
 			headers.setLocation(URI.create(loginUser.generateUrl()));
 			result = Result.success();
 		} catch (AuthenticationException e) {
