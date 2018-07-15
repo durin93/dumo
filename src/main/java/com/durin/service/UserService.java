@@ -80,7 +80,8 @@ public class UserService {
 	}
 
 	public void profileUpdate(User user, MultipartFile file) throws IllegalStateException, IOException {
-		if (!file.getOriginalFilename().equals("")) {
+//		if (!file.getOriginalFilename().equals("")) {
+			if (!file.isEmpty()) {
 			Attachment baseAttachment = attachmentRepository.findByWriter(user);
 			baseAttachment.update(file.getOriginalFilename());
 			file.transferTo(new File(baseAttachment.getPath(), baseAttachment.getSaveFileName()));

@@ -6,6 +6,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.logging.LoggingInitializationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,8 @@ import com.durin.service.MemoService;
 @RestController
 @RequestMapping("/api/memos")
 public class ApiMemoController {
+	
+	private static final Logger log = LoggerFactory.getLogger(ApiMemoController.class);
 
 	@Resource(name = "memoService")
 	private MemoService memoService;
@@ -58,6 +63,8 @@ public class ApiMemoController {
 	
 	@GetMapping("search")
 	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, String labelId, String search, String value) {
+		log.debug("/api/memos/search");
+		System.out.println("d"+loginUser.toString()+","+labelId+","+search+","+value);
 		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(Long.parseLong(labelId), search, value)),HttpStatus.OK);
 	}
 	

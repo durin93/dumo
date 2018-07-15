@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,9 +83,11 @@ public class ApiUserController {
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}
 
-//	@PutMapping("")
-    @RequestMapping(value = "", headers = ("content-type=multipart/*" ), method = RequestMethod.PUT )
+	@PutMapping("")
+//    @RequestMapping(value = "", headers = ("content-type=multipart/*" ), method = RequestMethod.PUT )
 	public ResponseEntity<Result> update(@RequestPart("file") MultipartFile file, UserDto userDto ) throws IllegalStateException, IOException {
+		
+		
 		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();

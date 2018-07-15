@@ -8,7 +8,7 @@ $(".link-friend").removeClass("select");
 $(".update-form input[type=submit]").on("click", function(e) {
 	e.preventDefault();
 
-/*	var userId = $(".id").val();
+	var userId = $(".id").val();
 	var name = $(".name").val();
 	var newPassword = $(".newPassword").val();
 	var newPassword2 = $(".newPassword2").val();
@@ -17,7 +17,7 @@ $(".update-form input[type=submit]").on("click", function(e) {
 	console.log("name :" + name);
 	console.log("password :" + password);
 	console.log("newPassword :" + newPassword);
-*/
+
 	var form = new FormData($(".update-form")[0]);
 
 	
