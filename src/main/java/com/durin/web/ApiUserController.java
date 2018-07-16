@@ -85,7 +85,7 @@ public class ApiUserController {
 
 	@PutMapping("")
 //    @RequestMapping(value = "", headers = ("content-type=multipart/*" ), method = RequestMethod.PUT )
-	public ResponseEntity<Result> update(@RequestPart("file") MultipartFile file, UserDto userDto ) throws IllegalStateException, IOException {
+	public ResponseEntity<Result> update(@RequestPart("file") MultipartFile file, UserDto userDto) throws IllegalStateException, IOException {
 		
 		
 		User loginUser;
