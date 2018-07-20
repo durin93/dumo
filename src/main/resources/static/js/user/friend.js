@@ -1,66 +1,86 @@
- $("#profileIcon").addClass("select");
- $("#linkIcon").removeClass("select");
- $("#memoIcon").removeClass("select");
+// $("#profileIcon").addClass("select");
+// $("#linkIcon").removeClass("select");
+// $("#memoIcon").removeClass("select");
+//
+//$(".link-friend").addClass("select");
+//$(".link-update").removeClass("select");
 
-$(".link-friend").addClass("select");
-$(".link-update").removeClass("select");
-
-
-$(".update-form input[type=submit]").on("click", function(e) {
+$(".search-friend-div").on("click", ".addFriend-btn" , function(e){
 	e.preventDefault();
-
-	var userId = $(".id").val();
-	var name = $(".name").val();
-	var newPassword = $(".newPassword").val();
-	var newPassword2 = $(".newPassword2").val();
-	var password = $(".password").val();
 	
-	console.log("userId :"+userId);
-	console.log("name :"+name);
-	console.log("password :"+password);
-	console.log("newPassword :"+newPassword);
+	var receiverId = $(".userId").val();
+	console.log("receiverId : "+receiverId);
 	
+	var queryString = "receiverId="+receiverId;
 	
-	if(password==""){
-		$(".password").focus();
-		$(".errorMessage").html("");
-		$(".errorPassword").html("비밀번호를 입력해주세요.");
-	}
-	else if(newPassword!=newPassword2){
-		$(".errorMessage").html("");
-		$(".errorNewPassword2").html("비밀번호가 일치하지 않습니다.");
-		$(".newPassword2").focus();
-	}
-	
-	else{
-	var url = $(".update-form").attr("action");
-	console.log("url : " + url);
-	console.log("정보수정 클릭");
-
 	$.ajax({
-		type : 'put',
-		contentType: "application/json",
-		url : url,
-		data : JSON.stringify({
-			userId : userId,
-			name : name,
-			password : password,
-			newPassword : newPassword
-		}),
-		dataType : 'json',
-		error : function() {
-			alert("error");
+		type :'post',
+		url : '/api/users/addFriend',
+		data : queryString,
+		dataType :'json',
+		error: function(){
+			alert("add firend request error");
 		},
-		success : function(data) {
-			if (!data.url) {
-					$(".errorMessage").html("");
-					$(".errorPassword").html(data.errorMessage);
-			} else {
-				console.log(data.url);
-				location.href = data.url;
-			}
-			}
+		success : function(data){
+			var source = $("#sendRequestFriend-template").html();
+			var template = Handlebars.compile(source);
+			$(".send-frined-request-wrap").append(template(data));
+		}
 	});
-	}
 });
 
+$(document).on("click", ".cancel-request" , function(e){
+	e.preventDefault();
+	var cancelBtn = $(this);
+
+	var url = cancelBtn.attr("href");
+	console.log("url :"+url);
+	$.ajax({
+		type :'get',
+		url : url,
+		error: function(){
+			alert("cancel friend request error");
+		},
+		success : function(){
+			cancelBtn.closest(".send-friend-request-div").remove();
+		}
+	});
+});
+
+$(document).on("click", ".search-btn", function(e) {
+	e.preventDefault();
+
+	var userId = $(".user-search").val();
+	console.log("userId :" + userId);
+
+	queryString = "userId="+userId;
+	
+	if (userId == "") {
+		$(".user-search").focus();
+	} else {
+
+		$.ajax({
+			type : 'get',
+			url : "/api/users/search",
+			data : queryString,
+			dataType : 'json',
+			error : function() {
+				alert("search user error");
+			},
+			success : function(data) {
+				$(".search-friend-div").empty();
+				if(data.userId=="x"){
+					var source = $("#searchFail-template").html();
+					var template = Handlebars.compile(source);
+					$(".search-friend-div").append(template);
+				}
+				else{
+					console.log(data.saveFileName);
+				var source = $("#searchUser-template").html();
+				var template = Handlebars.compile(source);
+				$(".search-friend-div").append(template(data));
+			}
+				}
+		});
+	}
+});

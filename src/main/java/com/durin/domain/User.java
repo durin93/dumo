@@ -10,6 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
 import com.durin.UnAuthorizedException;
+import com.durin.domain.friend.Relation;
+import com.durin.domain.friend.Relations;
+import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,13 +27,14 @@ public class User extends AbstractEntity {
 
 	private String name;
 	
-	
 	@Embedded
 	private Labels labels;
 	
 	@Embedded
 	private Links links;
 	
+	@Embedded
+	private Relations relations;
 	
 	public User() {
 	}
@@ -70,6 +74,9 @@ public class User extends AbstractEntity {
 		return labels.getLabels();
 	}
 
+	public List<Relation> getRelations(){
+		return relations.getRelations();
+	}
 
 	public void matchPassword(String password) throws AuthenticationException{
 		if (!this.password.equals(password)) {
@@ -80,6 +87,11 @@ public class User extends AbstractEntity {
 	public UserDto toUserDto() {
 		return new UserDto(this.userId, this.password, this.name);
 	}
+	
+	public SearchUserDto toSearchUserDto(String saveFileName) {
+		return new SearchUserDto(userId, name, saveFileName, getId());
+	}
+	
 	
 	public int getMemoCount() {
 //		return memos.AllCount();

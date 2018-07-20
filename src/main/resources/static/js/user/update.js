@@ -51,7 +51,7 @@ $(".update-form input[type=submit]").on("click", function(e) {
 						$(".errorMessage").html("");
 						$(".errorPassword").html(data.errorMessage);
 					} else {
-						console.log(data.url);
+//						console.log(data.url);
 //						location.href = data.url;
 						alert("성공");
 						location.href="/users/update";

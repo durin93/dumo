@@ -17,6 +17,10 @@ import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
 import com.durin.domain.User;
 import com.durin.domain.UserRepository;
+import com.durin.domain.friend.FriendRequest;
+import com.durin.domain.friend.FriendRequestRepository;
+import com.durin.dto.FriendRequestDto;
+import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
 
 @Service
@@ -30,6 +34,9 @@ public class UserService {
 
 	@Resource(name = "attachmentRepository")
 	private AttachmentRepository attachmentRepository;
+
+	@Resource(name = "friendRequestRepository")
+	private FriendRequestRepository friendRequestRepository;
 
 	@Value("${file.upload.path}")
 	private String uploadPath;
@@ -80,12 +87,18 @@ public class UserService {
 	}
 
 	public void profileUpdate(User user, MultipartFile file) throws IllegalStateException, IOException {
-//		if (!file.getOriginalFilename().equals("")) {
 			if (!file.isEmpty()) {
 			Attachment baseAttachment = attachmentRepository.findByWriter(user);
 			baseAttachment.update(file.getOriginalFilename());
 			file.transferTo(new File(baseAttachment.getPath(), baseAttachment.getSaveFileName()));
 		}
 	}
+
+	public SearchUserDto searchUser(String userId){
+		User user = userRepository.findByUserId(userId).orElseThrow(NullPointerException::new);
+		return user.toSearchUserDto(attachmentRepository.findByWriter(user).getSaveFileName());
+	}
+
+
 
 }

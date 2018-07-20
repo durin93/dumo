@@ -46,6 +46,7 @@ import com.durin.domain.User;
 import com.durin.domain.UserRepository;
 import com.durin.dto.MemoDto;
 import com.durin.dto.MemosDto;
+import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
 import com.durin.security.LoginUser;
@@ -117,6 +118,14 @@ public class ApiUserAcceptanceTest {
 		ResponseEntity<Result> response = basicAuthTemplate().getForEntity("/api/users/logout", Result.class);
 		assertThat(response.getStatusCode(),is(HttpStatus.OK));
 		assertThat(response.getBody().isValid(), is(true));
+	}
+
+	@Test
+	public void search() {
+		ResponseEntity<SearchUserDto> response = basicAuthTemplate().getForEntity("/api/users/search?userId=lsc109", SearchUserDto.class);
+		assertThat(response.getStatusCode(),is(HttpStatus.OK));
+		assertThat(response.getBody().getUserId(), is("lsc109"));
+		assertThat(response.getBody().getName(), is("일승철"));
 	}
 
 

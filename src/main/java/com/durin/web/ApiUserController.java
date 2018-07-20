@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +26,30 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.durin.domain.Result;
 import com.durin.domain.User;
+import com.durin.dto.FriendRequestDto;
+import com.durin.dto.MemosDto;
+import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
+import com.durin.security.LoginUser;
 import com.durin.service.AttachmentService;
+import com.durin.service.FriendRequestService;
 import com.durin.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
 public class ApiUserController {
 
+	private static final Logger log = LoggerFactory.getLogger(ApiUserController.class);
+	
 	@Resource(name = "userService")
 	private UserService userService;
 	
 	@Resource(name = "attachmentService")
 	private AttachmentService attachmentService;
+
+	@Resource(name = "friendRequestService")
+	private FriendRequestService friendRequestService;
 
 
 	
@@ -106,5 +118,27 @@ public class ApiUserController {
 		return new ResponseEntity<User>(userService.findByUserId(id), HttpStatus.OK);
 	}
 	
+	@GetMapping("search")
+	public ResponseEntity<SearchUserDto> search(String userId){
+		log.debug("user search : {}",userId);
+		try {
+			SearchUserDto user = userService.searchUser(userId);
+			return new ResponseEntity<SearchUserDto>(user,HttpStatus.OK);
+		} catch (NullPointerException e) {
+			log.debug("user search fail: {}",userId);
+			return new ResponseEntity<SearchUserDto>(SearchUserDto.noData(),HttpStatus.OK);
+		}
+	}
+	
+	@PostMapping("addFriend")
+	public ResponseEntity<FriendRequestDto> sendFreindRequest(@LoginUser User loginUser, String receiverId){
+		return new ResponseEntity<FriendRequestDto>(friendRequestService.sendFreindRequest(loginUser,receiverId),HttpStatus.CREATED);
+	}
+	
+	@GetMapping("cancel/{id}")
+	public ResponseEntity<Void> cancleFriendRequest(@LoginUser User loginUser, @PathVariable Long id){
+		friendRequestService.cancelFriendRequest(loginUser,id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 	
 }

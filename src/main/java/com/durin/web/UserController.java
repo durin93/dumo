@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.durin.domain.User;
 import com.durin.security.LoginUser;
 import com.durin.service.AttachmentService;
+import com.durin.service.FriendRequestService;
 
 @Controller
 @RequestMapping("/users")
@@ -17,6 +18,9 @@ public class UserController {
 	
 	@Resource(name="attachmentService")
 	private AttachmentService attachmentService;
+
+	@Resource(name="friendRequestService")
+	private FriendRequestService friendRequestService ;
 
 	@GetMapping("/join")
 	public String joinForm() {
@@ -32,6 +36,7 @@ public class UserController {
 	@GetMapping("/friend")
 	public String friendForm(@LoginUser User loginUser, Model model) {
 		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("friendRequests", friendRequestService.findRequestByUser(loginUser));
 		return "/users/friend";
 	}
 	
