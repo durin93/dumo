@@ -1,13 +1,11 @@
 package com.durin.domain.friend;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.durin.domain.AbstractEntity;
 import com.durin.domain.User;

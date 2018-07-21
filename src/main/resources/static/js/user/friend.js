@@ -21,13 +21,18 @@ $(".search-friend-div").on("click", ".addFriend-btn" , function(e){
 		data : queryString,
 		dataType :'json',
 		error: function(){
-			alert("add firend request error");
+			alert("add friend request error");
 		},
 		success : function(data){
+			if(data.status == false){
+					alert("이미 보낸 요청입니다");
+			}
+			else{
 			var source = $("#sendRequestFriend-template").html();
 			var template = Handlebars.compile(source);
 			$(".send-frined-request-wrap").append(template(data));
 		}
+	}
 	});
 });
 

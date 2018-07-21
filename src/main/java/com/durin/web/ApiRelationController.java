@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.durin.domain.User;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
+import com.durin.security.ExistException;
 import com.durin.security.LoginUser;
 import com.durin.service.FriendRequestService;
+
 
 @RestController
 @RequestMapping("/api/relations")
@@ -25,12 +26,16 @@ public class ApiRelationController {
 	private FriendRequestService friendRequestService;
 	
 	@PostMapping("request")
-	public ResponseEntity<FriendRequestDto> sendFreindRequest(@LoginUser User loginUser, String receiverId) {
-		return new ResponseEntity<FriendRequestDto>(friendRequestService.sendFreindRequest(loginUser, receiverId),
-				HttpStatus.CREATED);
+	public ResponseEntity<FriendRequestDto> sendFriendRequest(@LoginUser User loginUser, String receiverId) {
+		FriendRequestDto result;
+		try {
+			result = friendRequestService.sendFriendRequest(loginUser, receiverId);
+		} catch (ExistException e) {
+			result = FriendRequestDto.ofFail();
+		}
+		return new ResponseEntity<FriendRequestDto>(result,	HttpStatus.CREATED);
 	}
 
-	
 	
 	@PostMapping("accept")
 	public ResponseEntity<RelationDto> acceptFriendRequest(@LoginUser User loginUser,  String requestId, String senderId) {

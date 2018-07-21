@@ -15,6 +15,7 @@ import com.durin.domain.friend.RelationRepository;
 import com.durin.domain.friend.Relations;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
+import com.durin.security.ExistException;
 
 @Service
 public class FriendRequestService {
@@ -28,8 +29,17 @@ public class FriendRequestService {
 	@Resource(name = "relationRepository")
 	private RelationRepository relationRepository;
 	
-	public FriendRequestDto sendFreindRequest(User loginUser, String receiverId) {
-		FriendRequest request = new FriendRequest(loginUser, userRepository.findById(Long.parseLong(receiverId)).get());
+	public User findUserById(String userId) {
+		return userRepository.findById(Long.parseLong(userId)).orElseThrow(NullPointerException::new);
+	}
+	
+	
+	public FriendRequestDto sendFriendRequest(User loginUser, String receiverId) {
+		if(friendRequestRepository.findByReceiverAndSender(findUserById(receiverId), loginUser).isPresent()) {
+			throw new ExistException("이미 보낸 요청입니다.");
+		}
+		
+		FriendRequest request = new FriendRequest(loginUser, findUserById(receiverId));
 		friendRequestRepository.save(request);
 		return request.toFriendRequestDto();
 	}
@@ -51,8 +61,8 @@ public class FriendRequestService {
 	}
 
 
-	public RelationDto acceptFriendRequest(User loginUser, String requestId, String senederId) {
-		Relation relation = new Relation(loginUser,userRepository.findById(Long.parseLong(senederId)).orElseThrow(NullPointerException::new));
+	public RelationDto acceptFriendRequest(User loginUser, String requestId, String senderId) {
+		Relation relation = new Relation(loginUser,findUserById(senderId));
 	    relationRepository.save(relation);
 	    cancelFriendRequest(Long.parseLong(requestId));
 		return relation.toRelationDto();
