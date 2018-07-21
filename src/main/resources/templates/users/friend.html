@@ -39,7 +39,7 @@
 					<li>아이디 {{receiver.userId}}</li>
 					<li>닉네임 {{receiver.name}}</li>
 					<li>요청날짜 {{formattedCreateDate}}</li>
-					<li><a class="cancel-request" href="/api/users/cancel/{{id}}">취소</a></li>
+					<li><a class="cancel-request" href="/api/relations/cancel/{{id}}">취소</a></li>
 				</ul>
 			</div>
 			{{/friendRequests}}
@@ -54,7 +54,7 @@
 			<span class="search-id">\{{userId}}</span>
 			<span class="search-id">\{{name}}</span>
 			<input type="hidden" class="userId" value="\{{id}}"/>
-			<a href="/api/users/addFriend" class="addFriend-btn addFriend-icon">+</a>
+			<a href="/api/relations/request" class="addFriend-btn addFriend-icon">+</a>
 </div>
 </script>
 	<script type="text/x-handlebars-template" id="searchFail-template">

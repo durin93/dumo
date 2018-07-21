@@ -21,3 +21,6 @@ insert into memo (id, create_date, modified_date, writer_id, title, content, del
 insert into memo (id, create_date, modified_date, writer_id, title, content, deleted,label_id) values (12, current_time(), current_time(), 1, '메모13제목', '메모내영13', 0, 1);
 
 insert into friend_request (id, create_date, modified_date, receiver_id, sender_id) values (0, current_time(), current_time(), 3, 1);
+insert into friend_request (id, create_date, modified_date, receiver_id, sender_id) values (2, current_time(), current_time(), 1, 3);
+
+insert into relation (id, create_date, modified_date, friend_id, owner_id) values (0, current_time(), current_time(), 4, 1);

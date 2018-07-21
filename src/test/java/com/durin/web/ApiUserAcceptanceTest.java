@@ -128,6 +128,10 @@ public class ApiUserAcceptanceTest {
 		assertThat(response.getBody().getName(), is("일승철"));
 	}
 
+	@Test
+	public void addFriend() {
+		
+	}
 
 
 

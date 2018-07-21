@@ -48,8 +48,7 @@ public class ApiUserController {
 	@Resource(name = "attachmentService")
 	private AttachmentService attachmentService;
 
-	@Resource(name = "friendRequestService")
-	private FriendRequestService friendRequestService;
+	
 
 
 	
@@ -129,16 +128,6 @@ public class ApiUserController {
 			return new ResponseEntity<SearchUserDto>(SearchUserDto.noData(),HttpStatus.OK);
 		}
 	}
-	
-	@PostMapping("addFriend")
-	public ResponseEntity<FriendRequestDto> sendFreindRequest(@LoginUser User loginUser, String receiverId){
-		return new ResponseEntity<FriendRequestDto>(friendRequestService.sendFreindRequest(loginUser,receiverId),HttpStatus.CREATED);
-	}
-	
-	@GetMapping("cancel/{id}")
-	public ResponseEntity<Void> cancleFriendRequest(@LoginUser User loginUser, @PathVariable Long id){
-		friendRequestService.cancelFriendRequest(loginUser,id);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+
 	
 }

@@ -1,10 +1,12 @@
-// $("#profileIcon").addClass("select");
-// $("#linkIcon").removeClass("select");
-// $("#memoIcon").removeClass("select");
-//
-//$(".link-friend").addClass("select");
-//$(".link-update").removeClass("select");
+ $("#profileIcon").addClass("select");
+ $("#linkIcon").removeClass("select");
+ $("#memoIcon").removeClass("select");
 
+$(".link-friend").addClass("select");
+$(".link-friendRequest").removeClass("select");
+$(".link-update").removeClass("select");
+
+//친구요청
 $(".search-friend-div").on("click", ".addFriend-btn" , function(e){
 	e.preventDefault();
 	
@@ -15,7 +17,7 @@ $(".search-friend-div").on("click", ".addFriend-btn" , function(e){
 	
 	$.ajax({
 		type :'post',
-		url : '/api/users/addFriend',
+		url : '/api/relations/request',
 		data : queryString,
 		dataType :'json',
 		error: function(){
@@ -29,6 +31,7 @@ $(".search-friend-div").on("click", ".addFriend-btn" , function(e){
 	});
 });
 
+//친구요청취소 및 거절
 $(document).on("click", ".cancel-request" , function(e){
 	e.preventDefault();
 	var cancelBtn = $(this);
@@ -36,7 +39,7 @@ $(document).on("click", ".cancel-request" , function(e){
 	var url = cancelBtn.attr("href");
 	console.log("url :"+url);
 	$.ajax({
-		type :'get',
+		type :'delete',
 		url : url,
 		error: function(){
 			alert("cancel friend request error");
@@ -47,6 +50,8 @@ $(document).on("click", ".cancel-request" , function(e){
 	});
 });
 
+
+//친구검색
 $(document).on("click", ".search-btn", function(e) {
 	e.preventDefault();
 

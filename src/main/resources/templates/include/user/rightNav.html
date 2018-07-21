@@ -3,26 +3,18 @@
 
 <div class="right-navBar">
 	<div class="main-category">
-		<h1>4Members</h1>
+		<div class="friend-list">
+		<span>{{friends.size}} Friends</span>
+		</div>
 		<ul class="right-label-list-ul">
+			{{#friends.relations}}
 			<li>
 			<div class="user-list-li">
 			<img class="user-list-img" alt="메모아이콘"
-					src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140"/><a href="/users/update" class="leftNav-a left-link link-update">javajigi</a>
+					src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140"/><a href="#" class="leftNav-a left-link link-update">{{friend.userId}}({{friend.name}})</a>
 			</div>		
 			</li>
-			<li>
-			<div class="user-list-li">
-			<img class="user-list-img" alt="메모아이콘"
-					src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140"/><a  href="/users/friend" class="leftNav-a left-link link-friend">gram</a>
-			</div>		
-			</li>
-			<li>
-			<div class="user-list-li">
-			<img class="user-list-img" alt="메모아이콘"
-					src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140"/><a  href="/users/friend" class="leftNav-a left-link link-friend">gram</a>
-			</div>		
-			</li>
+			{{/friends.relations}}
 		</ul>
 	</div>
 </div>

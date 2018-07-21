@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.durin.domain.AbstractEntity;
 import com.durin.domain.User;
+import com.durin.dto.RelationDto;
 
 @Entity
 public class Relation extends AbstractEntity{
@@ -17,24 +18,30 @@ public class Relation extends AbstractEntity{
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_relation_owner"))
 	private User owner;
 	
-	private String freindId;
-	
-	private String name;
+	@ManyToOne
+	private User friend;
 
 	public Relation() {
+	}
+	
+	public Relation(User owner, User sender) {
+		super(0L);
+		this.owner = owner;
+		this.friend = sender;
 	}
 	
 	public User getOwner() {
 		return owner;
 	}
 
-	public String getFreindId() {
-		return freindId;
+	public User getFriend() {
+		return friend;
 	}
 
-	public String getName() {
-		return name;
+	public RelationDto toRelationDto() {
+		return new RelationDto(owner, friend);
 	}
+
 	
 	
 }

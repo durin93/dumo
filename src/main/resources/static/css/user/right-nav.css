@@ -39,3 +39,19 @@
 .user-list-li a{
 	line-height: 70px;
 }
+
+.friend-list{
+	    border-bottom: 1px solid black;
+	        height: 70px;
+}
+.friend-list span{
+	    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 5%;
+    display: inline-block;
+    width: 100%;
+        line-height: 80px;
+    
+}
