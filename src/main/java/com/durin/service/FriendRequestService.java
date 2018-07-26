@@ -38,6 +38,9 @@ public class FriendRequestService {
 		if(friendRequestRepository.findByReceiverAndSender(findUserById(receiverId), loginUser).isPresent()) {
 			throw new ExistException("이미 보낸 요청입니다.");
 		}
+		if(relationRepository.findByOwnerAndFriend(loginUser,findUserById(receiverId)).isPresent()) {
+			throw new ExistException("이미 친구입니다.");
+		}
 		
 		FriendRequest request = new FriendRequest(loginUser, findUserById(receiverId));
 		friendRequestRepository.save(request);
@@ -61,16 +64,18 @@ public class FriendRequestService {
 	}
 
 
-	public RelationDto acceptFriendRequest(User loginUser, String requestId, String senderId) {
+	public RelationDto acceptFriendRequest(User loginUser, String senderId) {
 		Relation relation = new Relation(loginUser,findUserById(senderId));
 	    relationRepository.save(relation);
-	    cancelFriendRequest(Long.parseLong(requestId));
+	    relation = new Relation(findUserById(senderId),loginUser);
+	    relationRepository.save(relation);
+	    cancelFriendRequest(Long.parseLong(loginUser.getUserId()));
 		return relation.toRelationDto();
 	}
 
 
 	public Relations findAllRelations(User loginUser) {
-		return new Relations(relationRepository.findByOwnerOrFriend(loginUser, loginUser));
+		return new Relations(relationRepository.findByOwner(loginUser));
 	}
 
 

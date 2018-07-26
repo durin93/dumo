@@ -38,8 +38,8 @@ public class ApiRelationController {
 
 	
 	@PostMapping("accept")
-	public ResponseEntity<RelationDto> acceptFriendRequest(@LoginUser User loginUser,  String requestId, String senderId) {
-		RelationDto relationDto = friendRequestService.acceptFriendRequest(loginUser, requestId,senderId);
+	public ResponseEntity<RelationDto> acceptFriendRequest(@LoginUser User loginUser, String senderId) {
+		RelationDto relationDto = friendRequestService.acceptFriendRequest(loginUser, senderId);
 		return new ResponseEntity<RelationDto>(relationDto,HttpStatus.OK);
 	}
 	

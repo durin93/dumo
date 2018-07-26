@@ -1,9 +1,6 @@
 package com.durin.dto;
 
 
-
-
-import com.durin.domain.AbstractEntity;
 import com.durin.domain.User;
 
 public class RelationDto {

@@ -9,7 +9,6 @@ public class Result {
 	private String errorMessage;
 	private String url;
 	
-	
 	public Result() {
 	}
 

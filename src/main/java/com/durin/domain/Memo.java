@@ -7,6 +7,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.security.sasl.AuthenticationException;
 
+import com.durin.dto.MemoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -72,10 +73,10 @@ public class Memo extends AbstractEntity {
 		}
 	}
 
-	public void update(User loginUser , String title, String content) throws AuthenticationException {
+	public void update(User loginUser , MemoDto memoDto) throws AuthenticationException {
 		isOwner(loginUser);
-		this.title = title;
-		this.content = content;
+		this.title = memoDto.getTitle();
+		this.content = memoDto.getContent();
 	}
 	
 

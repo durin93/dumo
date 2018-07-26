@@ -7,6 +7,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import com.durin.domain.friend.Relation;
+import com.durin.domain.friend.Relations;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,9 +28,9 @@ public class User extends AbstractEntity {
 	
 	@Embedded
 	private Links links;
-	
-//	@Embedded
-//	private Relations relations;
+//	
+	@Embedded
+	private Relations relations;
 //	
 	public User() {
 	}
@@ -62,6 +63,10 @@ public class User extends AbstractEntity {
 
 	public List<Label> getLabels(){
 		return labels.getLabels();
+	}
+
+	public List<Relation> getRelations(){
+		return relations.getRelations();
 	}
 
 	public void matchPassword(String password) throws AuthenticationException{

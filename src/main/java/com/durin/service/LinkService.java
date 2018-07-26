@@ -1,7 +1,5 @@
 package com.durin.service;
 
-
-
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
@@ -10,20 +8,22 @@ import org.springframework.stereotype.Service;
 import com.durin.domain.Link;
 import com.durin.domain.LinkRepository;
 import com.durin.domain.User;
+import com.durin.dto.LinkDto;
 
 @Service
 public class LinkService {
 
-	@Resource(name="linkRepository")
+	@Resource(name = "linkRepository")
 	private LinkRepository linkRepository;
-	
-	public Link add(User loginUser ,String title, String content, String url) {
-		return	linkRepository.save(new Link(loginUser, title, content, url));
+
+	public Link add(User loginUser, LinkDto linkDto) {
+		return linkRepository.save(linkDto.toLink(loginUser));
 	}
 
-	public Link update(User loginUser, Long id, String title, String content, String originalUrl) throws AuthenticationException {
+	public Link update(User loginUser, Long id, LinkDto linkDto)
+			throws AuthenticationException {
 		Link baseLink = linkRepository.findById(id).orElseThrow(NullPointerException::new);
-		baseLink.update(loginUser, title, content, originalUrl);
+		baseLink.update(linkDto.toLink(loginUser));
 		return linkRepository.save(baseLink);
 	}
 
@@ -32,9 +32,9 @@ public class LinkService {
 		link.isOwner(loginUser);
 		linkRepository.delete(link);
 	}
-	
+
 	public int allLinkCount(User loginUser) {
-		return 	linkRepository.findByWriter(loginUser).size();
+		return linkRepository.findByWriter(loginUser).size();
 	}
-	
+
 }

@@ -72,12 +72,12 @@ public class Link extends AbstractEntity{
 			throw new AuthenticationException("본인만");
 		}
 	}
-	public void update(User loginUser , String title, String content , String originalUrl) throws AuthenticationException {
-		isOwner(loginUser);
-		this.title = title.trim();
-		this.content = content;
-		this.originalUrl = originalUrl;
-		this.thumnailUrl = "https://image.thum.io/get/width/270/crop/800/"+originalUrl;
+	public void update(Link link) throws AuthenticationException {
+		isOwner(link.writer);
+		this.title = link.title.trim();
+		this.content = link.content;
+		this.originalUrl = link.originalUrl;
+		this.thumnailUrl = "https://image.thum.io/get/width/270/crop/800/"+link.originalUrl;
 	}
 	
 }

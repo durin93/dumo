@@ -2,8 +2,6 @@ package com.durin.dto;
 
 import javax.validation.constraints.Size;
 
-import com.durin.domain.Attachment;
-import com.durin.domain.User;
 
 public class SearchUserDto {
 

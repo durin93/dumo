@@ -1,7 +1,6 @@
 package com.durin.web;
 
 import java.net.URI;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
@@ -17,58 +16,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.durin.domain.Link;
 import com.durin.domain.User;
+import com.durin.dto.LinkDto;
 import com.durin.security.LoginUser;
 import com.durin.service.LinkService;
 
 @RestController
 @RequestMapping("/api/links")
 public class ApiLinkController {
-	
-	private static final int TITLE_START_LENGTH = 7;
 
 	@Resource(name = "linkService")
 	private LinkService linkService;
 
 	@PostMapping("")
-	public ResponseEntity<Link> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
-		String title = getUrlTitle(data.get("url"), data.get("title"));
+	public ResponseEntity<Link> create(@LoginUser User loginUser, @RequestBody LinkDto linkDto) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/api/links"));
-		return new ResponseEntity<Link>(linkService.add(loginUser, title, data.get("content"), data.get("url")),
-				HttpStatus.CREATED);
+		return new ResponseEntity<Link>(linkService.add(loginUser, linkDto), HttpStatus.CREATED);
 	}
 
-	
-	
 	@PutMapping("{id}")
 	public ResponseEntity<Link> update(@LoginUser User loginUser, @PathVariable Long id,
-			@RequestBody Map<String, String> data) throws AuthenticationException {
-		String title = getUrlTitle(data.get("url"), data.get("title"));
-		return new ResponseEntity<Link>(linkService.update(loginUser, id, title, data.get("content"),data.get("url")),
+			@RequestBody LinkDto linkDto) throws AuthenticationException {
+		return new ResponseEntity<Link>(linkService.update(loginUser, id, linkDto),
 				HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity<Void> delete(@LoginUser User loginUser, @PathVariable Long id) throws AuthenticationException{
+	public ResponseEntity<Void> delete(@LoginUser User loginUser, @PathVariable Long id)
+			throws AuthenticationException {
 		linkService.delete(loginUser, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
-	public String getUrlTitle(String url, String title) {
-		try {
-			ResponseEntity<String> res = new RestTemplate().getForEntity(url, String.class);
-			String urlBody = res.getBody().toString();
-			title = urlBody.substring(urlBody.indexOf("<title>")+TITLE_START_LENGTH, urlBody.indexOf("</title>"));
-		} catch (Exception e) {
-			title = "unable to connect";
-		}
-		return title;
-	}
-	
+
+
 	@GetMapping("size")
 	public ResponseEntity<Integer> userLinkSize(@LoginUser User loginUser) {
 		return new ResponseEntity<Integer>(linkService.allLinkCount(loginUser), HttpStatus.OK);

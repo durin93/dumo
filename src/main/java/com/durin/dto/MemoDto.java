@@ -11,6 +11,14 @@ public class MemoDto{
 	private String title;
 
 	private String content;
+	
+	public MemoDto() {
+	}
+	
+	public MemoDto(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
 
 	public User getWriter() {
 		return writer;
@@ -36,7 +44,8 @@ public class MemoDto{
 		this.content = content;
 	}
 
-	
-
+	public Memo toMemo(User writer, Label label) {
+		return new Memo(writer, title, content, label);
+	}
 
 }

@@ -1,14 +1,12 @@
 package com.durin.web;
 
 import java.net.URI;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.logging.LoggingInitializationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.durin.domain.Memo;
+import com.durin.dto.MemoDto;
 import com.durin.dto.MemosDto;
+import com.durin.dto.SearchDto;
 import com.durin.domain.Pagination;
 import com.durin.domain.Result;
 import com.durin.domain.User;
@@ -62,16 +62,15 @@ public class ApiMemoController {
 	}
 	
 	@GetMapping("search")
-	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, String labelId, String search, String value) {
+	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, SearchDto searchDto) {
 		log.debug("/api/memos/search");
-		System.out.println("d"+loginUser.toString()+","+labelId+","+search+","+value);
-		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(Long.parseLong(labelId), search, value)),HttpStatus.OK);
+		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(searchDto)),HttpStatus.OK);
 	}
 	
 	
 	@PostMapping("{labelId}")
-	public ResponseEntity<Memo> create(@LoginUser User loginUser,  @PathVariable Long labelId, @RequestBody Map<String, String> data) {
-		Memo memo = memoService.add(loginUser, labelId, data.get("title"), data.get("content"));
+	public ResponseEntity<Memo> create(@LoginUser User loginUser,  @PathVariable Long labelId, @RequestBody MemoDto memoDto) {
+		Memo memo = memoService.add(loginUser, labelId, memoDto);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create(memo.generateUrl()));
 		return new ResponseEntity<Memo>(memo,headers,HttpStatus.CREATED);
@@ -80,9 +79,8 @@ public class ApiMemoController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<Memo> update(@LoginUser User loginUser, @PathVariable Long id,
-			@RequestBody Map<String, String> data) throws AuthenticationException {
-		System.out.println("옷"+data.get("title")+","+data.get("content"));
-		return new ResponseEntity<Memo>(memoService.update(loginUser, id, data.get("title"), data.get("content")),
+			@RequestBody MemoDto memoDto) throws AuthenticationException {
+		return new ResponseEntity<Memo>(memoService.update(loginUser, id, memoDto),
 				HttpStatus.CREATED);
 	}
 

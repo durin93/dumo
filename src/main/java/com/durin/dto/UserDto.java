@@ -2,7 +2,6 @@ package com.durin.dto;
 
 import javax.validation.constraints.Size;
 
-import org.springframework.web.multipart.MultipartFile;
 
 import com.durin.domain.User;
 

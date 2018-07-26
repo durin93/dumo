@@ -26,7 +26,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
-import com.durin.domain.Memo;
 import com.durin.domain.User;
 import com.durin.domain.UserRepository;
 

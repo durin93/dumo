@@ -27,6 +27,7 @@ import com.durin.domain.Link;
 import com.durin.domain.LinkRepository;
 import com.durin.domain.User;
 import com.durin.domain.UserRepository;
+import com.durin.dto.LinkDto;
 
 
 @RunWith(SpringRunner.class)
@@ -62,14 +63,8 @@ public class ApiLinkAcceptanceTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		Map<String, Object> params = new HashMap<>();
-		params.put("url", "https://www.google.com/");
-		params.put("title", "구글");
-		params.put("content", "구글페이지");
-
-		HttpEntity<Map<String, Object>> request = new HttpEntity<Map<String, Object>>(params, headers);
-		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", request, Link.class);
+		
+		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
 
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		assertThat(response.getBody().getTitle(), is("Google"));
@@ -82,21 +77,15 @@ public class ApiLinkAcceptanceTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("url", "https://www.google.com/");
-		params.put("title", "구글");
-		params.put("content", "구글페이지");
 
 		HttpEntity<Map<String, Object>> request = new HttpEntity<Map<String, Object>>(params, headers);
-		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", request, Link.class);
-		
-		params.clear();
+		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
+
 		params.put("url", "https://www.naver.com/");
 		params.put("title", "네이버");
 		params.put("content", "네이버페이지");
 
-		HttpEntity<Map<String, Object>> request2 = new HttpEntity<Map<String, Object>>(params, headers);
-		basicAuthTemplate().exchange("/api/links/" + response.getBody().getId(), HttpMethod.PUT, request2,
-				String.class);
+		basicAuthTemplate().put("/api/links/" + response.getBody().getId(), request);
 
 		assertThat(linkRepository.findById(response.getBody().getId()).get().getContent(), is("네이버페이지"));
 	}
@@ -108,14 +97,7 @@ public class ApiLinkAcceptanceTest {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		Map<String, Object> params = new HashMap<>();
-		params.put("url", "https://www.google.com/");
-		params.put("title", "구글");
-		params.put("content", "구글페이지");
-
-		HttpEntity<Map<String, Object>> request = new HttpEntity<Map<String, Object>>(params, headers);
-
-		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", request, Link.class);
+		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
 		
 		basicAuthTemplate().delete("/api/links/"+response.getBody().getId());
 		

@@ -3,8 +3,13 @@ package com.durin.domain.friend;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+
+@Embeddable
 public class Relations {
 
+	@OneToMany(mappedBy="owner")
 	private List<Relation> relations = new ArrayList<>();
 
 	public Relations() {

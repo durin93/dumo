@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 import javax.servlet.http.HttpSession;
 
@@ -50,10 +51,12 @@ import com.durin.domain.friend.RelationRepository;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.MemoDto;
 import com.durin.dto.MemosDto;
+import com.durin.dto.RelationDto;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
 import com.durin.security.LoginUser;
+import com.durin.service.UserService;
 
 
 @RunWith(SpringRunner.class)
@@ -98,11 +101,8 @@ public class ApiRelationAcceptanceTest {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		
-		
 		User receiver = userRepository.findByUserId("lsc209").get();
 	
-		
 	    MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
 	    params.add("receiverId", String.valueOf(receiver.getId()));
 
@@ -117,9 +117,33 @@ public class ApiRelationAcceptanceTest {
 		
 		ResponseEntity<FriendRequestDto> response2 = basicAuthTemplate().postForEntity("/api/relations/request", request, FriendRequestDto.class);
 		assertThat(response2.getBody().getStatus(), is(false));
+	}
+	
+	@Test
+	public void accept() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
+	    MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+	    params.add("requestId", "1");
+	    params.add("senderId",  "2");
+		
+		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String,Object>>(params,headers);
+		ResponseEntity<RelationDto> response = basicAuthTemplate().postForEntity("/api/relations/accept", request, RelationDto.class);
+		
+		assertThat(response.getBody().getOwnerId(), is("lsc209"));
+		
+		assertThat(relationRepository.findByOwnerAndFriend(findByDefaultUser(),findByDefaultUser()).isPresent(),is(false));
 	}
 
+	
+/*	@DeleteMapping("cancel/{id}")
+	public ResponseEntity<Void> cancleFriendRequest(@LoginUser User loginUser, @PathVariable Long id) {
+		friendRequestService.cancelFriendRequest(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	*/
 	
 
 

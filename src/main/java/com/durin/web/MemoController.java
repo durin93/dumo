@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.durin.domain.Memo;
@@ -27,27 +26,11 @@ public class MemoController {
 
 	@Resource(name = "userService")
 	private UserService userService;
-
-
-	/*@GetMapping("")
-	public String defaultMainList(@LoginUser User loginUser, Model model) {
-		model = makeModel(model, loginUser, Pagination.of());
-		return "memo/list";
-	}*/
-	
 	@GetMapping("")
 	public String defaultMainList(@LoginUser User loginUser, Model model) {
 		model = makeModel(model, loginUser, Pagination.of());
 		return "memo/list";
 	}
-
-/*	@GetMapping("/{labelId}")
-	public String labelIdMainList(@LoginUser User loginUser, Model model, @PathVariable Long labelId) {
-		model = makeModel(model, loginUser, Pagination.of(labelId));
-		return "memo/list";
-	}*/
-
-
 
 	public Model makeModel(Model model, User loginUser, Pagination pagination) {
 		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
@@ -55,21 +38,4 @@ public class MemoController {
 		model.addAttribute("pagination", pagination.makePagination(postPage.getTotalPages()));
 		return model;
 	}
-	
-	/*	@GetMapping("/{labelId}/{page}")
-	public String labelIdPageList(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page, Model model) {
-		model = makeModel(model, loginUser, Pagination.of(page,labelId));
-		return "memo/list";
-	}*/
-
-	
-	/*	@GetMapping("/search")
-	public String search(@LoginUser User loginUser, String labelId, String search, String value,  Model model) {
-		model.addAttribute("loginUser", userService.findByUser(loginUser));
-		model.addAttribute("memos", memoService.findAllBySearch(Long.parseLong(labelId), search, value));
-		Pagination pagination = Pagination.of();
-		Page<Memo> postPage = memoService.findAll(pagination.getLabelId(), pagination.makePageReqeest());
-		model.addAttribute("pagination",  pagination.makePagination(postPage.getTotalPages()));
-		return "memo/list";
-	}*/
 }

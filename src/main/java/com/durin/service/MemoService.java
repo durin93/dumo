@@ -19,6 +19,8 @@ import com.durin.domain.Memo;
 import com.durin.domain.MemoRepository;
 import com.durin.domain.Pagination;
 import com.durin.domain.User;
+import com.durin.dto.MemoDto;
+import com.durin.dto.SearchDto;
 
 @Service
 public class MemoService {
@@ -29,15 +31,14 @@ public class MemoService {
 	@Resource(name="labelRepository")
 	private LabelRepository labelRepository;
 	
-	
-	public Memo add(User loginUser , Long labelId, String title, String content) {
-		Label defaultLabel = findLabelById(labelId);
-		return	memoRepository.save(new Memo(loginUser, title, content, defaultLabel));
+	public Memo add(User loginUser , Long labelId, MemoDto memoDto) {
+		Label label = findLabelById(labelId);
+		return	memoRepository.save(memoDto.toMemo(loginUser, label));
 	}
 
-	public Memo update(User loginUser, Long id, String title, String content) throws AuthenticationException {
+	public Memo update(User loginUser, Long id, MemoDto memoDto) throws AuthenticationException {
 		Memo baseMemo = findMemoById(id);
-		baseMemo.update(loginUser, title, content);
+		baseMemo.update(loginUser, memoDto);
 		return memoRepository.save(baseMemo);
 	}
 
@@ -77,13 +78,13 @@ public class MemoService {
 		return 	memoRepository.findByLabelAndContentLikeOrTitleLike(label,"%" + content + "%","%" + content + "%");
 	}
 
-	public List<Memo> findAllBySearch(Long labelId, String search, String value) {
-		Label label = findLabelById(labelId);
-		
-		if(search.equals("title")) {
+	public List<Memo> findAllBySearch(SearchDto searchDto) {
+		Label label = findLabelById(searchDto.getLabelId());
+		String value = searchDto.getValue();
+		if(searchDto.isTitleSearch()) {
 			return findAllByTitle (label, value);
 		}
-		if(search.equals("content")) {
+		if(searchDto.isContentSearch()) {
 		return findAllByContent(label, value);
 		}
 		return findAllByAll(label, value);
