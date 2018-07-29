@@ -34,7 +34,7 @@ public class MemoController {
 
 	public Model makeModel(Model model, User loginUser, Pagination pagination) {
 		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
-		model.addAttribute("loginUser", userService.findByUser(loginUser));
+		model.addAttribute("loginUser",  userService.pullUserInfo(loginUser));
 		model.addAttribute("pagination", pagination.makePagination(postPage.getTotalPages()));
 		return model;
 	}

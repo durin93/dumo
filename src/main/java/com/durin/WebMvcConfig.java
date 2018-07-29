@@ -19,6 +19,7 @@ import com.durin.security.LoginUserHandlerMethodArgumentResolver;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+	
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

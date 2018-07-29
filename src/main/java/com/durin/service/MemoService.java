@@ -1,20 +1,16 @@
 package com.durin.service;
 
 
-
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
-import com.durin.domain.Labels;
 import com.durin.domain.Memo;
 import com.durin.domain.MemoRepository;
 import com.durin.domain.Pagination;

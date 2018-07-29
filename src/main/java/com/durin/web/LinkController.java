@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.durin.domain.User;
 import com.durin.security.LoginUser;
-import com.durin.service.MemoService;
 import com.durin.service.UserService;
 
 @Controller
@@ -22,7 +21,7 @@ public class LinkController {
 	
 	@GetMapping("")
 	public String list(@LoginUser User loginUser, Model model) {
-		model.addAttribute("loginUser", userService.findByUser(loginUser));
+		model.addAttribute("loginUser",  userService.pullUserInfo(loginUser));
 		return "link/list";
 	}
 }

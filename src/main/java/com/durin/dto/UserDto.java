@@ -7,6 +7,9 @@ import com.durin.domain.User;
 
 
 public class UserDto {
+	
+	private String oauthId;
+	
     @Size(min = 3, max = 20)
     private String userId;
 
@@ -18,6 +21,8 @@ public class UserDto {
     @Size(min = 3, max = 20)
     private String name;
 
+    private String profileImg;
+    
     
     
     public UserDto() {
@@ -29,8 +34,26 @@ public class UserDto {
         this.password = password;
         this.name = name;
     }
+    
 
-    public String getUserId() {
+	public UserDto(String userId, String password, String name, String filePath) {
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.profileImg = filePath;
+	}
+	
+	
+	
+	public String getOauthId() {
+		return oauthId;
+	}
+
+	public void setOauthId(String oauthId) {
+		this.oauthId = oauthId;
+	}
+
+	public String getUserId() {
         return userId;
     }
 
@@ -63,9 +86,22 @@ public class UserDto {
     }
 
  
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+
 	public User toUser() {
-        return new User(this.userId, this.password, this.name);
+        return new User(null, this.userId, this.password, this.name, "dumo");
     }
+
+	public User oauthToUser() {
+		return new User(this.oauthId, this.userId, this.password, this.name, "kakao");
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -112,9 +148,14 @@ public class UserDto {
 
 	@Override
 	public String toString() {
-		return "UserDto [userId=" + userId + ", password=" + password + ", newPassword=" + newPassword + ", name="
-				+ name + "]";
+		return "UserDto [oauthId=" + oauthId + ", userId=" + userId + ", password=" + password + ", newPassword="
+				+ newPassword + ", name=" + name + ", profileImg=" + profileImg +  "]";
 	}
+
+	public boolean isOauthUser() {
+		return oauthId!=null;
+	}
+
 
 
 	

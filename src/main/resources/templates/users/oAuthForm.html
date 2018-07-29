@@ -12,7 +12,9 @@
 
 {{> include/loginHeader}}
 <div class="login-container">
-	<form class="join-form" method="post" action="/api/users">
+	<form class="oauth-join-form" method="post" action="/api/users/kakao">
+	<input type="hidden" name="oauthId" value="{{oauthId}}"/>
+	<input type="hidden" name="profileImg" value="{{profileImg}}"/>
 	<div class="input-div">		
 		<input class="id" type="text" name="userId" placeholder="아이디"  required="required"/> 
 		<h2 class="errorMessage errorId"></h2>

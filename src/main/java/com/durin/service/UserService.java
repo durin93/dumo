@@ -2,6 +2,7 @@ package com.durin.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
@@ -17,11 +18,10 @@ import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
 import com.durin.domain.User;
 import com.durin.domain.UserRepository;
-import com.durin.domain.friend.FriendRequest;
 import com.durin.domain.friend.FriendRequestRepository;
-import com.durin.dto.FriendRequestDto;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
+import com.durin.security.ExistException;
 
 @Service
 @Transactional
@@ -52,14 +52,22 @@ public class UserService {
 
 	public User add(UserDto userDto) throws Exception {
 		User user = userDto.toUser();
-		if (userRepository.findByUserId(user.getUserId()).isPresent()) {
-			throw new Exception("이미 존재하는 아이디 입니다.");
-		}
+		checkUser(user.getUserId());
 		User bUser = userRepository.save(user);
 		labelRepository.save(new Label(bUser, DEFAULT_LABEL));
 		attachmentRepository.save(Attachment.ofProfile(bUser, "default.png", uploadPath));
 		return bUser;
+	}
 
+	public User addOauth(UserDto userDto) throws UnsupportedEncodingException {
+		User user = userDto.oauthToUser();
+		if(checkOauth(user.getOauthId())) {
+			return userRepository.findByOauthId(user.getOauthId()).get();
+		}
+		User bUser = userRepository.save(user);
+		labelRepository.save(new Label(bUser, DEFAULT_LABEL));
+		attachmentRepository.save(Attachment.ofProfile(bUser, userDto.getProfileImg(), uploadPath));
+		return bUser;
 	}
 
 	public int memoSize(User loginUser) {
@@ -99,6 +107,32 @@ public class UserService {
 		return user.toSearchUserDto(attachmentRepository.findByWriter(user).getSaveFileName());
 	}
 
+	public void checkUser(String userId){
+		if (userRepository.findByUserId(userId).isPresent()) {
+			throw new ExistException("이미 존재하는 아이디 입니다.");
+		}
+	}
+	public Boolean checkOauth(String oauthId){
+		return userRepository.findByOauthId(oauthId).isPresent();
+	}
 
+	public User existOauth(String oauthId) {
+		if(!userRepository.findByOauthId(oauthId).isPresent()) {
+			throw new NullPointerException("가입되지않은회원입니다.");
+		}
+		return userRepository.findByOauthId(oauthId).get();
+	}
+
+	public UserDto pullUserInfo(User loginUser) {
+		return loginUser.toUserDto(makeFilePath(loginUser));
+	}
+	
+	public String makeFilePath(User loginUser) {
+		Attachment attachment =	attachmentRepository.findByWriter(loginUser);
+		if(loginUser.isKakaoUser()) {
+			return  attachment.getOriginalFileName();
+		}
+		return "/upload/"+attachment.getSaveFileName();
+	}
 
 }

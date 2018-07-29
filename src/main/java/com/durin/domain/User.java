@@ -17,6 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User extends AbstractEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
 
+    private String division;
+    
+    private String oauthId;
+    
 	private String userId;
 
 	private String password;
@@ -28,10 +32,10 @@ public class User extends AbstractEntity {
 	
 	@Embedded
 	private Links links;
-//	
+	
 	@Embedded
 	private Relations relations;
-//	
+	
 	public User() {
 	}
 
@@ -41,8 +45,41 @@ public class User extends AbstractEntity {
         this.password = password;
         this.name = name;
     }
-	public User(String userId, String password,String name) {
-		this(0L, userId, password, name);
+
+    public User(long id, String userId, String password, String name, String division) {
+    	super(id);
+    	this.userId = userId;
+    	this.password = password;
+    	this.name = name;
+    	this.division = division;
+    }
+
+    public User(long id, String oauthId, String userId, String password, String name, String division) {
+    	super(id);
+    	this.oauthId = oauthId;
+    	this.userId = userId;
+    	this.password = password;
+    	this.name = name;
+    	this.division = division;
+    }
+    
+
+	public User(String oauthId, String userId, String password,String name, String division) {
+		this(0L, oauthId, userId, password, name,division);
+	}
+
+	
+	
+	public String getOauthId() {
+		return oauthId;
+	}
+
+	public String getDivision() {
+		return division;
+	}
+
+	public void setDivision(String division) {
+		this.division = division;
 	}
 
 	public String getUserId() {
@@ -79,13 +116,17 @@ public class User extends AbstractEntity {
 		return new UserDto(this.userId, this.password, this.name);
 	}
 	
+	public UserDto toUserDto(String filePath) {
+		return new UserDto(this.userId, this.password, this.name, filePath);
+	}
+
+	
 	public SearchUserDto toSearchUserDto(String saveFileName) {
 		return new SearchUserDto(userId, name, saveFileName, getId());
 	}
 	
 	
 	public int getMemoCount() {
-//		return memos.AllCount();
 		return labels.AllMemoCount();
 	}
 	
@@ -100,18 +141,16 @@ public class User extends AbstractEntity {
 	public boolean isGuestUser() {
 		return false;
 	}
+	@JsonIgnore
+	public boolean isKakaoUser() {
+		return division.equals("kakao");
+	}
 
 	private static class GuestUser extends User {
 		@Override
 		public boolean isGuestUser() {
 			return true;
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", labels=" + labels
-				+ ", links=" + links + "]";
 	}
 
 	
@@ -121,6 +160,11 @@ public class User extends AbstractEntity {
 		this.password = user.getNewPassword();
 	}
 
+	@Override
+	public String toString() {
+		return "User [division=" + division + ", oauthId=" + oauthId + ", userId=" + userId + ", password=" + password
+				+ ", name=" + name + ", labels=" + labels + ", links=" + links + ", relations=" + relations + "]";
+	}
 	
 	
 }

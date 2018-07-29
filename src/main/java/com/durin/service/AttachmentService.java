@@ -46,7 +46,10 @@ public class AttachmentService {
 
 	public String userProfile(User loginUser) {
 		Attachment attachment = attachmentRepository.findByWriter(loginUser);
-		return attachment.getSaveFileName();
+		if(loginUser.isKakaoUser()) {
+			return attachment.getOriginalFileName();
+		}
+		return "/upload/"+attachment.getSaveFileName();
 	}
 
 	

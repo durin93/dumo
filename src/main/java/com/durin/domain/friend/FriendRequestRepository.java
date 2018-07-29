@@ -9,9 +9,11 @@ import com.durin.domain.User;
 
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long>{
 
-	List<FriendRequest> findBySender(User loginUser);
+	List<FriendRequest> findAllBySender(User loginUser);
 
-	List<FriendRequest> findByReceiver(User loginUser);
+	List<FriendRequest> findAllByReceiver(User loginUser);
+	
+	Optional<FriendRequest> findByReceiver(User loginUser);
 
 	Optional<FriendRequest> findByReceiverAndSender(User receiver, User sender);
 

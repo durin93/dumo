@@ -11,6 +11,7 @@ import com.durin.domain.User;
 import com.durin.security.LoginUser;
 import com.durin.service.AttachmentService;
 import com.durin.service.FriendRequestService;
+import com.durin.service.UserService;
 
 @Controller
 @RequestMapping("/users")
@@ -22,6 +23,9 @@ public class UserController {
 	@Resource(name="friendRequestService")
 	private FriendRequestService friendRequestService ;
 
+	@Resource(name="userService")
+	private UserService userService;
+	
 	@GetMapping("/join")
 	public String joinForm() {
 		return "/users/form";
@@ -29,13 +33,12 @@ public class UserController {
 
 	@GetMapping("/update")
 	public String updateForm(@LoginUser User loginUser, Model model) {
-		model.addAttribute("loginUser", loginUser);
-		model.addAttribute("profile", attachmentService.userProfile(loginUser));
+		model.addAttribute("loginUser",  userService.pullUserInfo(loginUser));
 		return "/users/updateForm";
 	}
 	@GetMapping("/friend")
 	public String friendForm(@LoginUser User loginUser, Model model) {
-		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("loginUser",  userService.pullUserInfo(loginUser));
 		model.addAttribute("friendRequests", friendRequestService.findRequestByUser(loginUser));
 		model.addAttribute("friends", friendRequestService.findAllRelations(loginUser));
 		return "/users/friend";
@@ -43,7 +46,7 @@ public class UserController {
 
 	@GetMapping("/friendRequest")
 	public String friendRequestList(@LoginUser User loginUser, Model model) {
-		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("loginUser",  userService.pullUserInfo(loginUser));
 		model.addAttribute("friendRequests", friendRequestService.findRequestByUser(loginUser));
 		model.addAttribute("friendRequested", friendRequestService.findRequestByOther(loginUser));
 		model.addAttribute("friends", friendRequestService.findAllRelations(loginUser));
