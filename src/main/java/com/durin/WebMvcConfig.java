@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -14,12 +16,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.durin.security.BasicAuthInterceptor;
+import com.durin.security.Encrpytion;
 import com.durin.security.LoginUserHandlerMethodArgumentResolver;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-	
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -51,6 +53,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		return new BasicAuthInterceptor();
 	}
 
+	@Bean
+	public PasswordEncoder 	passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public Encrpytion encryption() {
+		return new Encrpytion(passwordEncoder());
+	}
+	
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(basicAuthInterceptor());

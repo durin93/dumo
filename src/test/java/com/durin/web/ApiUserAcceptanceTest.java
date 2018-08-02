@@ -34,6 +34,8 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 		ResponseEntity<Result> response = basicAuthTemplate().postForEntity("/api/users",
 				new UserDto("gram", "1234", "그램"), Result.class);
 
+		log.debug("create test : {}", response.getBody());
+		System.out.println("앗"+response.getBody().toString());
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		assertThat(response.getBody().isValid(), is(true));
 		assertThat(response.getBody().getUrl(), is("/memos"));

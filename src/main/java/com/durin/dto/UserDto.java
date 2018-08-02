@@ -4,6 +4,7 @@ import javax.validation.constraints.Size;
 
 
 import com.durin.domain.User;
+import com.durin.security.Encrpytion;
 
 
 public class UserDto {
@@ -95,11 +96,11 @@ public class UserDto {
 	}
 
 	public User toUser() {
-        return new User(null, this.userId, this.password, this.name, "dumo");
+        return new User(null, this.userId, Encrpytion.encode(this.password), this.name, "dumo");
     }
 
 	public User oauthToUser() {
-		return new User(this.oauthId, this.userId, this.password, this.name, "kakao");
+		return new User(this.oauthId, this.userId, Encrpytion.encode(this.password), this.name, "kakao");
 	}
 
 

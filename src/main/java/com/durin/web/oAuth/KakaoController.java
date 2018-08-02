@@ -65,7 +65,6 @@ public class KakaoController {
 			session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
 			return "redirect:/memos";
 	}
-
 	
 	private KakaoOauthDto getAccessToken(String code){
 		
@@ -87,7 +86,7 @@ public class KakaoController {
 	}
 	
 	private JsonNode getUserInfo(String accessToken) throws IOException{
-		log.debug("앗디벅");
+		log.debug("getUserInfo");
 		System.out.println("accessToken "+accessToken);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_HTML, MediaType.APPLICATION_JSON));

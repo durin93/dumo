@@ -10,6 +10,7 @@ import com.durin.domain.friend.Relation;
 import com.durin.domain.friend.Relations;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
+import com.durin.security.Encrpytion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

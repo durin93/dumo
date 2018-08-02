@@ -67,6 +67,12 @@ public class Result {
 		return errorPart;
 	}
 
+	@Override
+	public String toString() {
+		return "Result [valid=" + valid + ", errorPart=" + errorPart + ", errorMessage=" + errorMessage + ", url=" + url
+				+ "]";
+	}
+
 
 
 }

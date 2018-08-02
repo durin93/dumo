@@ -73,7 +73,6 @@ public class ApiUserController {
 
 	@PostMapping("")
 	public ResponseEntity<Result> create(UserDto userDto) {
-		System.out.println("앗" + userDto.toString());
 		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();

@@ -93,3 +93,5 @@ $(document).on("click" , ".pagination ul li a", function(e){
 	});
 	
 });
+
+
