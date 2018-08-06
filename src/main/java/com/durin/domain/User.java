@@ -108,7 +108,7 @@ public class User extends AbstractEntity {
 	}
 
 	public void matchPassword(String password) throws AuthenticationException{
-		if (!this.password.equals(password)) {
+		if (!Encrpytion.match(password, this.password)) {
 			throw new AuthenticationException("비밀번호가 일치하지 않습니다.");
 		}
 	}
@@ -158,7 +158,7 @@ public class User extends AbstractEntity {
 	public void update(UserDto user) throws AuthenticationException {
 		matchPassword(user.getPassword());
 		this.name = user.getName();
-		this.password = user.getNewPassword();
+		this.password = Encrpytion.encode(user.getNewPassword());
 	}
 
 	@Override
