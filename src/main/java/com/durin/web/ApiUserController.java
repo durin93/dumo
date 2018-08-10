@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,9 @@ import com.durin.dto.UserDto;
 import com.durin.security.HttpSessionUtils;
 import com.durin.service.AttachmentService;
 import com.durin.service.UserService;
+import com.durin.validate.Validator;
+
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -72,7 +77,11 @@ public class ApiUserController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Result> create(UserDto userDto) {
+	public ResponseEntity<Result> create(@Valid UserDto userDto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			Validator v =	Validator.of(bindingResult);
+		}
+	
 		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();

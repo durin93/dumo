@@ -11,10 +11,10 @@ public class UserDto {
 	
 	private String oauthId;
 	
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20, message= "{Size.user.userId}")
     private String userId;
-
-    @Size(min = 6, max = 20)
+    
+    @Size(min = 6, max = 20, message= "{Size.user.password}")
     private String password;
     
     private String newPassword;
