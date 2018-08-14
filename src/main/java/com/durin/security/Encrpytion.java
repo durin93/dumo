@@ -15,6 +15,7 @@ public class Encrpytion {
 	}
 
 	public Encrpytion(PasswordEncoder passwordEncoder) {
+		log.debug("Encryption 생성자");
 		this.passwordEncoder = passwordEncoder;
 	}
 

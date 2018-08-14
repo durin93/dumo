@@ -30,6 +30,7 @@ import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
+import com.durin.security.ExistException;
 import com.durin.security.HttpSessionUtils;
 import com.durin.service.AttachmentService;
 import com.durin.service.UserService;
@@ -77,19 +78,19 @@ public class ApiUserController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Result> create(@Valid UserDto userDto, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+	public ResponseEntity<Result> create(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
+		/*if (bindingResult.hasErrors()) {
 			Validator v =	Validator.of(bindingResult);
-		}
+		}*/
 	
-		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();
 		try {
-			loginUser = userService.add(userDto);
+			User loginUser = userService.add(userDto);
 			headers.setLocation(URI.create(loginUser.generateUrl()));
 			result = Result.success();
-		} catch (Exception e) {
+		} catch (ExistException e) {
+			log.debug("user create error {} ", e.getMessage());
 			result = Result.failById(e.getMessage());
 		}
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);

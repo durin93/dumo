@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,7 @@ import com.durin.security.ExistException;
 @Transactional
 public class UserService {
 
+	private static final Logger log = LoggerFactory.getLogger(UserService.class);
 	private static final String DEFAULT_LABEL = "전체메모";
 
 	@Resource(name = "userRepository")
@@ -39,8 +42,8 @@ public class UserService {
 	@Resource(name = "friendRequestRepository")
 	private FriendRequestRepository friendRequestRepository;
 
-	@Resource(name = "encryption")
-	private Encrpytion encryption;
+//	@Resource(name = "encryption")
+//	private Encrpytion encryption;
 
 	@Value("${file.upload.path}")
 	private String uploadPath;
@@ -54,7 +57,7 @@ public class UserService {
 		return user;
 	}
 
-	public User add(UserDto userDto) throws Exception {
+	public User add(UserDto userDto) {
 		User user = userDto.toUser();
 		checkUser(user.getUserId());
 		User bUser = userRepository.save(user);
@@ -63,7 +66,7 @@ public class UserService {
 		return bUser;
 	}
 
-	public User addOauth(UserDto userDto) throws UnsupportedEncodingException {
+	public User addOauth(UserDto userDto){
 		User user = userDto.oauthToUser();
 		if (checkOauth(user.getOauthId())) {
 			return userRepository.findByOauthId(user.getOauthId()).get();
@@ -113,6 +116,7 @@ public class UserService {
 
 	public void checkUser(String userId) {
 		if (userRepository.findByUserId(userId).isPresent()) {
+			log.debug("userService checkUser 이미 존재하는 아이디");
 			throw new ExistException("이미 존재하는 아이디 입니다.");
 		}
 	}

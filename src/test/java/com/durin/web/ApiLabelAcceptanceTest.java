@@ -34,7 +34,7 @@ public class ApiLabelAcceptanceTest extends AcceptanceTest {
 	@Test
 	public void create() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setAccept(Arrays.asList(MediaType.TEXT_HTML,MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		Map<String, Object> params = new HashMap<>();

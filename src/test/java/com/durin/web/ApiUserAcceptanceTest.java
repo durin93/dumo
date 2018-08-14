@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import com.durin.domain.Result;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
+import com.durin.security.Encrpytion;
 
 
 public class ApiUserAcceptanceTest extends AcceptanceTest{
@@ -31,11 +32,11 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		ResponseEntity<Result> response = basicAuthTemplate().postForEntity("/api/users",
+		
+		ResponseEntity<Result> response = template.postForEntity("/api/users",
 				new UserDto("gram", "1234", "그램"), Result.class);
 
 		log.debug("create test : {}", response.getBody());
-		System.out.println("앗"+response.getBody().toString());
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		assertThat(response.getBody().isValid(), is(true));
 		assertThat(response.getBody().getUrl(), is("/memos"));

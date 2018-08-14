@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.durin.domain.User;
 import com.durin.domain.UserRepository;
+import com.durin.security.Encrpytion;
 
 
 
@@ -28,7 +29,7 @@ public abstract class AcceptanceTest {
 	}
 
 	public TestRestTemplate basicAuthTemplate(User loginUser) {
-		return template.withBasicAuth(loginUser.getUserId(), loginUser.getPassword());
+		return template.withBasicAuth(loginUser.getUserId(), "1234");
 	}
 
 	protected User findByUserId(String userId) {

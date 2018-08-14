@@ -38,7 +38,7 @@ public class Attachment extends AbstractEntity {
 	public Attachment() {
 	}
 
-	public Attachment(User loginUser, String originalName, String uploadPath, String type) throws UnsupportedEncodingException {
+	public Attachment(User loginUser, String originalName, String uploadPath, String type)  {
 		super(0L); //이걸해주어야Getter for property 'id' threw exception 해결
 		this.writer = loginUser;
 		this.originalFileName = originalName;
@@ -47,7 +47,7 @@ public class Attachment extends AbstractEntity {
 		this.type = type;
 	}
 	
-	public static Attachment ofProfile(User loginUser, String originalName, String uploadPath) throws UnsupportedEncodingException {
+	public static Attachment ofProfile(User loginUser, String originalName, String uploadPath) {
 		return new Attachment(loginUser, originalName, uploadPath, PROFILE_TYPE);
 	}
 
