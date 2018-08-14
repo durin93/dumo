@@ -1,7 +1,7 @@
-package com.durin.web;
-
-public class KakaoAcceptanceTest extends AcceptanceTest{
-
-	
-	
-}
+//package com.durin.web;
+//
+//public class KakaoAcceptanceTest extends AcceptanceTest{
+//
+//	
+//	
+//}
