@@ -1,6 +1,7 @@
 $(".search-btn").on("click", function(e){
 	e.preventDefault();
 	var labelId = $(".range-select option:selected").val();
+
 	var search = $(".search-select option:selected").val();
 	var searchVal = $(".input-search").val();
 	var url = $(".search-btn").attr("href")+"/"+labelId;
