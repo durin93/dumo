@@ -9,6 +9,8 @@
 	
 	<logger name="com.durin" level="DEBUG" />
 	
+		
+	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
