@@ -5,5 +5,5 @@ DUMO (MODU MEMO)
   - memo
   - link 
   - friend
-  - kakao Join
+  - kakao Join 
 ===================================
