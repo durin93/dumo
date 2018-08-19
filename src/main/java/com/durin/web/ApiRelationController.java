@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.durin.aspect.LogExecutionTime;
 import com.durin.domain.User;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
@@ -25,6 +26,8 @@ public class ApiRelationController {
 	@Resource(name = "friendRequestService")
 	private FriendRequestService friendRequestService;
 	
+	
+	@LogExecutionTime
 	@PostMapping("request")
 	public ResponseEntity<FriendRequestDto> sendFriendRequest(@LoginUser User loginUser, String receiverId) {
 		FriendRequestDto result;
@@ -36,13 +39,14 @@ public class ApiRelationController {
 		return new ResponseEntity<FriendRequestDto>(result,	HttpStatus.CREATED);
 	}
 
-	
+	@LogExecutionTime
 	@PostMapping("accept")
 	public ResponseEntity<RelationDto> acceptFriendRequest(@LoginUser User loginUser, String senderId) {
 		RelationDto relationDto = friendRequestService.acceptFriendRequest(loginUser, senderId);
 		return new ResponseEntity<RelationDto>(relationDto,HttpStatus.OK);
 	}
 	
+	@LogExecutionTime
 	@DeleteMapping("cancel/{id}")
 	public ResponseEntity<Void> cancleFriendRequest(@LoginUser User loginUser, @PathVariable Long id) {
 		friendRequestService.cancelFriendRequest(id);
