@@ -2,7 +2,6 @@ package com.durin.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class Encrpytion {
@@ -16,7 +15,7 @@ public class Encrpytion {
 
 	public Encrpytion(PasswordEncoder passwordEncoder) {
 		log.debug("Encryption 생성자");
-		this.passwordEncoder = passwordEncoder;
+		Encrpytion.passwordEncoder = passwordEncoder;
 	}
 
 	
