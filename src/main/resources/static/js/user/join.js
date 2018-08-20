@@ -1,17 +1,6 @@
 
 $(".join-form input[type=submit]").on("click", function(e) {
 	e.preventDefault();
-
-//	var userId = $(".id").val();
-//	var name = $(".name").val();
-//	var password = $(".password").val();
-//	var oauthId = $(".oauthId").val();
-//	var profileImg = $(".profileImg").val();
-//	var division =  "dumo";
-//	if(oauthId!=null){
-//		 division ="kakao";
-//	}
-//	
 	var queryString = $(".join-form").serialize();
 	
 	var url = $(".join-form").attr("action");

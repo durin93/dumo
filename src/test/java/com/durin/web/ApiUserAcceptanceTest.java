@@ -15,11 +15,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import com.durin.domain.Result;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
-import com.durin.security.Encrpytion;
 
 
 public class ApiUserAcceptanceTest extends AcceptanceTest{
@@ -30,11 +31,16 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 	public void create() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
+		MultiValueMap<String, String> queryString = new LinkedMultiValueMap<>();
+		queryString.add("userId", "gram");
+		queryString.add("password", "1234");
+		queryString.add("name", "이그램");
 		
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String,String>>(queryString,headers);
 		ResponseEntity<Result> response = template.postForEntity("/api/users",
-				new UserDto("gram", "1234", "그램"), Result.class);
+				request, Result.class);
 
 		log.debug("create test : {}", response.getBody());
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));

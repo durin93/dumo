@@ -81,6 +81,8 @@ public class ApiUserController {
 	@PostMapping("")
 	public ResponseEntity<Result> create(@Valid UserDto userDto, BindingResult bindingResult) {
 	
+		log.debug("create user {}",userDto.toString());
+		
 		Result result;
 		HttpHeaders headers = new HttpHeaders();
 		try {
@@ -92,6 +94,7 @@ public class ApiUserController {
 			log.debug("user create error {} ", e.getMessage());
 			result = Result.fail(e.getMessage(),Result.ERROR_ID);
 		} catch (ValidationException e) {
+			log.debug("user create validate error {} ", e.getMessage());
 			result = Result.fail(Validator.of(bindingResult));
 		}
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
