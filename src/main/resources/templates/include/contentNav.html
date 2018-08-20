@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="/css/content-nav.css" />
+
+<div class="content-nav">
+
+
+	<div class="content-nav-function">
+		<ul>
+			<li class="info menu-btn">
+			
+			</li>
+			<li><a href="#"><input type="radio"/></a></li>
+			<li><a href="#">삭제</a></li>
+			<li><button class="backup-btn">원래대로</button></li>
+			<li><button class="save-btn">저장</button></li>
+					</ul>
+			
+	</div>
+<!-- {{#loginUser}} -->
+	<div class="content-nav-header">
+		<ul>
+			<li>
+			<select class="range-select">
+			<option value="1"  selected="selected">전체메모</option>
+			{{#labels}}
+			<option value="{{id}}" >{{title}}</option>
+			{{/labels}}
+			</select>
+			<select class="search-select">
+			<option value="title" selected="selected">제목</option>
+			<option value="content" >내용</option>
+			<option value="all" >제목+내용</option>
+			</select>
+			</li>
+			<li>
+			<input class="input-search" type="text" placeholder="검색하세요." />
+			</li>
+			<li class="search-li margin-0 menu-btn" >
+			<a class="search-btn" href="/memos"><img class="search" alt="검색"	src="/image/content/search.png"></a>
+			</li>
+		</ul>
+		<div class="pagination">
+		<ul>
+		
+		</ul>
+		</div>
+	</div>
+<!-- 		{{/loginUser}} -->
+</div>
+
+<script type="text/x-handlebars-template" id="memo-content-nav">
+<span class="span-name">전체 메모</span>
+<span class="bar"></span>
+<span class="memo-count">\{{memoCount}}</span>
+</script>
+<script type="text/x-handlebars-template" id="link-content-nav">
+<span class="span-name">전체 링크</span>
+<span class="bar"></span>
+<span class="memo-count">\{{linkCount}}</span>
+</script>

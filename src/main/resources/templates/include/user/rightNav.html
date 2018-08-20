@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="/css/user/right-nav.css" />
+
+
+<div class="right-navBar">
+	<div class="main-category">
+		<div class="friend-list">
+		<span>{{friends.size}} Friends</span>
+		</div>
+		<ul class="right-label-list-ul">
+			{{#friends.relations}}
+			<li>
+			<div class="user-list-li">
+			<img class="user-list-img" alt="메모아이콘"
+					src="{{profileImg}}"/><a href="#" class="leftNav-a left-link link-update">{{friend.userId}}({{friend.name}})</a>
+			</div>		
+			</li>
+			{{/friends.relations}}
+		</ul>
+	</div>
+</div>

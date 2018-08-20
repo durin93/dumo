@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/css/left-nav.css" />
+
+<div class="left-navBar">
+
+	<div class="write-memo-btn-div">
+		<a id="write-btn" class="write-memo-btn" href="/api/memos/1">새 메모쓰기</a>
+	</div>
+
+	<div class="main-category">
+	
+	
+	</div>
+</div>
+
+<script type="text/x-handlebars-template" id="memo-left-nav">
+<div class="make-label-div">
+		<img class="leftNav-click-img" alt="메모아이콘"
+					src="/image/memo/label/labeladdicon.png"/>
+		<a href="/api/labels"  class="leftNav-a make-label">새 라벨 만들기</a>
+		</div>
+		<ul class="label-list-ul">
+		
+		\{{#labels}}
+		<li>
+		<div class="one-label">
+		<a href="/api/memos/\{{id}}" class="leftNav-a left-link link-memo">
+		<img class="leftNav-label-img" alt="메모아이콘"
+					src="/image/memo/label/labelicon.png"/>
+		</a>
+		<input class="label-action" type="hidden"  value="/api/labels/\{{id}}"/>
+		<input class="label-title" type="text" name="title" value="\{{title}}"/>
+		<a href="/api/labels/\{{id}}" class="label-delete"><img class="label-delete-img" alt="메모아이콘"
+					src="/image/memo/label/labeldelete.png"></a>			
+		</div>
+		</li>
+		\{{/labels}}
+</script>
+<script type="text/x-handlebars-template" id="link-left-nav">
+	<ul>
+		<li><a class="left-link link-link" href="/links">전체링크</a></li>
+	</ul>
+</script>

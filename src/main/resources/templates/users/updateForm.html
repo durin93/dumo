@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모두의 두모</title>
+<link rel="stylesheet" href="/css/login.css" />
+<link rel="stylesheet" href="/css/user/update.css" />
+<script src="/js/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+
+{{#loginUser}}
+{{> include/header}}
+{{> include/user/leftNav}}
+
+
+<div class="login-container">
+	<div class="update-title"><span>UPDATE</span></div>
+	<form class="update-form" method="post" action="/api/users" enctype="multipart/form-data" accept-charset="UTF-8">
+	<div style="text-align: center;">		
+	<img class="profile-img" alt="메모아이콘" src="{{profileImg}}"/>
+	<input type="file" class="file" name="file"/>
+	</div>
+	<div class="input-div">		
+		<input class="id" type="text" name="userId" value="{{userId}}" readonly="readonly" /> 
+		<h2 class="errorMessage errorId"></h2>
+	</div>
+	<div class="input-div">		
+		<input class="name" type="text" name="name"  value="{{name}}" required="required"/> 
+		<h2 class="errorMessage errorName"></h2>
+	</div>
+	
+	<div class="input-div">		
+		<input  class="password" type="password" name="password" placeholder="현재 비밀번호" required="required"/> 
+		<h2 class="errorMessage errorPassword"></h2>
+	</div>
+	
+	<div class="input-div">		
+		<input  class="newPassword" type="password" name="newPassword" placeholder="새 비밀번호" required="required"/> 
+		<h2 class="errorMessage errorNewPassword"></h2>
+	</div>
+
+	<div class="input-div">		
+		<input  class="newPassword2" type="password" name="newPassword2" placeholder="새 비밀번호 확인" required="required"/> 
+		<h2 class="errorMessage errorNewPassword2"></h2>
+	</div>
+	
+
+	<div class="input-div">		
+		<input type="submit" name="submit" value="정보수정"/>
+	</div>
+	</form>
+	
+	
+</div>
+{{/loginUser}}
+
+<script src="/js/user/update.js"></script>
+</body>
+</html>

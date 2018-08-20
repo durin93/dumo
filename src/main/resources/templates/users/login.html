@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>모두의 두모</title>
+<link rel="stylesheet" href="/css/login.css" />
+<script src="/js/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+
+
+	{{> include/loginHeader}}
+	<div class="login-container">
+		<form class="login-form" method="post" action="/api/users/login">
+			<div class="input-div">
+				<input type="text" name="userId" placeholder="아이디" />
+				<h2 class="errorMessage errorId"></h2>
+
+			</div>
+			<div class="input-div">
+				<input type="password" name="password" placeholder="비밀번호" />
+				<h2 class="errorMessage errorPassword"></h2>
+			</div>
+
+			<div class="input-div">
+				<input type="submit" name="submit" value="로그인" />
+			</div>
+		</form>
+		<hr class="login-hr" />
+
+		<div class="menu-div">
+			<ul>
+				<li><a>아이디 찾기</a><span class="bar">ㅣ</span></li>
+				<li><a>비밀번호 찾기</a><span class="bar">ㅣ</span></li>
+				<li><a class="join-btn" href="/api/users">회원가입</a></li>
+				<li class="mt-5per"><a class="kakao-login-btn " href="https://kauth.kakao.com/oauth/authorize?client_id=dd746ae4467778b3ffeb30138d366024&redirect_uri=http://localhost:8080/api/kakao/oauth&response_type=code">
+						<img
+						src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg"
+						width="300" />
+				</a></li>
+			</ul>
+		</div>  
+	</div>
+	
+	<script src="/js/user/login.js"></script>
+	<script src="/js/oAuth2/kakao.js"></script>
+</body>
+</html>

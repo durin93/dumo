@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모두의 두모</title>
+<link rel="stylesheet" href="/css/login.css" />
+<script src="/js/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+
+
+
+{{> include/loginHeader}}
+<div class="login-container">
+	<form class="join-form" method="post" action="/api/users">
+	<div class="input-div">		
+		<input class="id" type="text" name="userId" placeholder="아이디"  required="required"/> 
+		<h2 class="errorMessage errorId"></h2>
+	</div>
+	<div class="input-div">		
+		<input class="name" type="text" name="name" placeholder="닉네임" value="{{name}}" required="required"/> 
+		<h2 class="errorMessage errorNickName"></h2>
+	</div>
+	<div class="input-div">		
+		<input  class="password" type="password" name="password" placeholder="비밀번호" required="required"/> 
+		<h2 class="errorMessage errorPassword"></h2>
+	</div>
+
+	<div class="input-div">		
+		<input type="submit" name="submit" value="회원가입"/>
+	</div>
+	</form>
+	
+	
+</div>
+<script src="/js/user/join.js"></script>
+</body>
+</html>
