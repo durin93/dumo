@@ -21,10 +21,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.durin.domain.User;
 import com.durin.dto.KakaoOauthDto;
+import com.durin.dto.KakaoUserDto;
 import com.durin.security.HttpSessionUtils;
 import com.durin.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("/api/kakao")
@@ -45,20 +45,13 @@ public class KakaoController {
 		log.info("KakaoOauthDto " + response);
 
 		JsonNode userInfo = getUserInfo(response.getAccess_token());
-
-		String oauthId = userInfo.path("id").asText();
-		JsonNode properties = userInfo.path("properties");
-		String profileImg = properties.path("profile_image").asText();
-		String nickname = properties.path("nickname").asText();
-
-		model.addAttribute("oauthId", oauthId);
-		model.addAttribute("name", nickname);
-		model.addAttribute("profileImg", profileImg);
+		model.addAttribute("kakaoUser", new KakaoUserDto(userInfo));
 
 		User user = null;
 		try {
-			user = userService.existOauth(oauthId);
+			user = userService.existOauth(userInfo.path("id").asText());
 		} catch (NullPointerException e) {
+			model.addAttribute("kakaoUser", new KakaoUserDto(userInfo));
 			return "/users/oAuthForm";
 		}
 		session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
