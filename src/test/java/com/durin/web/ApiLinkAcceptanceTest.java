@@ -3,7 +3,6 @@ package com.durin.web;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.durin.domain.Link;
 import com.durin.domain.LinkRepository;
 import com.durin.dto.LinkDto;
+
+import support.test.HttpHeaderBuilder;
 
 
 public class ApiLinkAcceptanceTest extends AcceptanceTest {
@@ -33,21 +33,14 @@ public class ApiLinkAcceptanceTest extends AcceptanceTest {
 
 	@Test
 	public void create() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		
 		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
-
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		assertThat(response.getBody().getTitle(), is("Google"));
 	}
 
 	@Test
 	public void update() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpHeaders headers = HttpHeaderBuilder.allJsonData();
 
 		Map<String, Object> params = new HashMap<>();
 
@@ -66,14 +59,8 @@ public class ApiLinkAcceptanceTest extends AcceptanceTest {
 	
 	@Test
 	public void delete() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
 		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
-		
 		basicAuthTemplate().delete("/api/links/"+response.getBody().getId());
-		
 		assertThat(linkRepository.findById(response.getBody().getId()).isPresent(), is(false));
 }
 	

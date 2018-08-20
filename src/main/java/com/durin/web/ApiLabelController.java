@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.security.sasl.AuthenticationException;
+import javax.naming.AuthenticationException;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

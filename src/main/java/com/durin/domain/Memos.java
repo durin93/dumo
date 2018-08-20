@@ -1,6 +1,7 @@
 package com.durin.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -15,7 +16,7 @@ public class Memos {
 	private List<Memo> memos = new ArrayList<>();
 
 	public List<Memo> getMemos() {
-		return memos;
+		return Collections.unmodifiableList(memos);
 	}
 	public int AllCount() {
 		return memos.size();

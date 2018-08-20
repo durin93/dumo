@@ -3,7 +3,6 @@ package com.durin.web;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,14 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.durin.domain.Result;
 import com.durin.dto.SearchUserDto;
-import com.durin.dto.UserDto;
+
+import support.test.HttpHeaderBuilder;
 
 
 public class ApiUserAcceptanceTest extends AcceptanceTest{
@@ -29,9 +28,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 
 	@Test
 	public void create() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpHeaders headers = HttpHeaderBuilder.jsonAndFormData();
 
 		MultiValueMap<String, String> queryString = new LinkedMultiValueMap<>();
 		queryString.add("userId", "gram");
@@ -50,9 +47,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 
 	@Test
 	public void login() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpHeaders headers = HttpHeaderBuilder.allJsonData();
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("userId", "lsc109");

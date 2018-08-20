@@ -4,7 +4,6 @@ package com.durin.web;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,26 +15,25 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.durin.domain.Label;
 import com.durin.domain.LabelRepository;
 
+import support.test.HttpHeaderBuilder;
+
 
 public class ApiLabelAcceptanceTest extends AcceptanceTest {
 
 	private static final Logger log = LoggerFactory.getLogger(ApiLabelAcceptanceTest.class);
-
 	
 	@Autowired
 	private LabelRepository labelRepository;
 
 	@Test
 	public void create() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.TEXT_HTML,MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		HttpHeaders headers = HttpHeaderBuilder.allJsonData();
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("title", "라벨제목");
@@ -48,9 +46,7 @@ public class ApiLabelAcceptanceTest extends AcceptanceTest {
 
 	@Test
 	public void update() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpHeaders headers = HttpHeaderBuilder.allJsonData();
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("title", "라벨제목");

@@ -1,5 +1,6 @@
 package com.durin.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -18,6 +19,7 @@ public class Memo extends AbstractEntity {
 	@JsonIgnore
 	private User writer;
 
+	@Column(nullable=false)
 	private String title;
 
 	@Lob

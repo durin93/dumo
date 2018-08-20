@@ -2,9 +2,9 @@ package com.durin.dto;
 
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.durin.domain.User;
-import com.durin.security.Encrpytion;
 
 
 public class UserDto {
@@ -29,23 +29,28 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String userId, String password, String name) {
-        super();
+	
+	public UserDto(String userId, String password, String name) {
         this.userId = userId;
         this.password = password;
+        this.newPassword = password;
         this.name = name;
+	}
+    
+    public UserDto(String userId, String password, String newPassword, String name) {
+        this(userId,password,name);
+        this.newPassword = newPassword;
     }
     
 
-	public UserDto(String userId, String password, String name, String filePath) {
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
+	public UserDto(String userId, String password, String newPassword, String name, String filePath) {
+		this(userId,password,newPassword,name);
 		this.profileImg = filePath;
 	}
 	
 	
-	
+
+
 	public String getOauthId() {
 		return oauthId;
 	}
@@ -95,12 +100,12 @@ public class UserDto {
 		this.profileImg = profileImg;
 	}
 
-	public User toUser() {
-        return new User(null, this.userId, Encrpytion.encode(this.password), this.name, "dumo");
+	public User toUser(PasswordEncoder passwordEncoder) {
+        return new User(null, this.userId, passwordEncoder.encode(this.password), this.name, "dumo");
     }
 
-	public User oauthToUser() {
-		return new User(this.oauthId, this.userId, Encrpytion.encode(this.password), this.name, "kakao");
+	public User oauthToUser(PasswordEncoder passwordEncoder) {
+		return new User(this.oauthId, this.userId, passwordEncoder.encode(this.password), this.name, "kakao");
 	}
 
 

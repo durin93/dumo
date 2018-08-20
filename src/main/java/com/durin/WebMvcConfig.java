@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.durin.security.BasicAuthInterceptor;
-import com.durin.security.Encrpytion;
+//import com.durin.security.Encrpytion;
 import com.durin.security.LoginUserHandlerMethodArgumentResolver;
 
 @Configuration
@@ -57,13 +57,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public PasswordEncoder 	passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	@Bean
-	public Encrpytion encryption() {
-		return new Encrpytion(passwordEncoder());
-	}
-	
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(basicAuthInterceptor());

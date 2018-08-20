@@ -24,6 +24,8 @@ import com.durin.domain.friend.RelationRepository;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
 
+import support.test.HttpHeaderBuilder;
+
 
 public class ApiRelationAcceptanceTest extends AcceptanceTest {
 
@@ -42,9 +44,7 @@ public class ApiRelationAcceptanceTest extends AcceptanceTest {
 	
 	@Test
 	public void request() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpHeaders headers = HttpHeaderBuilder.jsonAndFormData();
 
 		User receiver = userRepository.findByUserId("lsc209").get();
 	
@@ -65,9 +65,7 @@ public class ApiRelationAcceptanceTest extends AcceptanceTest {
 	
 	@Test
 	public void accept() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpHeaders headers = HttpHeaderBuilder.jsonAndFormData();
 
 		User receiver = userRepository.findByUserId("lsc309").get();
 		

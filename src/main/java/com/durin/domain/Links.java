@@ -1,6 +1,7 @@
 package com.durin.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -15,10 +16,10 @@ public class Links {
 	private List<Link> links = new ArrayList<>();
 
 	public List<Link> getLinks() {
-		return links;
+		return Collections.unmodifiableList(links);
 	}
 	
-	public int AllCount() {
+	public int allCount() {
 		return links.size();
 	}
 	

@@ -2,13 +2,14 @@ package com.durin.domain;
 
 import java.util.List;
 
+import javax.naming.AuthenticationException;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.security.sasl.AuthenticationException;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +26,7 @@ public class Label extends AbstractEntity {
 	@OrderBy("createDate DESC")
 	private List<Memo> memos;
 	
+	@Column(nullable=false)
 	private String title;
 
 	public Label() {

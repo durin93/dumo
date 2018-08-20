@@ -26,9 +26,7 @@ public class Result {
 	}
 	
 	public Result(boolean valid, String errorMessage, String url, String errorPart) {
-		this.valid = valid;
-		this.errorMessage = errorMessage;
-		this.url = url;
+		this(valid,errorMessage,url);
 		this.errorPart = errorPart;
 	}
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.security.sasl.AuthenticationException;
+import javax.naming.AuthenticationException;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
