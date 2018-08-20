@@ -2,7 +2,6 @@ package com.durin.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
@@ -23,7 +22,6 @@ import com.durin.domain.UserRepository;
 import com.durin.domain.friend.FriendRequestRepository;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
-import com.durin.security.Encrpytion;
 import com.durin.security.ExistException;
 
 @Service
