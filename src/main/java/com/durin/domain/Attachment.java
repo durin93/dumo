@@ -1,6 +1,5 @@
 package com.durin.domain;
 
-import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 import javax.persistence.Column;

@@ -34,6 +34,7 @@ import com.durin.security.ExistException;
 import com.durin.security.HttpSessionUtils;
 import com.durin.service.AttachmentService;
 import com.durin.service.UserService;
+import com.durin.validate.ValidationException;
 import com.durin.validate.Validator;
 
 
@@ -52,7 +53,7 @@ public class ApiUserController {
 
 	@GetMapping("")
 	public ResponseEntity<Result> joinForm() {
-		return new ResponseEntity<Result>(Result.successJoinForm(), HttpStatus.OK);
+		return new ResponseEntity<Result>(Result.success(Result.JOIN_PAGE), HttpStatus.OK);
 	}
 
 	@PostMapping("login")
@@ -62,11 +63,11 @@ public class ApiUserController {
 			User loginUser = userService.login(data.get("userId"), data.get("password"));
 			
 			session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-			result = Result.success();
+			result = Result.success(Result.MAIN_PAGE);
 		} catch (NullPointerException e) {
-			result = Result.failById(e.getMessage());
+			result = Result.fail(e.getMessage(),Result.ERROR_ID);
 		} catch (AuthenticationException e) {
-			result = Result.faildByPassword(e.getMessage());
+			result = Result.fail(e.getMessage(),Result.ERROR_PASSWORD);
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}
@@ -74,24 +75,24 @@ public class ApiUserController {
 	@GetMapping("logout")
 	public ResponseEntity<Result> logout(HttpSession session) {
 		session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
-		return new ResponseEntity<Result>(Result.success(), HttpStatus.OK);
+		return new ResponseEntity<Result>(Result.success(Result.MAIN_PAGE), HttpStatus.OK);
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Result> create(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
-		/*if (bindingResult.hasErrors()) {
-			Validator v =	Validator.of(bindingResult);
-		}*/
+	public ResponseEntity<Result> create(@Valid UserDto userDto, BindingResult bindingResult) {
 	
 		Result result;
 		HttpHeaders headers = new HttpHeaders();
 		try {
+			checkValidator(bindingResult);
 			User loginUser = userService.add(userDto);
 			headers.setLocation(URI.create(loginUser.generateUrl()));
-			result = Result.success();
+			result = Result.success(Result.MAIN_PAGE);
 		} catch (ExistException e) {
 			log.debug("user create error {} ", e.getMessage());
-			result = Result.failById(e.getMessage());
+			result = Result.fail(e.getMessage(),Result.ERROR_ID);
+		} catch (ValidationException e) {
+			result = Result.fail(Validator.of(bindingResult));
 		}
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}
@@ -103,7 +104,7 @@ public class ApiUserController {
 		loginUser = userService.addOauth(userDto);
 		
 		session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-		result = Result.success();
+		result = Result.success(Result.MAIN_PAGE);
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}
 
@@ -119,9 +120,9 @@ public class ApiUserController {
 		try {
 			loginUser = userService.update(userDto, file);
 			headers.setLocation(URI.create(loginUser.generateUrl()));
-			result = Result.success();
+			result = Result.success(Result.MAIN_PAGE);
 		} catch (AuthenticationException e) {
-			result = Result.faildByPassword(e.getMessage());
+			result = Result.fail(e.getMessage(),Result.ERROR_PASSWORD);
 		}
 		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
 	}
@@ -140,6 +141,12 @@ public class ApiUserController {
 		} catch (NullPointerException e) {
 			log.debug("user search fail: {}", userId);
 			return new ResponseEntity<SearchUserDto>(SearchUserDto.noData(), HttpStatus.OK);
+		}
+	}
+	
+	public void checkValidator(BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			throw new ValidationException();
 		}
 	}
 

@@ -89,9 +89,9 @@ public class ApiMemoController {
 		Result result;
 		try {
 			memoService.delete(loginUser, id);
-			result = Result.success();
+			result = Result.success(Result.MAIN_PAGE);
 		} catch (AuthenticationException e) {
-			result = Result.failById(e.getMessage());
+			result = Result.fail(e.getMessage(),Result.ERROR_ID);
 		}
 		return new ResponseEntity<Result>(result, HttpStatus.OK);
 	}

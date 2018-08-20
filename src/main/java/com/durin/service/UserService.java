@@ -42,9 +42,6 @@ public class UserService {
 	@Resource(name = "friendRequestRepository")
 	private FriendRequestRepository friendRequestRepository;
 
-//	@Resource(name = "encryption")
-//	private Encrpytion encryption;
-
 	@Value("${file.upload.path}")
 	private String uploadPath;
 
@@ -95,9 +92,7 @@ public class UserService {
 			throws AuthenticationException, IllegalStateException, IOException {
 		User user = userRepository.findByUserId(userDto.getUserId()).orElseThrow(NullPointerException::new);
 		user.update(userDto);
-
 		profileUpdate(user, file);
-
 		return user;
 	}
 

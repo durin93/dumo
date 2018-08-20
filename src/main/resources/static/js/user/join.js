@@ -28,8 +28,14 @@ $(".join-form input[type=submit]").on("click", function(e) {
 		},
 		success : function(data) {
 				if(data.errorPart=="id"){
+					console.log("id 유효성오류"+data.errorMessage);
 					$(".errorMessage").html("");
 					$(".errorId").html(data.errorMessage);
+				}
+				else if(data.errorPart=="password"){
+					console.log("password 유효성오류"+data.errorMessage);
+					$(".errorMessage").html("");
+					$(".errorPassword").html(data.errorMessage);
 				}
 				else{
 				console.log(data.url);
