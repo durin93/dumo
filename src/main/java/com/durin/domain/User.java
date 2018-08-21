@@ -3,14 +3,16 @@ package com.durin.domain;
 import java.util.List;
 
 import javax.naming.AuthenticationException;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.durin.domain.friend.Relation;
 import com.durin.domain.friend.Relations;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
-import com.durin.security.Encrpytion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -18,14 +20,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User extends AbstractEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
 
+	@Column(nullable=false)
     private String division;
     
     private String oauthId;
-    
+
+	@Column(nullable=false)
 	private String userId;
 
+	@Column(nullable=false)
 	private String password;
 
+	@Column(nullable=false)
 	private String name;
 	
 	@Embedded
@@ -40,36 +46,18 @@ public class User extends AbstractEntity {
 	public User() {
 	}
 
-    public User(long id, String userId, String password, String name) {
-        super(id);
+    public User(String userId, String password, String name) {
+        super(0L);
         this.userId = userId;
         this.password = password;
         this.name = name;
     }
 
-    public User(long id, String userId, String password, String name, String division) {
-    	super(id);
-    	this.userId = userId;
-    	this.password = password;
-    	this.name = name;
-    	this.division = division;
-    }
-
-    public User(long id, String oauthId, String userId, String password, String name, String division) {
-    	super(id);
+    public User(String oauthId, String userId, String password, String name, String division) {
+    	this(userId,password,name);
     	this.oauthId = oauthId;
-    	this.userId = userId;
-    	this.password = password;
-    	this.name = name;
     	this.division = division;
     }
-    
-
-	public User(String oauthId, String userId, String password,String name, String division) {
-		this(0L, oauthId, userId, password, name,division);
-	}
-
-	
 	
 	public String getOauthId() {
 		return oauthId;
@@ -107,8 +95,8 @@ public class User extends AbstractEntity {
 		return relations.getRelations();
 	}
 
-	public void matchPassword(String password) throws AuthenticationException{
-		if (!Encrpytion.match(password, this.password)) {
+	public void matchPassword(String password, PasswordEncoder passwordEncoder) throws AuthenticationException{
+		if (!passwordEncoder.matches(password, this.password)) {
 			throw new AuthenticationException("비밀번호가 일치하지 않습니다.");
 		}
 	}
@@ -126,18 +114,15 @@ public class User extends AbstractEntity {
 		return new SearchUserDto(userId, name, saveFileName, getId());
 	}
 	
-	
 	public int getMemoCount() {
-		return labels.AllMemoCount();
+		return labels.allMemoCount();
 	}
 	
 	public int getLinkCount() {
-		return links.AllCount();
+		return links.allCount();
 	}
 	
-	public String generateUrl() {
-		return String.format("/api/users/%d", getId());
-	}
+
 	@JsonIgnore
 	public boolean isGuestUser() {
 		return false;
@@ -155,10 +140,10 @@ public class User extends AbstractEntity {
 	}
 
 	
-	public void update(UserDto user) throws AuthenticationException {
-		matchPassword(user.getPassword());
+	public void update(UserDto user, PasswordEncoder passwordEncoder) throws AuthenticationException {
+		matchPassword(user.getPassword(),passwordEncoder);
 		this.name = user.getName();
-		this.password = Encrpytion.encode(user.getNewPassword());
+		this.password = passwordEncoder.encode(user.getNewPassword());
 	}
 
 	@Override

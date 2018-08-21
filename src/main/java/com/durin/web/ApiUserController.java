@@ -2,7 +2,6 @@ package com.durin.web;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -44,7 +43,7 @@ import com.durin.validate.Validator;
 public class ApiUserController {
 
 	private static final Logger log = LoggerFactory.getLogger(ApiUserController.class);
-
+	
 	@Resource(name = "userService")
 	private UserService userService;
 
@@ -87,8 +86,7 @@ public class ApiUserController {
 		HttpHeaders headers = new HttpHeaders();
 		try {
 			checkValidator(bindingResult);
-			User loginUser = userService.add(userDto);
-			headers.setLocation(URI.create(loginUser.generateUrl()));
+			userService.add(userDto);
 			result = Result.success(Result.MAIN_PAGE);
 		} catch (ExistException e) {
 			log.debug("user create error {} ", e.getMessage());
@@ -117,12 +115,10 @@ public class ApiUserController {
 	public ResponseEntity<Result> update(@RequestPart("file") MultipartFile file, UserDto userDto)
 			throws IllegalStateException, IOException {
 
-		User loginUser;
 		Result result;
 		HttpHeaders headers = new HttpHeaders();
 		try {
-			loginUser = userService.update(userDto, file);
-			headers.setLocation(URI.create(loginUser.generateUrl()));
+			userService.update(userDto, file);
 			result = Result.success(Result.MAIN_PAGE);
 		} catch (AuthenticationException e) {
 			result = Result.fail(e.getMessage(),Result.ERROR_PASSWORD);

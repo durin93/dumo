@@ -2,7 +2,6 @@ package com.durin.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
@@ -11,6 +10,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +23,6 @@ import com.durin.domain.UserRepository;
 import com.durin.domain.friend.FriendRequestRepository;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
-import com.durin.security.Encrpytion;
 import com.durin.security.ExistException;
 
 @Service
@@ -42,6 +41,9 @@ public class UserService {
 	@Resource(name = "friendRequestRepository")
 	private FriendRequestRepository friendRequestRepository;
 
+	@Resource(name = "passwordEncoder")
+	private PasswordEncoder passwordEncoder;
+	
 	@Value("${file.upload.path}")
 	private String uploadPath;
 
@@ -50,12 +52,12 @@ public class UserService {
 
 	public User login(String userId, String password) throws AuthenticationException {
 		User user = userRepository.findByUserId(userId).orElseThrow(() -> new NullPointerException("존재하지 않는 아이디입니다."));
-		user.matchPassword(password);
+		user.matchPassword(password,passwordEncoder);
 		return user;
 	}
 
 	public User add(UserDto userDto) {
-		User user = userDto.toUser();
+		User user = userDto.toUser(passwordEncoder);
 		checkUser(user.getUserId());
 		User bUser = userRepository.save(user);
 		labelRepository.save(new Label(bUser, DEFAULT_LABEL));
@@ -64,7 +66,7 @@ public class UserService {
 	}
 
 	public User addOauth(UserDto userDto){
-		User user = userDto.oauthToUser();
+		User user = userDto.oauthToUser(passwordEncoder);
 		if (checkOauth(user.getOauthId())) {
 			return userRepository.findByOauthId(user.getOauthId()).get();
 		}
@@ -91,7 +93,7 @@ public class UserService {
 	public User update(UserDto userDto, MultipartFile file)
 			throws AuthenticationException, IllegalStateException, IOException {
 		User user = userRepository.findByUserId(userDto.getUserId()).orElseThrow(NullPointerException::new);
-		user.update(userDto);
+		user.update(userDto,passwordEncoder);
 		profileUpdate(user, file);
 		return user;
 	}

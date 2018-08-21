@@ -52,10 +52,6 @@ public class MemoService {
 		return labelRepository.findById(labelId).orElseThrow(NullPointerException::new);
 	}
 
-	public List<Memo> getMemos(Long labelId) {
-		return 	memoRepository.findByLabel(findLabelById(labelId));
-	}
-
 	public int allMemoCount(User loginUser) {
 		return 	memoRepository.findByWriter(loginUser).size();
 	}
