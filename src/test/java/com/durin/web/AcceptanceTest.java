@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.durin.domain.User;
 import com.durin.domain.UserRepository;
@@ -17,6 +18,10 @@ import com.durin.domain.UserRepository;
 public abstract class AcceptanceTest {
 	private static final String DEFAULT_LOGIN_USER = "lsc109";
 
+	
+	@Autowired
+	protected WebTestClient webTestClient;
+	
 	@Autowired
 	protected TestRestTemplate template;
 

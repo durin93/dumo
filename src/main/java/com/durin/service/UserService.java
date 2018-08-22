@@ -57,6 +57,7 @@ public class UserService {
 	}
 
 	public User add(UserDto userDto) {
+		log.debug("userService add {}",userDto.toString());
 		User user = userDto.toUser(passwordEncoder);
 		checkUser(user.getUserId());
 		User bUser = userRepository.save(user);

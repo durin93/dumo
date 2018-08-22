@@ -62,6 +62,48 @@ public class Result {
 	public String getErrorPart() {
 		return errorPart;
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((errorMessage == null) ? 0 : errorMessage.hashCode());
+		result = prime * result + ((errorPart == null) ? 0 : errorPart.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + (valid ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Result other = (Result) obj;
+		if (errorMessage == null) {
+			if (other.errorMessage != null)
+				return false;
+		} else if (!errorMessage.equals(other.errorMessage))
+			return false;
+		if (errorPart == null) {
+			if (other.errorPart != null)
+				return false;
+		} else if (!errorPart.equals(other.errorPart))
+			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
+		if (valid != other.valid)
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
