@@ -2,6 +2,7 @@ package com.durin.web;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -16,11 +18,12 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import com.durin.domain.Result;
 import com.durin.dto.SearchUserDto;
+import com.durin.service.UserService;
 
 
 public class ApiUserAcceptanceTest extends AcceptanceTest{
 	private static final Logger log = LoggerFactory.getLogger(ApiUserAcceptanceTest.class);
-
+	
 	@Test
 	public void create() {
 		MultiValueMap<String, String> queryString = new LinkedMultiValueMap<>();
@@ -53,11 +56,13 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 
 	@Test
 	public void login() {
-		Map<String, Object> params = new HashMap<>();
-		params.put("userId", "lsc109");
-		params.put("password", "1234");
-
+//		Map<String, Object> params = new HashMap<>();
+//		params.put("userId", "lsc109");
+//		params.put("password", "1234");
+		
+		String params = "{\"userId\":\"lsc109\",\"password\":\"1234\"}";
 		webTestClient.post().uri("/api/users/login")
+		.contentType(MediaType.APPLICATION_JSON)
 		.accept(MediaType.APPLICATION_JSON)
 		.body(BodyInserters.fromObject(params))
 		.exchange()
