@@ -37,7 +37,6 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 		.expectBody(Result.class).isEqualTo(new Result(true,null,"/memos",null));
 		
 /*		HttpHeaders headers = HttpHeaderBuilder.jsonAndFormData();
-
 		MultiValueMap<String, String> queryString = new LinkedMultiValueMap<>();
 		queryString.add("userId", "gram");
 		queryString.add("password", "1234");
@@ -46,7 +45,6 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String,String>>(queryString,headers);
 		ResponseEntity<Result> response = template.postForEntity("/api/users",
 				request, Result.class);
-
 		log.debug("create test : {}", response.getBody());
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		assertThat(response.getBody().isValid(), is(true));
