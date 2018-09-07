@@ -1,4 +1,4 @@
-package com.durin.security;
+package com.durin.exception;
 
 public class ExistException extends RuntimeException{
 

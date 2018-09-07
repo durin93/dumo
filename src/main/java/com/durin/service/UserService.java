@@ -15,15 +15,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.durin.domain.Attachment;
-import com.durin.domain.AttachmentRepository;
 import com.durin.domain.Label;
-import com.durin.domain.LabelRepository;
 import com.durin.domain.User;
-import com.durin.domain.UserRepository;
 import com.durin.domain.friend.FriendRequestRepository;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
-import com.durin.security.ExistException;
+import com.durin.exception.ExistException;
+import com.durin.repository.AttachmentRepository;
+import com.durin.repository.LabelRepository;
+import com.durin.repository.UserRepository;
 
 @Service
 @Transactional

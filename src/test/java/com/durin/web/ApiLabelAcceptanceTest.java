@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.durin.domain.Label;
-import com.durin.domain.LabelRepository;
+import com.durin.repository.LabelRepository;
 
 import support.test.HttpHeaderBuilder;
 

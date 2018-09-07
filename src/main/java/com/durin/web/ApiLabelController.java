@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.durin.UnAuthorizedException;
 import com.durin.domain.Label;
 import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.dto.LabelsDto;
+import com.durin.exception.UnAuthorizedException;
 import com.durin.security.LoginUser;
 import com.durin.service.LabelService;
 

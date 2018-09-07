@@ -6,9 +6,9 @@ import javax.security.sasl.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import com.durin.domain.Link;
-import com.durin.domain.LinkRepository;
 import com.durin.domain.User;
 import com.durin.dto.LinkDto;
+import com.durin.repository.LinkRepository;
 
 @Service
 public class LinkService {

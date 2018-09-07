@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.durin.domain.User;
-import com.durin.domain.UserRepository;
 import com.durin.domain.friend.FriendRequest;
 import com.durin.domain.friend.FriendRequestRepository;
 import com.durin.domain.friend.Relation;
@@ -15,7 +14,8 @@ import com.durin.domain.friend.RelationRepository;
 import com.durin.domain.friend.Relations;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
-import com.durin.security.ExistException;
+import com.durin.exception.ExistException;
+import com.durin.repository.UserRepository;
 
 @Service
 public class FriendRequestService {

@@ -16,8 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.durin.domain.Link;
-import com.durin.domain.LinkRepository;
 import com.durin.dto.LinkDto;
+import com.durin.repository.LinkRepository;
 
 import support.test.HttpHeaderBuilder;
 

@@ -14,7 +14,7 @@ import com.durin.aspect.LogExecutionTime;
 import com.durin.domain.User;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
-import com.durin.security.ExistException;
+import com.durin.exception.ExistException;
 import com.durin.security.LoginUser;
 import com.durin.service.FriendRequestService;
 

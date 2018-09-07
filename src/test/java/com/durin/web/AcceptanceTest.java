@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.durin.domain.User;
-import com.durin.domain.UserRepository;
+import com.durin.repository.UserRepository;
 
 
 

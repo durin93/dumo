@@ -10,13 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.durin.domain.Label;
-import com.durin.domain.LabelRepository;
 import com.durin.domain.Memo;
-import com.durin.domain.MemoRepository;
 import com.durin.domain.Pagination;
 import com.durin.domain.User;
 import com.durin.dto.MemoDto;
 import com.durin.dto.SearchDto;
+import com.durin.repository.LabelRepository;
+import com.durin.repository.MemoRepository;
 
 @Service
 public class MemoService {

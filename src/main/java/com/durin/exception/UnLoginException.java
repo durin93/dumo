@@ -1,4 +1,4 @@
-package com.durin;
+package com.durin.exception;
 
 public class UnLoginException extends RuntimeException {
     private static final long serialVersionUID = 1L;

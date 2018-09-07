@@ -29,11 +29,11 @@ import com.durin.domain.Result;
 import com.durin.domain.User;
 import com.durin.dto.SearchUserDto;
 import com.durin.dto.UserDto;
-import com.durin.security.ExistException;
+import com.durin.exception.ExistException;
+import com.durin.exception.ValidationException;
 import com.durin.security.HttpSessionUtils;
 import com.durin.service.AttachmentService;
 import com.durin.service.UserService;
-import com.durin.validate.ValidationException;
 import com.durin.validate.Validator;
 
 

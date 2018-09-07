@@ -1,4 +1,4 @@
-package com.durin.domain;
+package com.durin.repository;
 
 
 import java.util.List;
@@ -6,6 +6,10 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.durin.domain.Label;
+import com.durin.domain.Memo;
+import com.durin.domain.User;
 
 
 public interface MemoRepository extends JpaRepository<Memo, Long>{

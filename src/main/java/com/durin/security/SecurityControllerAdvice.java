@@ -8,13 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.durin.UnAuthenticationException;
-import com.durin.UnAuthorizedException;
-import com.durin.UnLoginException;
+import com.durin.exception.UnAuthenticationException;
+import com.durin.exception.UnAuthorizedException;
+import com.durin.exception.UnLoginException;
 
 
-@ControllerAdvice
+@RestControllerAdvice
 public class SecurityControllerAdvice {
     private static final Logger log = LoggerFactory.getLogger(SecurityControllerAdvice.class);
 

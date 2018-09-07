@@ -37,14 +37,9 @@ public class UserDto {
         this.name = name;
 	}
     
-    public UserDto(String userId, String password, String newPassword, String name) {
-        this(userId,password,name);
-        this.newPassword = newPassword;
-    }
-    
 
-	public UserDto(String userId, String password, String newPassword, String name, String filePath) {
-		this(userId,password,newPassword,name);
+	public UserDto(String userId, String password, String name, String filePath) {
+		this(userId,password,name);
 		this.profileImg = filePath;
 	}
 	

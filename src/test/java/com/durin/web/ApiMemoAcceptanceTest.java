@@ -16,9 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.durin.domain.Memo;
-import com.durin.domain.MemoRepository;
 import com.durin.dto.MemoDto;
 import com.durin.dto.MemosDto;
+import com.durin.repository.MemoRepository;
 
 import support.test.HttpHeaderBuilder;
 

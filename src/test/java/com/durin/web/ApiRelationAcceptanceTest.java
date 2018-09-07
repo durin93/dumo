@@ -17,12 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import com.durin.domain.User;
-import com.durin.domain.UserRepository;
 import com.durin.domain.friend.FriendRequest;
 import com.durin.domain.friend.FriendRequestRepository;
 import com.durin.domain.friend.RelationRepository;
 import com.durin.dto.FriendRequestDto;
 import com.durin.dto.RelationDto;
+import com.durin.repository.UserRepository;
 
 import support.test.HttpHeaderBuilder;
 

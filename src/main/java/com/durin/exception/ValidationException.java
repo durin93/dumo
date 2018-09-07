@@ -1,4 +1,4 @@
-package com.durin.validate;
+package com.durin.exception;
 
 public class ValidationException extends RuntimeException{
 

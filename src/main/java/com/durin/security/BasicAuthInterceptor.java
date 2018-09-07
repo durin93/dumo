@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.durin.UnAuthenticationException;
 import com.durin.domain.User;
+import com.durin.exception.UnAuthenticationException;
 import com.durin.service.UserService;
 
 

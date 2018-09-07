@@ -11,10 +11,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.durin.UnAuthorizedException;
 import com.durin.domain.Label;
-import com.durin.domain.LabelRepository;
 import com.durin.domain.User;
+import com.durin.exception.UnAuthorizedException;
+import com.durin.repository.LabelRepository;
 
 @Service
 @Transactional

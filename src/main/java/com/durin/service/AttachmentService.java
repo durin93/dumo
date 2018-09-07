@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.durin.domain.Attachment;
-import com.durin.domain.AttachmentRepository;
 import com.durin.domain.User;
+import com.durin.repository.AttachmentRepository;
 
 
 @Service
