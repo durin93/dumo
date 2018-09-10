@@ -9,18 +9,18 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 @Embeddable
-public class Links {
+public class BookMarks {
 	
 	@OneToMany(mappedBy="writer")
 	@OrderBy("createDate DESC")
-	private List<Link> links = new ArrayList<>();
+	private List<BookMark> bookMarks = new ArrayList<>();
 
-	public List<Link> getLinks() {
-		return Collections.unmodifiableList(links);
+	public List<BookMark> getBookMarks() {
+		return Collections.unmodifiableList(bookMarks);
 	}
 	
 	public int allCount() {
-		return links.size();
+		return bookMarks.size();
 	}
 	
 }

@@ -52,7 +52,7 @@ public class ApiUserController {
 
 	@GetMapping("")
 	public ResponseEntity<Result> joinForm() {
-		return new ResponseEntity<Result>(Result.success(Result.JOIN_PAGE), HttpStatus.OK);
+		return new ResponseEntity<>(Result.success(Result.JOIN_PAGE), HttpStatus.OK);
 	}
 
 	@PostMapping("login")
@@ -68,13 +68,13 @@ public class ApiUserController {
 		} catch (AuthenticationException e) {
 			result = Result.fail(e.getMessage(),Result.ERROR_PASSWORD);
 		}
-		return new ResponseEntity<Result>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("logout")
 	public ResponseEntity<Result> logout(HttpSession session) {
 		session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
-		return new ResponseEntity<Result>(Result.success(Result.MAIN_PAGE), HttpStatus.OK);
+		return new ResponseEntity<>(Result.success(Result.MAIN_PAGE), HttpStatus.OK);
 	}
 
 	@PostMapping("")
@@ -95,7 +95,7 @@ public class ApiUserController {
 			log.debug("user create validate error {} ", e.getMessage());
 			result = Result.fail(Validator.of(bindingResult));
 		}
-		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
+		return new ResponseEntity<>(result, headers, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/kakao")
@@ -106,7 +106,7 @@ public class ApiUserController {
 		
 		session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
 		result = Result.success(Result.MAIN_PAGE);
-		return new ResponseEntity<Result>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping("")
@@ -123,7 +123,7 @@ public class ApiUserController {
 		} catch (AuthenticationException e) {
 			result = Result.fail(e.getMessage(),Result.ERROR_PASSWORD);
 		}
-		return new ResponseEntity<Result>(result, headers, HttpStatus.CREATED);
+		return new ResponseEntity<>(result, headers, HttpStatus.CREATED);
 	}
 
 	@GetMapping("{id}/info")
@@ -139,7 +139,7 @@ public class ApiUserController {
 			return new ResponseEntity<SearchUserDto>(user, HttpStatus.OK);
 		} catch (NullPointerException e) {
 			log.debug("user search fail: {}", userId);
-			return new ResponseEntity<SearchUserDto>(SearchUserDto.noData(), HttpStatus.OK);
+			return new ResponseEntity<>(SearchUserDto.noData(), HttpStatus.OK);
 		}
 	}
 	

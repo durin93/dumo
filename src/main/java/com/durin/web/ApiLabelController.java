@@ -1,11 +1,13 @@
 package com.durin.web;
 
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 
+import org.springframework.boot.autoconfigure.hateoas.HateoasProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +44,11 @@ public class ApiLabelController {
 	
 	@PostMapping("")
 	public ResponseEntity<Label> create(@LoginUser User loginUser, @RequestBody Map<String, String> data) {
+		
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/api/labels"));
-		return new ResponseEntity<Label>(labelService.add(loginUser, data.get("title")),
+		return new ResponseEntity<Label>(labelService.add(loginUser, data.get("title")),headers,
 				HttpStatus.CREATED);
 	}
 

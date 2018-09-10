@@ -13,7 +13,7 @@ import com.durin.service.UserService;
 
 @Controller
 @RequestMapping("/links")
-public class LinkController {
+public class BookMarkController {
 	
 
 	@Resource(name="userService")

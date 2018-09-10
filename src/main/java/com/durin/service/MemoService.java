@@ -27,15 +27,15 @@ public class MemoService {
 	@Resource(name="labelRepository")
 	private LabelRepository labelRepository;
 	
-	public Memo add(User loginUser , Long labelId, MemoDto memoDto) {
+	public MemoDto add(User loginUser , Long labelId, MemoDto memoDto) {
 		Label label = findLabelById(labelId);
-		return	memoRepository.save(memoDto.toMemo(loginUser, label));
+		return	memoRepository.save(memoDto.toMemo(loginUser, label)).toMemoDto();
 	}
 
-	public Memo update(User loginUser, Long id, MemoDto memoDto) throws AuthenticationException {
+	public MemoDto update(User loginUser, Long id, MemoDto memoDto) throws AuthenticationException {
 		Memo baseMemo = findMemoById(id);
 		baseMemo.update(loginUser, memoDto);
-		return memoRepository.save(baseMemo);
+		return memoRepository.save(baseMemo).toMemoDto();
 	}
 
 	public void delete(User loginUser, Long id) throws AuthenticationException {

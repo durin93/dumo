@@ -18,6 +18,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import com.durin.domain.Result;
 import com.durin.dto.SearchUserDto;
+import com.durin.dto.UserDto;
 import com.durin.service.UserService;
 
 
@@ -30,6 +31,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest{
 		queryString.add("userId", "gram");
 		queryString.add("password", "1234");
 		queryString.add("name", "이그램");
+		
 		
 		webTestClient.post().uri("/api/users")
 		.contentType(MediaType.APPLICATION_JSON)

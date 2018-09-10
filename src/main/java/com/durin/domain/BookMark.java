@@ -11,7 +11,7 @@ import javax.security.sasl.AuthenticationException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Link extends AbstractEntity{
+public class BookMark extends AbstractEntity{
 
 	private static final String THUM_IO_URL = "https://image.thum.io/get/width/270/crop/800/";
 	
@@ -33,10 +33,10 @@ public class Link extends AbstractEntity{
 	private String thumnailUrl;
 	
 	
-	public Link() {
+	public BookMark() {
 	}
 
-	public Link (User writer, String title, String content, String originalUrl) {
+	public BookMark(User writer, String title, String content, String originalUrl) {
 		super(0L);
 		this.writer = writer;
 		this.title = title.trim();
@@ -78,7 +78,7 @@ public class Link extends AbstractEntity{
 			throw new AuthenticationException("본인만");
 		}
 	}
-	public void update(Link link) throws AuthenticationException {
+	public void update(BookMark link) throws AuthenticationException {
 		isOwner(link.writer);
 		this.title = link.title.trim();
 		this.content = link.content;

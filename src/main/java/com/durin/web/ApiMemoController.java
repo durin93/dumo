@@ -1,13 +1,16 @@
 package com.durin.web;
 
-import java.net.URI;
 
-import javax.annotation.Resource;
 import javax.security.sasl.AuthenticationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,16 +33,23 @@ import com.durin.domain.User;
 import com.durin.security.LoginUser;
 import com.durin.service.MemoService;
 
+import java.net.URI;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/api/memos")
 public class ApiMemoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ApiMemoController.class);
 
-	@Resource(name = "memoService")
 	private MemoService memoService;
 
-	
+	public ApiMemoController(MemoService memoService) {
+		this.memoService = memoService;
+	}
+
 	@GetMapping("")
 	public ResponseEntity<MemosDto> defaultMainList(@LoginUser User loginUser) {
 		Pagination pagination = Pagination.of();
@@ -69,19 +79,29 @@ public class ApiMemoController {
 	
 	
 	@PostMapping("{labelId}")
-	public ResponseEntity<Memo> create(@LoginUser User loginUser,  @PathVariable Long labelId, @RequestBody MemoDto memoDto) {
-		Memo memo = memoService.add(loginUser, labelId, memoDto);
+	public ResponseEntity<MemoDto> create(@LoginUser User loginUser, @PathVariable Long labelId, @RequestBody MemoDto memoDto) {
+
+		MemoDto memo = memoService.add(loginUser, labelId, memoDto);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create(memo.generateUrl()));
-		return new ResponseEntity<Memo>(memo,headers,HttpStatus.CREATED);
+		headers.setLocation(linkTo(ApiMemoController.class).slash(memo.getMemoId()).toUri());
+		memo.add(linkTo(ApiMemoController.class).slash(memo.getMemoId()).withSelfRel());
+		return new ResponseEntity<>(memo,headers,HttpStatus.CREATED);
 	}
-	
+
+
+
+
 
 	@PutMapping("{id}")
-	public ResponseEntity<Memo> update(@LoginUser User loginUser, @PathVariable Long id,
+	public ResponseEntity<MemoDto> update(@LoginUser User loginUser, @PathVariable Long id,
 			@RequestBody MemoDto memoDto) throws AuthenticationException {
-		return new ResponseEntity<Memo>(memoService.update(loginUser, id, memoDto),
-				HttpStatus.CREATED);
+
+		MemoDto memo = memoService.update(loginUser, id, memoDto);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(linkTo(ApiMemoController.class).slash(memo.getMemoId()).toUri());
+		memo.add(linkTo(ApiMemoController.class).slash(memo.getMemoId()).withSelfRel());
+
+		return new ResponseEntity<>(memo,headers,HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("{id}")

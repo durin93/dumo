@@ -15,25 +15,25 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.durin.domain.Link;
-import com.durin.dto.LinkDto;
-import com.durin.repository.LinkRepository;
+import com.durin.domain.BookMark;
+import com.durin.dto.BookMarkDto;
+import com.durin.repository.BookMarkRepository;
 
 import support.test.HttpHeaderBuilder;
 
 
-public class ApiLinkAcceptanceTest extends AcceptanceTest {
+public class ApiBookMarkAcceptanceTest extends AcceptanceTest {
 
-	private static final Logger log = LoggerFactory.getLogger(ApiLinkAcceptanceTest.class);
+	private static final Logger log = LoggerFactory.getLogger(ApiBookMarkAcceptanceTest.class);
 
 
 	@Autowired
-	private LinkRepository linkRepository;
+	private BookMarkRepository bookMarkRepository;
 
 
 	@Test
 	public void create() {
-		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
+		ResponseEntity<BookMark> response = basicAuthTemplate().postForEntity("/api/links", new BookMarkDto("https://www.google.com/", "구글", "구글페이지"), BookMark.class);
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 		assertThat(response.getBody().getTitle(), is("Google"));
 	}
@@ -45,7 +45,7 @@ public class ApiLinkAcceptanceTest extends AcceptanceTest {
 		Map<String, Object> params = new HashMap<>();
 
 		HttpEntity<Map<String, Object>> request = new HttpEntity<Map<String, Object>>(params, headers);
-		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
+		ResponseEntity<BookMark> response = basicAuthTemplate().postForEntity("/api/links", new BookMarkDto("https://www.google.com/", "구글", "구글페이지"), BookMark.class);
 
 		params.put("url", "https://www.naver.com/");
 		params.put("title", "네이버");
@@ -53,15 +53,15 @@ public class ApiLinkAcceptanceTest extends AcceptanceTest {
 
 		basicAuthTemplate().put("/api/links/" + response.getBody().getId(), request);
 
-		assertThat(linkRepository.findById(response.getBody().getId()).get().getContent(), is("네이버페이지"));
+		assertThat(bookMarkRepository.findById(response.getBody().getId()).get().getContent(), is("네이버페이지"));
 	}
 
 	
 	@Test
 	public void delete() {
-		ResponseEntity<Link> response = basicAuthTemplate().postForEntity("/api/links", new LinkDto("https://www.google.com/", "구글", "구글페이지"), Link.class);
+		ResponseEntity<BookMark> response = basicAuthTemplate().postForEntity("/api/links", new BookMarkDto("https://www.google.com/", "구글", "구글페이지"), BookMark.class);
 		basicAuthTemplate().delete("/api/links/"+response.getBody().getId());
-		assertThat(linkRepository.findById(response.getBody().getId()).isPresent(), is(false));
+		assertThat(bookMarkRepository.findById(response.getBody().getId()).isPresent(), is(false));
 }
 	
 

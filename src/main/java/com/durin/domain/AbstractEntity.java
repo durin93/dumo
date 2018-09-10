@@ -14,6 +14,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -41,6 +43,7 @@ public class AbstractEntity {
 	public long getId() {
 		return id;
 	}
+
 
 	public String getFormattedCreateDate() {
 		return getFormattedDate(createDate, "yyyy.MM.dd HH:mm:ss");

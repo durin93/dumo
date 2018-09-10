@@ -22,7 +22,8 @@ $(".logout-btn").on("click",function(e){
 	e.preventDefault();
 	
 	var url = $(this).attr("href");
-	
+	console.log("로그아웃"+url);
+
 	$.ajax({
 		type : 'get',
 		url : url,
@@ -31,6 +32,7 @@ $(".logout-btn").on("click",function(e){
 			alert("로그아웃에러");
 		},
 		success : function(data){
+			console.log("로그아웃성공")
 			location.href=data.url;
 		}
 		

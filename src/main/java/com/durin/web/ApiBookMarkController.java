@@ -17,30 +17,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.durin.domain.Link;
+import com.durin.domain.BookMark;
 import com.durin.domain.User;
-import com.durin.dto.LinkDto;
+import com.durin.dto.BookMarkDto;
 import com.durin.security.LoginUser;
-import com.durin.service.LinkService;
+import com.durin.service.BookMarkService;
 
 @RestController
 @RequestMapping("/api/links")
-public class ApiLinkController {
+public class ApiBookMarkController {
 
-	@Resource(name = "linkService")
-	private LinkService linkService;
+	@Resource(name = "bookMarkService")
+	private BookMarkService linkService;
 
 	@PostMapping("")
-	public ResponseEntity<Link> create(@LoginUser User loginUser, @RequestBody LinkDto linkDto) {
+	public ResponseEntity<BookMark> create(@LoginUser User loginUser, @RequestBody BookMarkDto linkDto) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(URI.create("/api/links"));
-		return new ResponseEntity<Link>(linkService.add(loginUser, linkDto), HttpStatus.CREATED);
+		return new ResponseEntity<BookMark>(linkService.add(loginUser, linkDto), HttpStatus.CREATED);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Link> update(@LoginUser User loginUser, @PathVariable Long id,
-			@RequestBody LinkDto linkDto) throws AuthenticationException {
-		return new ResponseEntity<Link>(linkService.update(loginUser, id, linkDto),
+	public ResponseEntity<BookMark> update(@LoginUser User loginUser, @PathVariable Long id,
+                                           @RequestBody BookMarkDto linkDto) throws AuthenticationException {
+		return new ResponseEntity<BookMark>(linkService.update(loginUser, id, linkDto),
 				HttpStatus.CREATED);
 	}
 

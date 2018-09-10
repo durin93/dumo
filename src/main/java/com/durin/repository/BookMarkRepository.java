@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.durin.domain.Link;
+import com.durin.domain.BookMark;
 import com.durin.domain.User;
 
 
-public interface LinkRepository extends JpaRepository<Link, Long>{
+public interface BookMarkRepository extends JpaRepository<BookMark, Long>{
 
-	List<Link> findByWriter(User loginUser);
+	List<BookMark> findByWriter(User loginUser);
 
 
 	

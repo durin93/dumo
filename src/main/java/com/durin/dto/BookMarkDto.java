@@ -3,10 +3,10 @@ package com.durin.dto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.durin.domain.Link;
+import com.durin.domain.BookMark;
 import com.durin.domain.User;
 
-public class LinkDto{
+public class BookMarkDto {
 	private static final int TITLE_START_LENGTH = 7;
 
 	private String title;
@@ -15,10 +15,10 @@ public class LinkDto{
 
 	private String content;
 
-	public LinkDto() {
+	public BookMarkDto() {
 	}
 	
-	public LinkDto(String url, String title, String content) {
+	public BookMarkDto(String url, String title, String content) {
 		this.url = url;
 		this.title = title;
 		this.content = content;
@@ -55,9 +55,9 @@ public class LinkDto{
 		}
 	}
 
-	public Link toLink(User writer) {
+	public BookMark toBookMark(User writer) {
 		makeUrlTitle();
-		return new Link(writer, title, content, url);
+		return new BookMark(writer, title, content, url);
 	}
 
 

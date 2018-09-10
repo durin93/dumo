@@ -41,6 +41,8 @@ public class ApiLabelAcceptanceTest extends AcceptanceTest {
 		HttpEntity<Map<String,Object>> request = new HttpEntity<Map<String,Object>>(params ,headers);
 		ResponseEntity<Label> response = basicAuthTemplate().postForEntity("/api/labels",request,Label.class);
 		
+		 System.out.println(		 response.getHeaders().getLocation().getPath()+"앗");
+
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
 	}
 

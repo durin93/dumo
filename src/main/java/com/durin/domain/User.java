@@ -38,7 +38,7 @@ public class User extends AbstractEntity {
 	private Labels labels;
 	
 	@Embedded
-	private Links links;
+	private BookMarks bookMarks;
 	
 	@Embedded
 	private Relations relations;
@@ -83,8 +83,8 @@ public class User extends AbstractEntity {
 		return name;
 	}
 	
-	public List<Link> getLinks(){
-		return links.getLinks();
+	public List<BookMark> getBookMarks(){
+		return bookMarks.getBookMarks();
 	}
 
 	public List<Label> getLabels(){
@@ -118,8 +118,8 @@ public class User extends AbstractEntity {
 		return labels.allMemoCount();
 	}
 	
-	public int getLinkCount() {
-		return links.allCount();
+	public int getBookMarkCount() {
+		return bookMarks.allCount();
 	}
 	
 
@@ -149,7 +149,7 @@ public class User extends AbstractEntity {
 	@Override
 	public String toString() {
 		return "User [division=" + division + ", oauthId=" + oauthId + ", userId=" + userId + ", password=" + password
-				+ ", name=" + name + ", labels=" + labels + ", links=" + links + ", relations=" + relations + "]";
+				+ ", name=" + name + ", labels=" + labels + ", bookMarks=" + bookMarks + ", relations=" + relations + "]";
 	}
 	
 	
