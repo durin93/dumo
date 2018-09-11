@@ -62,6 +62,9 @@ $(".write-link-btn").on("click" ,
 			var url = "https://www.google.co.kr";
 			var content = "";
 
+			console.log("title="+title+" url="+url+" content="+content);
+
+
 			$.ajax({
 				type : 'post',
 				url : actionUrl,

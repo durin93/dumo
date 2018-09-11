@@ -15,7 +15,7 @@ import com.durin.exception.UnAuthorizedException;
 import com.durin.exception.UnLoginException;
 
 
-@RestControllerAdvice
+@ControllerAdvice
 public class SecurityControllerAdvice {
     private static final Logger log = LoggerFactory.getLogger(SecurityControllerAdvice.class);
 

@@ -17,10 +17,10 @@
 			}
 		});
 });*/
- 
+
 $(".logout-btn").on("click",function(e){
 	e.preventDefault();
-	
+
 	var url = $(this).attr("href");
 	console.log("로그아웃"+url);
 
