@@ -9,6 +9,12 @@ public class SearchDto {
 	public SearchDto() {
 	}
 
+	public SearchDto(Long labelId, String search, String value) {
+		this.labelId = labelId;
+		this.search = search;
+		this.value = value;
+	}
+
 	public Long getLabelId() {
 		return labelId;
 	}

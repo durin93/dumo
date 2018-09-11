@@ -5,12 +5,8 @@ import javax.security.sasl.AuthenticationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +29,8 @@ import com.durin.domain.User;
 import com.durin.security.LoginUser;
 import com.durin.service.MemoService;
 
-import java.net.URI;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/memos")
@@ -54,27 +48,28 @@ public class ApiMemoController {
 	public ResponseEntity<MemosDto> defaultMainList(@LoginUser User loginUser) {
 		Pagination pagination = Pagination.of();
 		Page<Memo> postPage = memoService.findAll(pagination , loginUser);
-		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
+		return new ResponseEntity<>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
 	@GetMapping("{labelId}")
 	public ResponseEntity<MemosDto> labelIdList(@LoginUser User loginUser, @PathVariable Long labelId) {
 		Pagination pagination = Pagination.of(labelId);
 		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
-		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
+		return new ResponseEntity<>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
 	@GetMapping("{labelId}/{page}")
 	public ResponseEntity<MemosDto> labelIdPageList(@LoginUser User loginUser, @PathVariable Long labelId, @PathVariable Integer page) {
 		Pagination pagination = Pagination.of(page,labelId);
 		Page<Memo> postPage = memoService.findAll(pagination, loginUser);
-		return new ResponseEntity<MemosDto>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
+		return new ResponseEntity<>(MemosDto.of(postPage,  pagination),HttpStatus.OK);
 	}
 	
 	@GetMapping("search")
 	public  ResponseEntity<MemosDto> search(@LoginUser User loginUser, SearchDto searchDto) {
 		log.debug("/api/memos/search");
-		return new ResponseEntity<MemosDto>(MemosDto.of(memoService.findAllBySearch(searchDto)),HttpStatus.OK);
+		MemosDto memosDto = MemosDto.of(memoService.findAllBySearch(searchDto));
+		return new ResponseEntity<>(memosDto,HttpStatus.OK);
 	}
 	
 	
@@ -87,9 +82,6 @@ public class ApiMemoController {
 		memo.add(linkTo(ApiMemoController.class).slash(memo.getMemoId()).withSelfRel());
 		return new ResponseEntity<>(memo,headers,HttpStatus.CREATED);
 	}
-
-
-
 
 
 	@PutMapping("{id}")
@@ -113,12 +105,12 @@ public class ApiMemoController {
 		} catch (AuthenticationException e) {
 			result = Result.fail(e.getMessage(),Result.ERROR_ID);
 		}
-		return new ResponseEntity<Result>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("size")
 	public ResponseEntity<Integer> userMemoSize(@LoginUser User loginUser) {
-		return new ResponseEntity<Integer>(memoService.allMemoCount(loginUser), HttpStatus.OK);
+		return new ResponseEntity<>(memoService.allMemoCount(loginUser), HttpStatus.OK);
 	}
 
 }

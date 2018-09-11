@@ -2,19 +2,16 @@ package com.durin.web;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-
+import com.durin.domain.Result;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 
-import com.durin.domain.Memo;
 import com.durin.dto.MemoDto;
 import com.durin.dto.MemosDto;
 import com.durin.repository.MemoRepository;
@@ -28,7 +25,7 @@ public class ApiMemoAcceptanceTest extends AcceptanceTest {
     private MemoRepository memoRepository;
 
     @Test
-    public void create() throws Exception {
+    public void create() {
         MemoDto response =
                 basicAuthDefaultClient()
                         .post().uri("/api/memos/1")
@@ -49,9 +46,17 @@ public class ApiMemoAcceptanceTest extends AcceptanceTest {
     @Test
     public void update() {
 
+        MemoDto createMemo =
+                basicAuthDefaultClient()
+                        .post().uri("/api/memos/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(new MemoDto("제목1", "내용1")))
+                        .exchange().expectBody(MemoDto.class).returnResult().getResponseBody();
+
         MemoDto response =
                 basicAuthDefaultClient()
-                        .put().uri("/api/memos/1")
+                        .put().uri("/api/memos/" + createMemo.getMemoId())
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .body(BodyInserters.fromObject(new MemoDto("수정제목", "수정내용")))
@@ -65,34 +70,54 @@ public class ApiMemoAcceptanceTest extends AcceptanceTest {
                         .returnResult().getResponseBody();
         log.debug(response.getLinkz().toString());
 
-
-//		HttpHeaders headers = HttpHeaderBuilder.allJsonData();
-//
-//		Map<String, Object> params = new HashMap<>();
-//
-//		ResponseEntity<Memo> response = basicAuthTemplate().postForEntity("/api/memos/1", new MemoDto("제목1","내용1"), Memo.class);
-//		params.put("title", "수정제목");
-//		params.put("content", "수정내용");
-//
-//		HttpEntity<Map<String, Object>> request = new HttpEntity<Map<String, Object>>(params, headers);
-//		basicAuthTemplate().put("/api/memos/" + response.getBody().getId(), request);
-//
-//		assertThat(memoRepository.findById(response.getBody().getId()).get().getContent(), is("수정내용"));
     }
 
 
     @Test
     public void delete() {
-        ResponseEntity<MemoDto> response = basicAuthTemplate().postForEntity("/api/memos/1", new MemoDto("제목1", "내용1"), MemoDto.class);
-        basicAuthTemplate().delete("/api/memos/" + response.getBody().getId());
-        assertThat(memoRepository.findById(response.getBody().getMemoId()).isPresent(), is(false));
+
+        MemoDto createMemo =
+                basicAuthDefaultClient()
+                        .post().uri("/api/memos/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(new MemoDto("제목1", "내용1")))
+                        .exchange().expectBody(MemoDto.class).returnResult().getResponseBody();
+
+        basicAuthDefaultClient()
+                .delete().uri("/api/memos/" + createMemo.getMemoId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Result.class)
+                .consumeWith(result -> assertThat(result.getResponseBody().isValid(), is(true)));
+        assertThat(memoRepository.findById(createMemo.getMemoId()).isPresent(), is(false));
+
     }
 
     @Test
     public void search() {
-        ResponseEntity<MemosDto> response = basicAuthTemplate().getForEntity("/api/memos/search?labelId=1&search=1&value=1", MemosDto.class);
-        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        MemosDto response =
+        basicAuthDefaultClient()
+                .get().uri("/api/memos/search?labelId=1&search=title&value=제목")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(MemosDto.class)
+                .consumeWith(result -> assertNotNull(result.getResponseBody().getMemos()))
+                .returnResult().getResponseBody();
+        log.debug(response.getMemos().toString());
     }
 
+    @Test
+    public void defaultMainList(){
+        MemosDto response =
+                basicAuthDefaultClient()
+                        .get().uri("/api/memos")
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBody(MemosDto.class)
+                        .consumeWith(result -> assertNotNull(result.getResponseBody().getMemos()))
+                        .returnResult().getResponseBody();
+        log.debug(response.getMemos().toString());
+    }
 
 }

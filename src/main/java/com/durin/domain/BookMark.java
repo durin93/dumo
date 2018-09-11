@@ -68,11 +68,7 @@ public class BookMark extends AbstractEntity{
 	public String getModifiedDate() {
 		return getFormattedModifiedDate();
 	}
-	
-	public String generateUrl() {
-		return String.format("/api/link/%d", getId());
-	}
-	
+
 	public void isOwner(User loginUser) throws AuthenticationException {
 		if (!writer.equals(loginUser)) {
 			throw new AuthenticationException("본인만");
@@ -85,5 +81,5 @@ public class BookMark extends AbstractEntity{
 		this.originalUrl = link.originalUrl;
 		this.thumnailUrl = THUM_IO_URL+link.originalUrl;
 	}
-	
+
 }

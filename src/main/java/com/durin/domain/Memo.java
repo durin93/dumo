@@ -66,10 +66,6 @@ public class Memo extends AbstractEntity {
         return deleted;
     }
 
-    public String generateUrl() {
-        return String.format("/api/memos/%d", getId());
-    }
-
     public void isOwner(User loginUser) throws AuthenticationException {
         if (!writer.equals(loginUser)) {
             throw new AuthenticationException("본인만");
@@ -82,6 +78,9 @@ public class Memo extends AbstractEntity {
         this.content = memoDto.getContent();
     }
 
+    public MemoDto toMemoDto() {
+        return new MemoDto(getId(), title, content, getModifiedDate());
+    }
 
     @Override
     public String toString() {
@@ -89,9 +88,5 @@ public class Memo extends AbstractEntity {
                 + ", deleted=" + deleted + "]";
     }
 
-
-    public MemoDto toMemoDto() {
-        return new MemoDto(getId(), title, content, getModifiedDate());
-    }
 
 }

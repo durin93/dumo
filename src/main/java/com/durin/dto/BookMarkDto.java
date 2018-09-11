@@ -10,14 +10,14 @@ public class BookMarkDto {
 	private static final int TITLE_START_LENGTH = 7;
 
 	private String title;
-	
+
 	private String url;
 
 	private String content;
 
 	public BookMarkDto() {
 	}
-	
+
 	public BookMarkDto(String url, String title, String content) {
 		this.url = url;
 		this.title = title;
@@ -39,8 +39,8 @@ public class BookMarkDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
+
+
 	public String getTitle() {
 		return title;
 	}
