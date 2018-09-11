@@ -16,15 +16,15 @@ public class BookMarkService {
 	@Resource(name = "bookMarkRepository")
 	private BookMarkRepository bookMarkRepository;
 
-	public BookMark add(User loginUser, BookMarkDto bookMarkDto) {
-		return bookMarkRepository.save(bookMarkDto.toBookMark(loginUser));
+	public BookMarkDto add(User loginUser, BookMarkDto bookMarkDto) {
+		return bookMarkRepository.save(bookMarkDto.toBookMark(loginUser)).toBookMarkDto();
 	}
 
-	public BookMark update(User loginUser, Long id, BookMarkDto bookMarkDto)
+	public BookMarkDto update(User loginUser, Long id, BookMarkDto bookMarkDto)
 			throws AuthenticationException {
 		BookMark baseBookMark = bookMarkRepository.findById(id).orElseThrow(NullPointerException::new);
 		baseBookMark.update(bookMarkDto.toBookMark(loginUser));
-		return bookMarkRepository.save(baseBookMark);
+		return bookMarkRepository.save(baseBookMark).toBookMarkDto();
 	}
 
 	public void delete(User loginUser, Long id) throws AuthenticationException {

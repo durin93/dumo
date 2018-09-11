@@ -53,15 +53,18 @@ function initDraggable() {
 }
 
 
-//글 추가
+//북마크 추가
 $(".write-link-btn").on("click" , 
 		function(e) {
 			e.preventDefault();
+
+
 			var actionUrl = "/api/links";
 			var title = "";
 			var url = "https://www.google.co.kr";
 			var content = "";
 
+			console.log("북마크 추가");
 			console.log("title="+title+" url="+url+" content="+content);
 
 

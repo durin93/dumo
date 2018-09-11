@@ -23,47 +23,53 @@ import com.durin.dto.BookMarkDto;
 import com.durin.security.LoginUser;
 import com.durin.service.BookMarkService;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
 @RestController
 @RequestMapping("/api/links")
 public class ApiBookMarkController {
 
-	@Resource(name = "bookMarkService")
 	private BookMarkService bookMarkService;
 
-	@PostMapping("")
-	public ResponseEntity<BookMark> create(@LoginUser User loginUser, @RequestBody BookMarkDto linkDto) {
-		HttpHeaders headers = new HttpHeaders();
-		return new ResponseEntity<BookMark>(bookMarkService.add(loginUser, linkDto), HttpStatus.CREATED);
+	public ApiBookMarkController(BookMarkService bookMarkService) {
+		this.bookMarkService = bookMarkService;
 	}
 
-    /*@PostMapping("{labelId}")
-    public ResponseEntity<MemoDto> create(@LoginUser User loginUser, @PathVariable Long labelId, @RequestBody MemoDto memoDto) {
+	@PostMapping("")
+	public ResponseEntity<BookMarkDto> create(@LoginUser User loginUser, @RequestBody BookMarkDto bookMarkDto) {
+		HttpHeaders headers = new HttpHeaders();
 
-        MemoDto memo = memoService.add(loginUser, labelId, memoDto);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(linkTo(ApiMemoController.class).slash(memo.getMemoId()).toUri());
-        memo.add(linkTo(ApiMemoController.class).slash(memo.getMemoId()).withSelfRel());
-        return new ResponseEntity<>(memo,headers,HttpStatus.CREATED);
-    }*/
+		BookMarkDto bookMark  = bookMarkService.add(loginUser, bookMarkDto);
+		bookMark.add(linkTo(ApiBookMarkController.class).slash(bookMark.getBookMarkId()).withSelfRel());
+		headers.setLocation(linkTo(ApiBookMarkController.class).slash(bookMark.getBookMarkId()).toUri());
+
+		return new ResponseEntity<>(bookMark, headers, HttpStatus.CREATED);
+	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<BookMark> update(@LoginUser User loginUser, @PathVariable Long id,
-                                           @RequestBody BookMarkDto linkDto) throws AuthenticationException {
-		return new ResponseEntity<BookMark>(bookMarkService.update(loginUser, id, linkDto),
-				HttpStatus.CREATED);
+	public ResponseEntity<BookMarkDto> update(@LoginUser User loginUser, @PathVariable Long id,
+                                           @RequestBody BookMarkDto bookMarkDto) throws AuthenticationException {
+
+		HttpHeaders headers = new HttpHeaders();
+		BookMarkDto bookMark  = bookMarkService.update(loginUser, id, bookMarkDto);
+		bookMark.add(linkTo(ApiBookMarkController.class).slash(bookMark.getBookMarkId()).withSelfRel());
+		headers.setLocation(linkTo(ApiBookMarkController.class).slash(bookMark.getBookMarkId()).toUri());
+
+		return new ResponseEntity<>(bookMark,headers,HttpStatus.CREATED);
 	}
+
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> delete(@LoginUser User loginUser, @PathVariable Long id)
 			throws AuthenticationException {
 		bookMarkService.delete(loginUser, id);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 
 	@GetMapping("size")
 	public ResponseEntity<Integer> userLinkSize(@LoginUser User loginUser) {
-		return new ResponseEntity<Integer>(bookMarkService.allLinkCount(loginUser), HttpStatus.OK);
+		return new ResponseEntity<>(bookMarkService.allLinkCount(loginUser), HttpStatus.OK);
 	}
 
 }

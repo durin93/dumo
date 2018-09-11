@@ -10,61 +10,88 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 import com.durin.domain.BookMark;
 import com.durin.dto.BookMarkDto;
 import com.durin.repository.BookMarkRepository;
 
+import org.springframework.web.reactive.function.BodyInserters;
 import support.test.HttpHeaderBuilder;
 
 
 public class ApiBookMarkAcceptanceTest extends AcceptanceTest {
 
-	private static final Logger log = LoggerFactory.getLogger(ApiBookMarkAcceptanceTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiBookMarkAcceptanceTest.class);
 
 
-	@Autowired
-	private BookMarkRepository bookMarkRepository;
+    @Autowired
+    private BookMarkRepository bookMarkRepository;
 
 
-	@Test
-	public void create() {
-		ResponseEntity<BookMark> response = basicAuthTemplate().postForEntity("/api/links", new BookMarkDto("https://www.google.com/", "구글", "구글페이지"), BookMark.class);
-		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
-		assertThat(response.getBody().getTitle(), is("Google"));
-	}
+    @Test
+    public void create() {
+        BookMarkDto createBookMark =
+                basicAuthDefaultClient().post()
+                        .uri("/api/links")
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(new BookMarkDto("https://www.google.com/", "구글", "구글페이지")))
+                        .exchange()
+                        .expectStatus().isCreated()
+                        .expectHeader().exists("Location")
+                        .expectBody(BookMarkDto.class)
+                        .consumeWith(result -> assertThat(result.getResponseBody().getTitle(), is("Google")))
+                        .returnResult().getResponseBody();
+        log.debug(createBookMark.toString());
+    }
 
-	@Test
-	public void update() {
-		HttpHeaders headers = HttpHeaderBuilder.allJsonData();
+    @Test
+    public void update() {
 
-		Map<String, Object> params = new HashMap<>();
+        BookMarkDto createBookMark =
+                basicAuthDefaultClient().post()
+                        .uri("/api/links")
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(new BookMarkDto("https://www.google.com/", "구글", "구글페이지")))
+                        .exchange()
+                        .expectBody(BookMarkDto.class)
+                        .returnResult().getResponseBody();
 
-		HttpEntity<Map<String, Object>> request = new HttpEntity<Map<String, Object>>(params, headers);
-		ResponseEntity<BookMark> response = basicAuthTemplate().postForEntity("/api/links", new BookMarkDto("https://www.google.com/", "구글", "구글페이지"), BookMark.class);
 
-		params.put("url", "https://www.naver.com/");
-		params.put("title", "네이버");
-		params.put("content", "네이버페이지");
+        BookMarkDto updateBookMark =
+                basicAuthDefaultClient().put()
+                        .uri("/api/links/" + createBookMark.getBookMarkId())
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(new BookMarkDto("https://www.naver.com/", "네이버", "네이버페이지")))
+                        .exchange()
+                        .expectBody(BookMarkDto.class)
+                        .consumeWith(result -> assertThat(result.getResponseBody().getTitle(), is("NAVER")))
+                        .returnResult().getResponseBody();
+        log.debug(updateBookMark.toString());
+    }
 
-		basicAuthTemplate().put("/api/links/" + response.getBody().getId(), request);
 
-		assertThat(bookMarkRepository.findById(response.getBody().getId()).get().getContent(), is("네이버페이지"));
-	}
+    @Test
+    public void delete() {
+        BookMarkDto createBookMark =
+                basicAuthDefaultClient().post()
+                        .uri("/api/links")
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(new BookMarkDto("https://www.google.com/", "구글", "구글페이지")))
+                        .exchange()
+                        .expectBody(BookMarkDto.class)
+                        .returnResult().getResponseBody();
 
-	
-	@Test
-	public void delete() {
-		ResponseEntity<BookMark> response = basicAuthTemplate().postForEntity("/api/links", new BookMarkDto("https://www.google.com/", "구글", "구글페이지"), BookMark.class);
-		basicAuthTemplate().delete("/api/links/"+response.getBody().getId());
-		assertThat(bookMarkRepository.findById(response.getBody().getId()).isPresent(), is(false));
-}
-	
-
+        basicAuthDefaultClient()
+                .delete().uri("/api/links/" + createBookMark.getBookMarkId())
+                .exchange()
+                .expectStatus().isOk();
+        assertThat(bookMarkRepository.findById(createBookMark.getBookMarkId()).isPresent(), is(false));
+    }
 
 
 }

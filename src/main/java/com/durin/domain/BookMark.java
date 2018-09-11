@@ -8,12 +8,13 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.security.sasl.AuthenticationException;
 
+import com.durin.dto.BookMarkDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class BookMark extends AbstractEntity{
 
-	private static final String THUM_IO_URL = "https://image.thum.io/get/width/270/crop/800/";
+	protected static final String THUM_IO_URL = "https://image.thum.io/get/width/270/crop/800/";
 	
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_link_writer"))
@@ -80,6 +81,10 @@ public class BookMark extends AbstractEntity{
 		this.content = link.content;
 		this.originalUrl = link.originalUrl;
 		this.thumnailUrl = THUM_IO_URL+link.originalUrl;
+	}
+
+	public BookMarkDto toBookMarkDto() {
+		return new BookMarkDto(getId(), originalUrl, title , content, getModifiedDate());
 	}
 
 }
