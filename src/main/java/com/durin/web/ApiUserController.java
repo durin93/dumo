@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -56,7 +57,7 @@ public class ApiUserController {
 	}
 
 	@PostMapping("login")
-	public ResponseEntity<Result> login(HttpSession session, @RequestBody Map<String, String> data) {
+	public ResponseEntity<Result> login(HttpSession session, @RequestBody Map<String, String> data, HttpServletResponse response) {
 		Result result;
 		try {
 			User loginUser = userService.login(data.get("userId"), data.get("password"));
@@ -68,6 +69,8 @@ public class ApiUserController {
 		} catch (AuthenticationException e) {
 			result = Result.fail(e.getMessage(),Result.ERROR_PASSWORD);
 		}
+		response.setHeader("Authorization", "token");
+
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
